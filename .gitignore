@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#ignoring file with oed credentials
+oed_experiments/oed_credentials.json
