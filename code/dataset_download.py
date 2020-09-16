@@ -63,4 +63,4 @@ senses_df = query_oed('word',lemma_id,'include_senses=true&include_quotations=tr
 
 senses_df.to_pickle(lemma_id+"_senses.pickle")  
 
-senses_df.to_csv(lemma_id+"_senses.tsv',sep='\t')
+senses_df.to_csv(lemma_id+"_senses.tsv",sep='\t')
