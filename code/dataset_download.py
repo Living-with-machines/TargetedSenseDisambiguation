@@ -1,6 +1,7 @@
 import json,pickle
 import requests
 import pandas as pd
+from pathlib import Path
 
 def query_oed(
           auth:dict,
@@ -87,13 +88,14 @@ def query_oed(
 with open('../oed_experiments/oed_credentials.json') as f:
     credentials = json.load(f)
 
-#app_id = credentials["app_id"]
-#app_key = credentials["app_key"]
+
+save_path = Path("../data")
+save_path.mkdir(exist_ok=True)
 
 lemma_id = "machine_nn01"
 
 senses_df = query_oed(credentials,'word',lemma_id,'include_senses=true&include_quotations=true')
 
-senses_df.to_pickle(lemma_id+"_senses.pickle")  
+senses_df.to_pickle(save_path / (lemma_id+"_senses.pickle"))  
 
-senses_df.to_csv(lemma_id+"_senses.tsv",sep='\t')
+senses_df.to_csv(save_path / (lemma_id+"_senses.tsv"),sep='\t')
