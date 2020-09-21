@@ -1,0 +1,3271 @@
+,categories.region,categories.register,categories.topic,daterange.end,daterange.obsolete,daterange.rangestring,daterange.start,definition,first_use,id,lemma,main_current_sense,meta.created,meta.position_in_entry,meta.revised,meta.sense_group,meta.updated,notes,oed_reference,oed_url,part_of_speech,quotations,semantic_class_ids,transitivity,word_id,sense_id
+0,[],[['rare']],[],,False,1545—,1545,"A material or immaterial structure, esp. the fabric of the world or of the universe; a construction or edifice. Now rare.",J. Schäfer,machine_nn01-38473945,machine,False,1904,1,True,machine_nn01-g01,2000,[],"machine, n., sense I.1a",https://www.oed.com/view/Entry/111850#eid38473945,NN,"id:  machine_nn01-38473950
+text:  {'keyword': 'machyne', 'full_text': 'The hole machyne of this world is divided in .2. parte. That is to saye, in the celestiall and into the elementall regions.', 'keyword_offset': 9}
+year:  1545
+lemma:  machine
+source:  {'title': 'Early Mod. Eng. Lexicogr.', 'author': 'J. Schäfer', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38473950
+word_id:  machine_nn01
+sense_id:  machine_nn01-38473945
+datestring:  1545
+first_in_word:  True
+oed_reference:  machine, n., sense I.1a
+first_in_sense:  True
+
+
+id:  machine_nn01-38473961
+text:  {'keyword': 'Machine', 'full_text': 'Machine, hath many significacions, but here it is taken for the worke of the hole worlde.', 'keyword_offset': 0}
+year:  1545
+lemma:  machine
+source:  {'title': 'Early Mod. Eng. Lexicogr.', 'author': 'J. Schäfer', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38473961
+word_id:  machine_nn01
+sense_id:  machine_nn01-38473945
+datestring:  1545
+first_in_word:  False
+oed_reference:  machine, n., sense I.1a
+first_in_sense:  False
+
+
+id:  machine_nn01-38473973
+text:  {'keyword': 'machine', 'full_text': 'The maist illustir potent prince of the maist fertil & pacebil realme, vndir the machine of the supreme olimp.', 'keyword_offset': 81}
+year:  1550
+lemma:  machine
+source:  {'title': 'Complaynt Scotl.', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38473973
+word_id:  machine_nn01
+sense_id:  machine_nn01-38473945
+datestring:  c1550
+first_in_word:  False
+oed_reference:  machine, n., sense I.1a
+first_in_sense:  False
+
+
+id:  machine_nn01-38473981
+text:  {'keyword': 'machin', 'full_text': 'Be his wisedome,..sa wondrouslie of nocht, This machin round, this vniuers, this vther warld he wrocht.', 'keyword_offset': 48}
+year:  1599
+lemma:  machine
+source:  {'title': 'Hymnes', 'author': 'A. Hume', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38473981
+word_id:  machine_nn01
+sense_id:  machine_nn01-38473945
+datestring:  1599
+first_in_word:  False
+oed_reference:  machine, n., sense I.1a
+first_in_sense:  False
+
+
+id:  machine_nn01-38473999
+text:  {'keyword': 'Machine', 'full_text': 'They that asserted Universal redemption by the death of Christ destroyed the whole Machine of the Calvinian predestination.', 'keyword_offset': 83}
+year:  1673
+lemma:  machine
+source:  {'title': 'Hist. Quinq-articularis', 'author': 'H. Hickman', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38473999
+word_id:  machine_nn01
+sense_id:  machine_nn01-38473945
+datestring:  1673
+first_in_word:  False
+oed_reference:  machine, n., sense I.1a
+first_in_sense:  False
+
+
+id:  machine_nn01-38474007
+text:  {'keyword': 'Machine', 'full_text': ""Behind this Machine, cover'd as with a skreen, The Sneaking Chanter scarce could then be seen."", 'keyword_offset': 12}
+year:  1682
+lemma:  machine
+source:  {'title': 'Lutrin', 'author': 'N. O.', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474007
+word_id:  machine_nn01
+sense_id:  machine_nn01-38473945
+datestring:  1682
+first_in_word:  False
+oed_reference:  machine, n., sense I.1a
+first_in_sense:  False
+
+
+id:  machine_nn01-38474047
+text:  {'keyword': 'machine', 'full_text': 'Her imperial majesty is drawn..in a large machine, which contains her bed, a table, and other conveniences...This machine is set on a sledge, and drawn by 24 post horses.', 'keyword_offset': 42}
+year:  1753
+lemma:  machine
+source:  {'title': 'Hist. Acct. Brit. Trade Caspian Sea', 'author': 'J. Hanway', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474047
+word_id:  machine_nn01
+sense_id:  machine_nn01-38473945
+datestring:  1753
+first_in_word:  False
+oed_reference:  machine, n., sense I.1a
+first_in_sense:  False
+
+
+id:  machine_nn01-38474058
+text:  {'keyword': 'machine', 'full_text': 'Her new laylock bonnet..for the safety of which she was so solicitous that she would have taken the great machine in which it was contained into the coach, had it not been opposed by the coachman.', 'keyword_offset': 106}
+year:  1791
+lemma:  machine
+source:  {'title': 'Celestina', 'author': 'C. Smith', 'gender': 'female'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474058
+word_id:  machine_nn01
+sense_id:  machine_nn01-38473945
+datestring:  1791
+first_in_word:  False
+oed_reference:  machine, n., sense I.1a
+first_in_sense:  False
+
+
+id:  machine_nn01-38474068
+text:  {'keyword': 'machine', 'full_text': 'Had the whole of this great machine of the Fontana di Trevi been committed to any one of those sculptors.', 'keyword_offset': 28}
+year:  1805
+lemma:  machine
+source:  {'title': None, 'author': 'J. Barry', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474068
+word_id:  machine_nn01
+sense_id:  machine_nn01-38473945
+datestring:  a1806
+first_in_word:  False
+oed_reference:  machine, n., sense I.1a
+first_in_sense:  False
+
+
+id:  machine_nn01-38474079
+text:  {'keyword': 'machine', 'full_text': 'The mind casts its eye over the whole machine of society.', 'keyword_offset': 38}
+year:  1829
+lemma:  machine
+source:  {'title': 'Wks.', 'author': 'R. Hall', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474079
+word_id:  machine_nn01
+sense_id:  machine_nn01-38473945
+datestring:  1829
+first_in_word:  False
+oed_reference:  machine, n., sense I.1a
+first_in_sense:  False
+
+
+id:  machine_nn01-38474089
+text:  {'keyword': 'machine', 'full_text': 'To each mortal peradventure earth becomes a new machine.', 'keyword_offset': 48}
+year:  1878
+lemma:  machine
+source:  {'title': 'La Saisiaz', 'author': 'R. Browning', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474089
+word_id:  machine_nn01
+sense_id:  machine_nn01-38473945
+datestring:  1878
+first_in_word:  False
+oed_reference:  machine, n., sense I.1a
+first_in_sense:  False
+
+","1: the world
+111290: relative properties
+118635: wholeness
+119024: mutual relation of parts to whole
+120162: None
+120172: a structure
+1: the world
+111290: relative properties
+118635: wholeness
+119024: mutual relation of parts to whole
+120162: None
+120172: a structure
+120173: immaterial",,machine_nn01,machine_nn01-38473945
+0,[],[['historical']],"[['Military', 'Weaponry']]",,False,1583—,1583,A military engine or siege-tower. Cf. war machine n. (a) at  war n.1 compounds 4. Now historical.,Brian Melbancke,machine_nn01-38474233,machine,False,1904,4,True,machine_nn01-g03,2000,[],"machine, n., sense II.3",https://www.oed.com/view/Entry/111850#eid38474233,NN,"id:  machine_nn01-38474243
+text:  {'keyword': 'machins', 'full_text': 'For all that, their lucke was at that time, to loose man, moyle, and machins belonging to warre.', 'keyword_offset': 69}
+year:  1583
+lemma:  machine
+source:  {'title': 'Philotimus', 'author': 'B. Melbancke', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474243
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474233
+datestring:  1583
+first_in_word:  False
+oed_reference:  machine, n., sense II.3
+first_in_sense:  True
+
+
+id:  machine_nn01-38474252
+text:  {'keyword': 'Machine', 'full_text': 'Machine, an instrument or engine of War.', 'keyword_offset': 0}
+year:  1656
+lemma:  machine
+source:  {'title': 'Glossographia', 'author': 'T. Blount', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474252
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474233
+datestring:  1656
+first_in_word:  False
+oed_reference:  machine, n., sense II.3
+first_in_sense:  False
+
+
+id:  machine_nn01-38474260
+text:  {'keyword': 'Machines', 'full_text': 'These are the goodly Machines..recommended to batter down the Protestant Cause.', 'keyword_offset': 21}
+year:  1674
+lemma:  machine
+source:  {'title': 'Difference Church & Court of Rome', 'author': 'W. Lloyd', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474260
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474233
+datestring:  1674
+first_in_word:  False
+oed_reference:  machine, n., sense II.3
+first_in_sense:  False
+
+
+id:  machine_nn01-38474268
+text:  {'keyword': 'machines', 'full_text': 'He enormous machines round about the city.', 'keyword_offset': 12}
+year:  1732
+lemma:  machine
+source:  {'title': 'Life Sethos', 'author': 'T. Lediard', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474268
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474233
+datestring:  1732
+first_in_word:  False
+oed_reference:  machine, n., sense II.3
+first_in_sense:  False
+
+
+id:  machine_nn01-38474281
+text:  {'keyword': 'machines', 'full_text': 'The besieged made many vigorous sallies for the purpose of setting fire to the machines.', 'keyword_offset': 79}
+year:  1839
+lemma:  machine
+source:  {'title': 'Hist. Greece', 'author': 'C. Thirlwall', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474281
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474233
+datestring:  1839
+first_in_word:  False
+oed_reference:  machine, n., sense II.3
+first_in_sense:  False
+
+
+id:  machine_nn01-38474290
+text:  {'keyword': 'machines', 'full_text': ""It was surrounded by massive walls and bastions to be stormed by no machines or engines of man's invention."", 'keyword_offset': 68}
+year:  1915
+lemma:  machine
+source:  {'title': 'Of Human Bondage', 'author': 'W. S. Maugham', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474290
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474233
+datestring:  1915
+first_in_word:  False
+oed_reference:  machine, n., sense II.3
+first_in_sense:  False
+
+","153072: society
+160439: armed hostility
+163207: military equipment
+163208: weapon
+163377: engine of war
+163378: None",,machine_nn01,machine_nn01-38474233
+0,[],[],[],1707,True,1595—1707,1595,spec. A scheme or plot. Obsolete.,Elizabeth I,machine_nn01-38474097,machine,False,1904,2,True,machine_nn01-g01,2000,[],"machine, n., sense I.1b",https://www.oed.com/view/Entry/111850#eid38474097,NN,"id:  machine_nn01-38474102
+text:  {'keyword': 'machines', 'full_text': 'In wordz..of such waight, as, in honest dimars, hit may mar the façon of diuelische machines, and crase the hartz of treason-mynding men.', 'keyword_offset': 84}
+year:  1595
+lemma:  machine
+source:  {'title': 'Let. to James VI', 'author': 'Queen Elizabeth I', 'gender': 'female'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474102
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474097
+datestring:  1595–6
+first_in_word:  False
+oed_reference:  machine, n., sense I.1b
+first_in_sense:  True
+
+
+id:  machine_nn01-38474122
+text:  {'keyword': 'machines', 'full_text': 'As vsually it fares with those that plot These machines of Ambition, and high pride.', 'keyword_offset': 47}
+year:  1601
+lemma:  machine
+source:  {'title': 'Ciuill Warres', 'author': 'S. Daniel', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474122
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474097
+datestring:  1601
+first_in_word:  False
+oed_reference:  machine, n., sense I.1b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474131
+text:  {'keyword': 'Machine', 'full_text': 'Now unless Aimwell has made good use of his time, all our fair Machine goes souse into the Sea like the Edistone.', 'keyword_offset': 63}
+year:  1707
+lemma:  machine
+source:  {'title': 'Beaux Stratagem', 'author': 'G. Farquhar', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474131
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474097
+datestring:  1707
+first_in_word:  False
+oed_reference:  machine, n., sense I.1b
+first_in_sense:  False
+
+","1: the world
+84689: action or operation
+87987: advantage
+87988: usefulness
+87989: use (made of things)
+88083: instrumentality
+88109: None
+88117: (a) means
+88125: available means or a resource
+88126: a device, contrivance, or expedient",,machine_nn01,machine_nn01-38474097
+0,[],[],"[['Sciences', 'Medicine', 'Anatomy']]",,False,1604—,1604,"A living body, esp. the human body considered in general or individually. Now chiefly figurative from sense 6b (cf. sense 8b).",William Shakespeare,machine_nn01-38474140,machine,False,1904,3,True,machine_nn01-g02,2000,[],"machine, n., sense I.2",https://www.oed.com/view/Entry/111850#eid38474140,NN,"id:  machine_nn01-38474151
+text:  {'keyword': 'machine', 'full_text': 'Thine euermore most deere Lady, whilst this machine is to him.', 'keyword_offset': 44}
+year:  1604
+lemma:  machine
+source:  {'title': 'Hamlet', 'author': 'W. Shakespeare', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474151
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474140
+datestring:  1604
+first_in_word:  False
+oed_reference:  machine, n., sense I.2
+first_in_sense:  True
+
+
+id:  machine_nn01-38474160
+text:  {'keyword': 'Machin', 'full_text': 'And shall so useful a Machin as I Engage in civil Broyls, I know not why?', 'keyword_offset': 22}
+year:  1699
+lemma:  machine
+source:  {'title': 'Dispensary', 'author': 'S. Garth', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474160
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474140
+datestring:  1699
+first_in_word:  False
+oed_reference:  machine, n., sense I.2
+first_in_sense:  False
+
+
+id:  machine_nn01-38474169
+text:  {'keyword': 'Machins', 'full_text': 'What Nobler Souls the Nobler Machins Wear.', 'keyword_offset': 29}
+year:  1709
+lemma:  machine
+source:  {'title': ""Death's Vision"", 'author': 'J. Reynolds', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474169
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474140
+datestring:  1709
+first_in_word:  False
+oed_reference:  machine, n., sense I.2
+first_in_sense:  False
+
+
+id:  machine_nn01-38474177
+text:  {'keyword': 'Machine', 'full_text': 'Cheerfulness is..the best Promoter of Health. Repinings..wear out the Machine insensibly.', 'keyword_offset': 70}
+year:  1712
+lemma:  machine
+source:  {'title': 'Spectator', 'author': 'J. Addison', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474177
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474140
+datestring:  1712
+first_in_word:  False
+oed_reference:  machine, n., sense I.2
+first_in_sense:  False
+
+
+id:  machine_nn01-38474186
+text:  {'keyword': 'Machine', 'full_text': 'Until some Authors..have demonstrated the Laws of Circulation in an Animal Machine.', 'keyword_offset': 75}
+year:  1722
+lemma:  machine
+source:  {'title': 'Lexicon Physico-medicum', 'author': 'J. Quincy', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474186
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474140
+datestring:  1722
+first_in_word:  False
+oed_reference:  machine, n., sense I.2
+first_in_sense:  False
+
+
+id:  machine_nn01-38474195
+text:  {'keyword': 'machine', 'full_text': 'When a product of diseased action has been effected,..in consequence of which the machine becomes again sensible to the impressions of ordinary causes.', 'keyword_offset': 82}
+year:  1805
+lemma:  machine
+source:  {'title': 'Med. & Physical Jrnl.', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474195
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474140
+datestring:  1805
+first_in_word:  False
+oed_reference:  machine, n., sense I.2
+first_in_sense:  False
+
+
+id:  machine_nn01-38474203
+text:  {'keyword': 'machine', 'full_text': 'And now I see with eye serene The very pulse of the machine.', 'keyword_offset': 52}
+year:  1807
+lemma:  machine
+source:  {'title': 'Poems', 'author': 'W. Wordsworth', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474203
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474140
+datestring:  1807
+first_in_word:  False
+oed_reference:  machine, n., sense I.2
+first_in_sense:  False
+
+
+id:  machine_nn01-38474212
+text:  {'keyword': 'machine', 'full_text': 'The human machine tires, and as a consequence not only is the speed of working reduced, but.', 'keyword_offset': 10}
+year:  1876
+lemma:  machine
+source:  {'title': 'Telegraphy', 'author': 'W. H. Preece', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474212
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474140
+datestring:  1876
+first_in_word:  False
+oed_reference:  machine, n., sense I.2
+first_in_sense:  False
+
+
+id:  machine_nn01-38474223
+text:  {'keyword': 'machine', 'full_text': 'He wondered whether at the very end, now that the machine was painfully wearing itself out, the clergyman still believed in immortality.', 'keyword_offset': 50}
+year:  1915
+lemma:  machine
+source:  {'title': 'Of Human Bondage', 'author': 'W. S. Maugham', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474223
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474140
+datestring:  1915
+first_in_word:  False
+oed_reference:  machine, n., sense I.2
+first_in_sense:  False
+
+","1: the world
+8835: life
+25507: the body
+29189: None",,machine_nn01,machine_nn01-38474140
+0,[],"[['historical'], ['poetic and literary']]","[['Arts', 'Performing Arts', 'Theatre']]",,False,1609—,1609,Theatre. A (usually movable) contrivance for the production of stage-effects; (in plural) stage machinery. Also figurative. Cf. god from the machine at  god n. int.phrases 4e and deus ex machina n. Now historical and poetic.,Ben Jonson,machine_nn01-38474301,machine,False,1904,5,True,machine_nn01-g04,2000,"['In early use predominantly a ‘flying’ car along with the mechanism used to lower it to the stage, often as the climax of a production.']","machine, n., sense II.4a",https://www.oed.com/view/Entry/111850#eid38474301,NN,"id:  machine_nn01-38474320
+text:  {'keyword': 'Machine', 'full_text': ""She, after the Musique had done, which wayted on the turning of the Machine, cal'd from thence, to Vertue."", 'keyword_offset': 68}
+year:  1609
+lemma:  machine
+source:  {'title': 'Masque of Queenes', 'author': 'B. Jonson', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474320
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474301
+datestring:  1609
+first_in_word:  False
+oed_reference:  machine, n., sense II.4a
+first_in_sense:  True
+
+
+id:  machine_nn01-38474329
+text:  {'keyword': 'machins', 'full_text': 'This play succeeded very well, especially for the admirable beauty and finenesse of the machins.', 'keyword_offset': 88}
+year:  1658
+lemma:  machine
+source:  {'title': 'Hist. Q. Christina', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474329
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474301
+datestring:  1658
+first_in_word:  False
+oed_reference:  machine, n., sense II.4a
+first_in_sense:  False
+
+
+id:  machine_nn01-38474336
+text:  {'keyword': 'Machine', 'full_text': 'Like a Machine which, when some god appears, We see descend upon our Theaters.', 'keyword_offset': 7}
+year:  1681
+lemma:  machine
+source:  {'title': 'Wonders of Peake', 'author': 'C. Cotton', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474336
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474301
+datestring:  1681
+first_in_word:  False
+oed_reference:  machine, n., sense II.4a
+first_in_sense:  False
+
+
+id:  machine_nn01-38474363
+text:  {'keyword': 'Machine', 'full_text': 'She..descended into that Room full of Company as a Miracle appearing in a Machine from above.', 'keyword_offset': 74}
+year:  1720
+lemma:  machine
+source:  {'title': 'Hist. Life & Adventures D. Campbell', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474363
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474301
+datestring:  1720
+first_in_word:  False
+oed_reference:  machine, n., sense II.4a
+first_in_sense:  False
+
+
+id:  machine_nn01-38474372
+text:  {'keyword': 'Machines', 'full_text': 'Adorned..with all the Machines and Decorations, the Skill of those Times could afford.', 'keyword_offset': 22}
+year:  1741
+lemma:  machine
+source:  {'title': ""Betterton's Hist. Eng. Stage"", 'author': 'W. Oldys', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474372
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474301
+datestring:  1741
+first_in_word:  False
+oed_reference:  machine, n., sense II.4a
+first_in_sense:  False
+
+
+id:  machine_nn01-38474380
+text:  {'keyword': 'machine', 'full_text': ""Time's ripe for the Ballet, Like bees they all rally Before the machine!"", 'keyword_offset': 64}
+year:  1844
+lemma:  machine
+source:  {'title': 'Vauxhall', 'author': 'T. Hood', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474380
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474301
+datestring:  a1845
+first_in_word:  False
+oed_reference:  machine, n., sense II.4a
+first_in_sense:  False
+
+
+id:  machine_nn01-38474388
+text:  {'keyword': 'machine', 'full_text': 'Forth steps the needy tailor on the stage, Deity-like from dusk machine of fog.', 'keyword_offset': 64}
+year:  1873
+lemma:  machine
+source:  {'title': 'Red Cotton Night-cap Country', 'author': 'R. Browning', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474388
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474301
+datestring:  1873
+first_in_word:  False
+oed_reference:  machine, n., sense II.4a
+first_in_sense:  False
+
+
+id:  machine_nn01-38474396
+text:  {'keyword': 'machine', 'full_text': 'A rather scruffy-looking god Descends in a machine.', 'keyword_offset': 43}
+year:  1951
+lemma:  machine
+source:  {'title': 'Nones', 'author': 'W. H. Auden', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474396
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474301
+datestring:  1951
+first_in_word:  False
+oed_reference:  machine, n., sense II.4a
+first_in_sense:  False
+
+","153072: society
+222360: leisure
+224508: the arts
+232933: performance arts
+232967: the theatre or the stage
+233050: a theatre
+233119: theatrical equipment or accessories
+233127: None
+233139: machinery for effects",,machine_nn01,machine_nn01-38474301
+0,[],[['colloquial and slang']],"[['Transport', 'Nautical']]",,False,1637—,1637,A ship or other vessel. Now colloquial: a boat.,Thomas Heywood,machine_nn01-38474548,machine,False,1904,7,True,machine_nn01-g05,2000,[],"machine, n., sense III.5a",https://www.oed.com/view/Entry/111850#eid38474548,NN,"id:  machine_nn01-38474552
+text:  {'keyword': 'Machine', 'full_text': 'Shee hath (no doubt) raptured our Undertaker This Machine to devise first, and then make her.', 'keyword_offset': 50}
+year:  1637
+lemma:  machine
+source:  {'title': 'True Descr. Royall Ship', 'author': 'T. Heywood', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474552
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474548
+datestring:  1637
+first_in_word:  False
+oed_reference:  machine, n., sense III.5a
+first_in_sense:  True
+
+
+id:  machine_nn01-38474562
+text:  {'keyword': 'Machin', 'full_text': ""In vain upon the Canvas plays A wanton Gale. The Machin stays Becalm'd with Harmony."", 'keyword_offset': 49}
+year:  1702
+lemma:  machine
+source:  {'title': 'Five Bks. De Finibus', 'author': 'S. Parker', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474562
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474548
+datestring:  1702
+first_in_word:  False
+oed_reference:  machine, n., sense III.5a
+first_in_sense:  False
+
+
+id:  machine_nn01-38474572
+text:  {'keyword': 'machines', 'full_text': ""Britain's glory: or, ship-building unvail'd. Being a general director, for building and compleating the said machines."", 'keyword_offset': 109}
+year:  1717
+lemma:  machine
+source:  {'title': None, 'author': 'W. Sutherland', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474572
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474548
+datestring:  1717
+first_in_word:  False
+oed_reference:  machine, n., sense III.5a
+first_in_sense:  False
+
+
+id:  machine_nn01-38474581
+text:  {'keyword': 'machine', 'full_text': 'carried in a strange machine over an ever agitated element, which they had never seen before.', 'keyword_offset': 21}
+year:  1782
+lemma:  machine
+source:  {'title': 'Lett. from Amer. Farmer', 'author': 'J. H. St. J. de Crèvecoeur', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474581
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474548
+datestring:  1782
+first_in_word:  False
+oed_reference:  machine, n., sense III.5a
+first_in_sense:  False
+
+
+id:  machine_nn01-38474590
+text:  {'keyword': 'machine', 'full_text': ""We..embarked upon the canal in a stage boat bound for Chester... The shape of the machine resembles the common representations of Noah's ark."", 'keyword_offset': 82}
+year:  1807
+lemma:  machine
+source:  {'title': 'Lett. from Eng.', 'author': 'R. Southey', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474590
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474548
+datestring:  1807
+first_in_word:  False
+oed_reference:  machine, n., sense III.5a
+first_in_sense:  False
+
+
+id:  machine_nn01-38474599
+text:  {'keyword': 'machine', 'full_text': 'He..had no second thoughts about helping to sail it—and it is a flighty, high-performance machine—in the Round Britain race.', 'keyword_offset': 90}
+year:  1985
+lemma:  machine
+source:  {'title': 'Sydney Morning Herald', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474599
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474548
+datestring:  1985
+first_in_word:  False
+oed_reference:  machine, n., sense III.5a
+first_in_sense:  False
+
+","153072: society
+198379: travel
+202986: travel by water
+204466: vessel, ship, or boat
+206654: None",,machine_nn01,machine_nn01-38474548
+0,"[['North America', 'Canada']]","[['archaic'], ['regional']]",[],,False,1648—,1648,"In general use: an apparatus, device, instrument, or implement (now archaic and Canadian regional (Newfoundland)); an appliance; a vending machine. Cf. sense 6c.",Moderate,machine_nn01-38475164,machine,False,1904,15,True,machine_nn01-g06,2000,[],"machine, n., sense IV.6a",https://www.oed.com/view/Entry/111850#eid38475164,NN,"id:  machine_nn01-208243324
+text:  {'keyword': 'Machine', 'full_text': 'He hath brought from that Countrey the invention of a Machine, being Airie, & of a construction so light, nevertheless so sound and firm, that the same is able to bear two men, and hold them up in the Air.', 'keyword_offset': 54}
+year:  1648
+lemma:  machine
+source:  {'title': 'Moderate', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid208243324
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475164
+datestring:  1648
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6a
+first_in_sense:  True
+
+
+id:  machine_nn01-38475174
+text:  {'keyword': 'Machin', 'full_text': 'In the curious Machin of speech, the Nose is added as a Recorder.', 'keyword_offset': 15}
+year:  1650
+lemma:  machine
+source:  {'title': 'Anthropometamorphosis', 'author': 'J. Bulwer', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475174
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475164
+datestring:  1650
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6a
+first_in_sense:  False
+
+
+id:  machine_nn01-38475182
+text:  {'keyword': 'Machine', 'full_text': ""The Microscope..has been but lately discover'd: for the Naturalists..were not aided by that Machine."", 'keyword_offset': 92}
+year:  1707
+lemma:  machine
+source:  {'title': 'Curiosities in Husbandry & Gardening', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475182
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475164
+datestring:  1707
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6a
+first_in_sense:  False
+
+
+id:  machine_nn01-38475192
+text:  {'keyword': 'Machine', 'full_text': 'A Machine, which the Savages of Canada bind to their Feet, to walk more commodiously over the Snow.', 'keyword_offset': 2}
+year:  1728
+lemma:  machine
+source:  {'title': 'Cycl.', 'author': 'E. Chambers', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475192
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475164
+datestring:  1728
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6a
+first_in_sense:  False
+
+
+id:  machine_nn01-38475201
+text:  {'keyword': 'machine', 'full_text': 'Our Cold Collation was eat off Scallop Shells..; the machine to drink out of was a West India Cronk Shell.', 'keyword_offset': 53}
+year:  1794
+lemma:  machine
+source:  {'title': 'Newfoundland Jrnl.', 'author': 'A. Thomas', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475201
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475164
+datestring:  1794
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6a
+first_in_sense:  False
+
+
+id:  machine_nn01-38475211
+text:  {'keyword': 'machine', 'full_text': 'A Mr Hawkins..has invented a machine which he calls a polygraph, and which carries two, three, or four pens.', 'keyword_offset': 29}
+year:  1805
+lemma:  machine
+source:  {'title': 'Let.', 'author': 'T. Jefferson', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475211
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475164
+datestring:  1805
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6a
+first_in_sense:  False
+
+
+id:  machine_nn01-38475223
+text:  {'keyword': 'machine', 'full_text': 'I have used a wooden machine, made like a cranberry rake,..to gather my clover-seed this season.', 'keyword_offset': 21}
+year:  1849
+lemma:  machine
+source:  {'title': 'Cultivator', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475223
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475164
+datestring:  1849
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6a
+first_in_sense:  False
+
+
+id:  machine_nn01-38475231
+text:  {'keyword': 'machine', 'full_text': 'He figured up his accounts on a machine like a grid-iron with buttons strung on its bars.', 'keyword_offset': 32}
+year:  1872
+lemma:  machine
+source:  {'title': 'Roughing It', 'author': '‘M. Twain’', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475231
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475164
+datestring:  1872
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6a
+first_in_sense:  False
+
+
+id:  machine_nn01-38475239
+text:  {'keyword': 'machine', 'full_text': 'He put a cent in the machine which good-naturedly drops out boxes of matches.', 'keyword_offset': 21}
+year:  1914
+lemma:  machine
+source:  {'title': 'Our Mr. Wrenn', 'author': 'S. Lewis', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475239
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475164
+datestring:  1914
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6a
+first_in_sense:  False
+
+
+id:  machine_nn01-38475247
+text:  {'keyword': 'machine', 'full_text': 'He wrestled with the problem of designing a machine that would consistently catch fish while he slept.', 'keyword_offset': 44}
+year:  1956
+lemma:  machine
+source:  {'title': ""Evening Telegram (St. John's, Newfoundland)"", 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475247
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475164
+datestring:  1956
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6a
+first_in_sense:  False
+
+
+id:  machine_nn01-38475258
+text:  {'keyword': 'machine', 'full_text': ""There's a mat-hook here somewhere—a little machine like a sewing awl."", 'keyword_offset': 43}
+year:  1965
+lemma:  machine
+source:  {'title': 'Dict. Newfoundland Eng.', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475258
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475164
+datestring:  1965
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6a
+first_in_sense:  False
+
+
+id:  machine_nn01-38475275
+text:  {'keyword': 'machine', 'full_text': 'Suppose we had a machine that tells us where north is... A machine of the sort has been constructed, and some navigators have used it... It exploits the power of a marvellous stone..that attracts iron.', 'keyword_offset': 17}
+year:  1983
+lemma:  machine
+source:  {'title': 'Name of Rose', 'author': 'W. Weaver', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475275
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475164
+datestring:  1983
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6a
+first_in_sense:  False
+
+","1: the world
+84689: action or operation
+87987: advantage
+87988: usefulness
+87989: use (made of things)
+88083: instrumentality
+88109: None
+88117: (a) means
+88146: equipment for any action or undertaking
+88147: a device or contrivance
+153072: society
+208185: occupation and work
+211995: equipment
+211996: tool
+212078: None",,machine_nn01,machine_nn01-38475164
+0,[],[],"[['Technology', 'Electrical'], ['Technology', 'Engineering', 'Mechanics']]",,False,1659—,1659,"A complex device, consisting of a number of interrelated parts, each having a definite function, together applying, using, or generating mechanical or (later) electrical power to perform a certain kind of work (often specified by a preceding verbal noun).",T. St. Serfe,machine_nn01-38475286,machine,True,1904,16,True,machine_nn01-g06,2000,"['In 19th- and early 20th-cent. use, the word tended to be applied to devices performing, (relatively) independently of the strength or skill of the operator, work that had formerly been done by hand. Its use has been extended to devices that perform tasks which previously required human mental activity.']","machine, n., sense IV.6b",https://www.oed.com/view/Entry/111850#eid38475286,NN,"id:  machine_nn01-38475290
+text:  {'keyword': 'Machine', 'full_text': 'I caused a Machine to be made of Iron..and being well seated in the seat, I cast my Magnetique Bowl into the Air.', 'keyword_offset': 11}
+year:  1659
+lemma:  machine
+source:  {'title': 'Σεληναρχια', 'author': 'T. St. Serfe', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475290
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475286
+datestring:  1659
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6b
+first_in_sense:  True
+
+
+id:  machine_nn01-38475300
+text:  {'keyword': 'Machin', 'full_text': 'This kind of Machin is generally used..for raising up Water.', 'keyword_offset': 13}
+year:  1673
+lemma:  machine
+source:  {'title': 'Observ. Journey Low-countries', 'author': 'J. Ray', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475300
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475286
+datestring:  1673
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6b
+first_in_sense:  False
+
+
+id:  machine_nn01-38475325
+text:  {'keyword': 'machines', 'full_text': 'For raising this obelisk out of the ground,..Fontana contrived forty-one machines.', 'keyword_offset': 73}
+year:  1757
+lemma:  machine
+source:  {'title': 'Trav.', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475325
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475286
+datestring:  1757
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6b
+first_in_sense:  False
+
+
+id:  machine_nn01-38475337
+text:  {'keyword': 'machine', 'full_text': 'It is certain that the account given in the Century of Inventions could instruct no person who was not sufficiently acquainted with the properties of steam to be able to invent the machine himself.', 'keyword_offset': 181}
+year:  1797
+lemma:  machine
+source:  {'title': 'Encycl. Brit.', 'author': 'J. Robison', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475337
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475286
+datestring:  1797
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6b
+first_in_sense:  False
+
+
+id:  machine_nn01-38475346
+text:  {'keyword': 'machine', 'full_text': 'The calculating-machine now constructing under the superintendence of the inventor.', 'keyword_offset': 16}
+year:  1832
+lemma:  machine
+source:  {'title': 'Lett. Nat. Magic', 'author': 'D. Brewster', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475346
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475286
+datestring:  1832
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6b
+first_in_sense:  False
+
+
+id:  machine_nn01-38475356
+text:  {'keyword': 'Machine', 'full_text': 'Examining the component parts of the Machine,—its springs, wheels, levers, cords, pulleys, &c.', 'keyword_offset': 37}
+year:  1851
+lemma:  machine
+source:  {'title': 'Man. Physiol.', 'author': 'W. B. Carpenter', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475356
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475286
+datestring:  1851
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6b
+first_in_sense:  False
+
+
+id:  machine_nn01-38475365
+text:  {'keyword': 'machines', 'full_text': 'Windmills as hitherto made are very costly machines.', 'keyword_offset': 43}
+year:  1881
+lemma:  machine
+source:  {'title': 'Nature', 'author': 'W. Thomson', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475365
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475286
+datestring:  1881
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6b
+first_in_sense:  False
+
+
+id:  machine_nn01-38475375
+text:  {'keyword': 'machine', 'full_text': 'An Automatic Gas Machine... The machine is charged with one of the first products of petroleum, or gasolene.', 'keyword_offset': 32}
+year:  1888
+lemma:  machine
+source:  {'title': 'Pall Mall Gaz.', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475375
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475286
+datestring:  1888
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6b
+first_in_sense:  False
+
+
+id:  machine_nn01-38475383
+text:  {'keyword': 'machines', 'full_text': 'Semi-automatics, these constitute a large class of machines which occupy a middle position between the..‘full’ automatic machines and those which involve the constant attendance of an operator.', 'keyword_offset': 51}
+year:  1902
+lemma:  machine
+source:  {'title': ""Lockwood's Dict. Mech. Engin."", 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475383
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475286
+datestring:  1902
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6b
+first_in_sense:  False
+
+
+id:  machine_nn01-38475392
+text:  {'keyword': 'machine', 'full_text': 'The flail has been displaced by a steam threshing-machine, the barn-fan and the shaul by a winnowing-machine.', 'keyword_offset': 50}
+year:  1908
+lemma:  machine
+source:  {'title': 'Essex Rev.', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475392
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475286
+datestring:  1908
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6b
+first_in_sense:  False
+
+
+id:  machine_nn01-38475400
+text:  {'keyword': 'machines', 'full_text': 'The methods, machines, tools and compounds necessary to merge rubber, metal and plastics into the smart steering wheels.', 'keyword_offset': 13}
+year:  1939
+lemma:  machine
+source:  {'title': 'Fortune', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475400
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475286
+datestring:  1939
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6b
+first_in_sense:  False
+
+
+id:  machine_nn01-38475409
+text:  {'keyword': 'machines', 'full_text': 'He recognized me as an American, one of the new lords of the earth,..full of the pride of machines and dollars.', 'keyword_offset': 90}
+year:  1948
+lemma:  machine
+source:  {'title': 'Spanish Let.', 'author': 'S. Bellow', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475409
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475286
+datestring:  1948
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6b
+first_in_sense:  False
+
+
+id:  machine_nn01-38475420
+text:  {'keyword': 'machines', 'full_text': 'Many factories are spending large sums on ‘automation’, that is, the adoption of automatic machines working together with little labour.', 'keyword_offset': 91}
+year:  1953
+lemma:  machine
+source:  {'title': 'Manch. Guardian Weekly', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475420
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475286
+datestring:  1953
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6b
+first_in_sense:  False
+
+
+id:  machine_nn01-38475428
+text:  {'keyword': 'machines', 'full_text': 'In addition to digital computers, there is an important group of computing machines known as analog computers.', 'keyword_offset': 75}
+year:  1957
+lemma:  machine
+source:  {'title': 'Introd. Automatic Computers', 'author': 'N. Chapin', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475428
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475286
+datestring:  1957
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6b
+first_in_sense:  False
+
+
+id:  machine_nn01-38475436
+text:  {'keyword': 'machine', 'full_text': 'Tabulator (accounting machine), a machine which reads data from a medium..and produces lists, tables or totals.', 'keyword_offset': 22}
+year:  1962
+lemma:  machine
+source:  {'title': 'Gloss. Terms Automatic Data Processing', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475436
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475286
+datestring:  1962
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6b
+first_in_sense:  False
+
+
+id:  machine_nn01-38475446
+text:  {'keyword': 'machine', 'full_text': 'Thorpe has analysed the fish-calls of 40 sandwich terns by means of a sound spectrograph, a machine which analyses sounds, in terms of their pitch and loudness and produces a graphical representation of the sound.', 'keyword_offset': 92}
+year:  1968
+lemma:  machine
+source:  {'title': 'Times', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475446
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475286
+datestring:  1968
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6b
+first_in_sense:  False
+
+
+id:  machine_nn01-38475454
+text:  {'keyword': 'machines', 'full_text': 'The stoves, the refrigerators and other machines.', 'keyword_offset': 40}
+year:  1970
+lemma:  machine
+source:  {'title': 'Washington Post', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475454
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475286
+datestring:  1970
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6b
+first_in_sense:  False
+
+
+id:  machine_nn01-38475462
+text:  {'keyword': 'machines', 'full_text': 'Before the advent of the washing machines people would boil their soiled clothing in wash boilers.', 'keyword_offset': 33}
+year:  1977
+lemma:  machine
+source:  {'title': 'Tales Boatmen Told', 'author': 'J. Lee', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475462
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475286
+datestring:  1977
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6b
+first_in_sense:  False
+
+
+id:  machine_nn01-38475470
+text:  {'keyword': 'machines', 'full_text': 'We no longer send five-year-olds into the factory to tend the machines.', 'keyword_offset': 62}
+year:  1987
+lemma:  machine
+source:  {'title': 'Beyond Fear', 'author': 'D. Rowe', 'gender': 'female'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475470
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475286
+datestring:  1987
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6b
+first_in_sense:  False
+
+
+id:  machine_nn01-38475478
+text:  {'keyword': 'machine', 'full_text': 'A bank teller discovers she will soon be replaced by an automated banking machine.', 'keyword_offset': 74}
+year:  1991
+lemma:  machine
+source:  {'title': 'Gender Relations Canada', 'author': 'M. Mackie', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475478
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475286
+datestring:  1991
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6b
+first_in_sense:  False
+
+
+id:  machine_nn01-38475486
+text:  {'keyword': 'machine', 'full_text': 'While all PCs are broadly similar, each machine has a unique memory map in the 640Kb to 1,024Kb region.', 'keyword_offset': 40}
+year:  1991
+lemma:  machine
+source:  {'title': 'What Personal Computer', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475486
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475286
+datestring:  1991
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6b
+first_in_sense:  False
+
+","153072: society
+208185: occupation and work
+211995: equipment
+213839: machine
+214572: None",,machine_nn01,machine_nn01-38475286
+0,[],[['rare']],[],,False,1674—,1674,"In literature, etc.: a contrivance for the sake of effect; a supernatural agency, personage, or incident introduced into a narrative; the interposition of one of these. Now rare.",Thomas Rymer,machine_nn01-38474405,machine,False,1904,6,True,machine_nn01-g04,2000,[],"machine, n., sense II.4b",https://www.oed.com/view/Entry/111850#eid38474405,NN,"id:  machine_nn01-38474409
+text:  {'keyword': 'Machine', 'full_text': ""Since in the principal actions all is carried on by Machine; how can these examples be propos'd for great persons to imitate?"", 'keyword_offset': 52}
+year:  1674
+lemma:  machine
+source:  {'title': ""Refl. Aristotle's Treat. Poesie"", 'author': 'T. Rymer', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474409
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474405
+datestring:  1674
+first_in_word:  False
+oed_reference:  machine, n., sense II.4b
+first_in_sense:  True
+
+
+id:  machine_nn01-38474419
+text:  {'keyword': 'Machine', 'full_text': ""The greatest errour in the contrivance seems to be in the person of Octavia... Yet the force of the first Machine still remain'd."", 'keyword_offset': 106}
+year:  1692
+lemma:  machine
+source:  {'title': 'All for Love', 'author': 'J. Dryden', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474419
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474405
+datestring:  1692
+first_in_word:  False
+oed_reference:  machine, n., sense II.4b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474449
+text:  {'keyword': 'Machine', 'full_text': ""The Apparition of Venus comes in very properly..for without such a Machine..I can't see how the Heroe could..leave Neoptolemus triumphant."", 'keyword_offset': 67}
+year:  1705
+lemma:  machine
+source:  {'title': 'Remarks Italy', 'author': 'J. Addison', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474449
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474405
+datestring:  1705
+first_in_word:  False
+oed_reference:  machine, n., sense II.4b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474466
+text:  {'keyword': 'Machines', 'full_text': 'I come now to treat of the Machines, a Sort of Beings that have the Outside or Appearance of Men, without being really such.', 'keyword_offset': 27}
+year:  1713
+lemma:  machine
+source:  {'title': 'Guardian', 'author': 'D. Bartlett', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474466
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474405
+datestring:  1713
+first_in_word:  False
+oed_reference:  machine, n., sense II.4b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474507
+text:  {'keyword': 'machines', 'full_text': 'These machines are vastly superior to the allegorical personages of Boileau and Garth.', 'keyword_offset': 6}
+year:  1756
+lemma:  machine
+source:  {'title': 'Ess. on Pope', 'author': 'J. Warton', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474507
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474405
+datestring:  1756
+first_in_word:  False
+oed_reference:  machine, n., sense II.4b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474516
+text:  {'keyword': 'machines', 'full_text': 'The actions, sentiments, conversations, of the heroes and heroines of ancient days were as unnatural as the machines employed to put them in motion.', 'keyword_offset': 108}
+year:  1765
+lemma:  machine
+source:  {'title': 'Castle of Otranto', 'author': 'H. Walpole', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474516
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474405
+datestring:  1765
+first_in_word:  False
+oed_reference:  machine, n., sense II.4b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474525
+text:  {'keyword': 'machine', 'full_text': ""It has nothing, except the machine of the chime, in common with Fabyll's Ghoste."", 'keyword_offset': 27}
+year:  1781
+lemma:  machine
+source:  {'title': 'Hist. Eng. Poetry', 'author': 'T. Warton', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474525
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474405
+datestring:  1781
+first_in_word:  False
+oed_reference:  machine, n., sense II.4b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474534
+text:  {'keyword': 'machines', 'full_text': 'The episodes of Circe, of the Sirens, and of Polyphemus, are machines.', 'keyword_offset': 61}
+year:  1897
+lemma:  machine
+source:  {'title': 'Epic & Romance', 'author': 'W. P. Ker', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474534
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474405
+datestring:  1897
+first_in_word:  False
+oed_reference:  machine, n., sense II.4b
+first_in_sense:  False
+
+",,,machine_nn01,machine_nn01-38474405
+0,[],[],[],,False,1676—,1676,figurative in general use.,Thomas Guidott,machine_nn01-38475994,machine,False,1904,21,True,machine_nn01-g08,2000,[],"machine, n., sense V.8a",https://www.oed.com/view/Entry/111850#eid38475994,NN,"id:  machine_nn01-38475998
+text:  {'keyword': 'machines', 'full_text': 'More clear and active spirits, the wheels and machines of all sense and motion.', 'keyword_offset': 46}
+year:  1676
+lemma:  machine
+source:  {'title': 'Disc. Bathe', 'author': 'T. Guidott', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475998
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475994
+datestring:  1676
+first_in_word:  False
+oed_reference:  machine, n., sense V.8a
+first_in_sense:  True
+
+
+id:  machine_nn01-38476016
+text:  {'keyword': 'Machines', 'full_text': 'The great State Wheels in all the political Machines of Europe.', 'keyword_offset': 44}
+year:  1749
+lemma:  machine
+source:  {'title': 'Tom Jones', 'author': 'H. Fielding', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476016
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475994
+datestring:  1749
+first_in_word:  False
+oed_reference:  machine, n., sense V.8a
+first_in_sense:  False
+
+
+id:  machine_nn01-38476026
+text:  {'keyword': 'machine', 'full_text': 'More experience than we have yet had of the operation of the court (of the manner in which the machine works).', 'keyword_offset': 95}
+year:  1801
+lemma:  machine
+source:  {'title': 'Dispatches', 'author': 'Duke of Wellington', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476026
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475994
+datestring:  1801
+first_in_word:  False
+oed_reference:  machine, n., sense V.8a
+first_in_sense:  False
+
+
+id:  machine_nn01-38476037
+text:  {'keyword': 'machine', 'full_text': 'To expose the folly and the legerdemain of those who have thus abused the blessed machine of language.', 'keyword_offset': 82}
+year:  1809
+lemma:  machine
+source:  {'title': 'Friend', 'author': 'S. T. Coleridge', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476037
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475994
+datestring:  1809–10
+first_in_word:  False
+oed_reference:  machine, n., sense V.8a
+first_in_sense:  False
+
+
+id:  machine_nn01-38476047
+text:  {'keyword': 'machine', 'full_text': 'The United States Bank was a great political machine, and as such exerted great political influence.', 'keyword_offset': 45}
+year:  1838
+lemma:  machine
+source:  {'title': 'N.Y. Advertiser & Express', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476047
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475994
+datestring:  1838
+first_in_word:  False
+oed_reference:  machine, n., sense V.8a
+first_in_sense:  False
+
+
+id:  machine_nn01-38476055
+text:  {'keyword': 'machine', 'full_text': 'The Church was excellent as a national refrigerating machine.', 'keyword_offset': 53}
+year:  1876
+lemma:  machine
+source:  {'title': 'Hist. Eng. Thought 18th Cent.', 'author': 'L. Stephen', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476055
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475994
+datestring:  1876
+first_in_word:  False
+oed_reference:  machine, n., sense V.8a
+first_in_sense:  False
+
+
+id:  machine_nn01-38476065
+text:  {'keyword': 'machine', 'full_text': ""He tapped his forehead with his finger. ‘This is a machine for making plays. Everything that's put into it will be grist for it.’"", 'keyword_offset': 51}
+year:  1910
+lemma:  machine
+source:  {'title': 'Susan Lenox', 'author': 'D. G. Phillips', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476065
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475994
+datestring:  a1911
+first_in_word:  False
+oed_reference:  machine, n., sense V.8a
+first_in_sense:  False
+
+
+id:  machine_nn01-38476075
+text:  {'keyword': 'machine', 'full_text': 'The organization of society as a smoothly-working machine providing for the needs of such of its members as are permitted to survive.', 'keyword_offset': 50}
+year:  1950
+lemma:  machine
+source:  {'title': 'Foreign Affairs', 'author': 'I. Berlin', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476075
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475994
+datestring:  1950
+first_in_word:  False
+oed_reference:  machine, n., sense V.8a
+first_in_sense:  False
+
+
+id:  machine_nn01-38476085
+text:  {'keyword': 'machine', 'full_text': 'Protein synthesis in present-day organisms centers on a very large ribonucleoprotein machine, the ribosome.', 'keyword_offset': 85}
+year:  1989
+lemma:  machine
+source:  {'title': 'Molecular Biol. Cell', 'author': 'B. Alberts', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476085
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475994
+datestring:  1989
+first_in_word:  False
+oed_reference:  machine, n., sense V.8a
+first_in_sense:  False
+
+",,,machine_nn01,machine_nn01-38475994
+0,[],[],[],,False,1676—,1676,"figurative. A living being considered to move or act automatically or mechanically, rather than of its own volition; esp. a person who acts mechanically or unthinkingly, as from habit or obedience; a person who acts with mechanical precision or efficiency. Also: a system or organization of an impersonal or inflexible character.",B. Lamy's Art of Speaking,machine_nn01-38476096,machine,False,1904,22,True,machine_nn01-g08,2000,[],"machine, n., sense V.8b",https://www.oed.com/view/Entry/111850#eid38476096,NN,"id:  machine_nn01-38476101
+text:  {'keyword': 'Machins', 'full_text': ""Those who have fancied them but Machins, have show'd..their Bodies to be so organiz'd, that they may perform those actions without assistance from the Soul."", 'keyword_offset': 32}
+year:  1676
+lemma:  machine
+source:  {'title': 'Art of Speaking', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476101
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476096
+datestring:  1676
+first_in_word:  False
+oed_reference:  machine, n., sense V.8b
+first_in_sense:  True
+
+
+id:  machine_nn01-38476114
+text:  {'keyword': 'Machins', 'full_text': 'Mere Machins! yet the Movement hid so well, They seem to act from a Free Principle.', 'keyword_offset': 5}
+year:  1683
+lemma:  machine
+source:  {'title': 'Agathocles', 'author': 'T. Hoy', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476114
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476096
+datestring:  1683
+first_in_word:  False
+oed_reference:  machine, n., sense V.8b
+first_in_sense:  False
+
+
+id:  machine_nn01-38476124
+text:  {'keyword': 'Machins', 'full_text': 'If be bare Engines and Machins.', 'keyword_offset': 23}
+year:  1692
+lemma:  machine
+source:  {'title': 'Boyle Lect.', 'author': 'R. Bentley', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476124
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476096
+datestring:  1692
+first_in_word:  False
+oed_reference:  machine, n., sense V.8b
+first_in_sense:  False
+
+
+id:  machine_nn01-38476134
+text:  {'keyword': 'machines', 'full_text': 'The nearer the soldiers approach to machines perhaps the better.', 'keyword_offset': 36}
+year:  1779
+lemma:  machine
+source:  {'title': 'Let.', 'author': 'A. Hamilton', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476134
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476096
+datestring:  1779
+first_in_word:  False
+oed_reference:  machine, n., sense V.8b
+first_in_sense:  False
+
+
+id:  machine_nn01-38476147
+text:  {'keyword': 'Machine', 'full_text': 'Man must be free; or to what purpose was he made a Spirit of Reason, and not a Machine of Instinct?', 'keyword_offset': 79}
+year:  1809
+lemma:  machine
+source:  {'title': 'Friend', 'author': 'S. T. Coleridge', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476147
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476096
+datestring:  1809
+first_in_word:  False
+oed_reference:  machine, n., sense V.8b
+first_in_sense:  False
+
+
+id:  machine_nn01-38476157
+text:  {'keyword': 'machines', 'full_text': ""They are..mere machines, To serve the nobles' most patrician pleasure."", 'keyword_offset': 15}
+year:  1821
+lemma:  machine
+source:  {'title': 'Marino Faliero', 'author': 'Ld. Byron', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476157
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476096
+datestring:  1821
+first_in_word:  False
+oed_reference:  machine, n., sense V.8b
+first_in_sense:  False
+
+
+id:  machine_nn01-38476166
+text:  {'keyword': 'machine', 'full_text': 'Wherefore their system is a machine and cannot grow or endure.', 'keyword_offset': 28}
+year:  1830
+lemma:  machine
+source:  {'title': 'Jrnl.', 'author': 'T. Carlyle', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476166
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476096
+datestring:  1830
+first_in_word:  False
+oed_reference:  machine, n., sense V.8b
+first_in_sense:  False
+
+
+id:  machine_nn01-38476183
+text:  {'keyword': 'machine', 'full_text': ""I'll have old Hickes. He was a neat little machine of a butler."", 'keyword_offset': 43}
+year:  1866
+lemma:  machine
+source:  {'title': 'Felix Holt', 'author': '‘G. Eliot’', 'gender': 'female'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476183
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476096
+datestring:  1866
+first_in_word:  False
+oed_reference:  machine, n., sense V.8b
+first_in_sense:  False
+
+
+id:  machine_nn01-38476192
+text:  {'keyword': 'machines', 'full_text': 'I believe women think horses are machines, and made of cast-iron too.', 'keyword_offset': 33}
+year:  1890
+lemma:  machine
+source:  {'title': 'Mademoiselle Ixe', 'author': '‘L. Falconer’', 'gender': 'female'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476192
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476096
+datestring:  1890
+first_in_word:  False
+oed_reference:  machine, n., sense V.8b
+first_in_sense:  False
+
+
+id:  machine_nn01-38476201
+text:  {'keyword': 'machine', 'full_text': 'Too much preparation..makes a man a mere machine, set to go off at a particular day.', 'keyword_offset': 41}
+year:  1895
+lemma:  machine
+source:  {'title': 'Outing', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476201
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476096
+datestring:  1895
+first_in_word:  False
+oed_reference:  machine, n., sense V.8b
+first_in_sense:  False
+
+
+id:  machine_nn01-38476209
+text:  {'keyword': 'machines', 'full_text': 'Susan was compelled to..the lot that will be the common lot as long as there are people..to force men and women and children to degrade themselves into machines as wage-slaves.', 'keyword_offset': 152}
+year:  1910
+lemma:  machine
+source:  {'title': 'Susan Lenox', 'author': 'D. G. Phillips', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476209
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476096
+datestring:  a1911
+first_in_word:  False
+oed_reference:  machine, n., sense V.8b
+first_in_sense:  False
+
+
+id:  machine_nn01-38476219
+text:  {'keyword': 'machine', 'full_text': 'Koenig was..a precision machine at getting a man along to second with hit or sacrifice.', 'keyword_offset': 24}
+year:  1942
+lemma:  machine
+source:  {'title': 'Lou Gehrig', 'author': 'P. Gallico', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476219
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476096
+datestring:  1942
+first_in_word:  False
+oed_reference:  machine, n., sense V.8b
+first_in_sense:  False
+
+
+id:  machine_nn01-38476228
+text:  {'keyword': 'machine', 'full_text': 'A nice gesture on the part of the driver. It made the bus service a bit more human. The system was less of a machine.', 'keyword_offset': 109}
+year:  1980
+lemma:  machine
+source:  {'title': 'How German is It?', 'author': 'W. Abish', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476228
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476096
+datestring:  1980
+first_in_word:  False
+oed_reference:  machine, n., sense V.8b
+first_in_sense:  False
+
+
+id:  machine_nn01-38476237
+text:  {'keyword': 'machines', 'full_text': 'Weeding out the wild from the natures of..cattle and pigs..changed animals which are intelligent and alert in the wild into sluggish meat-making machines.', 'keyword_offset': 145}
+year:  1990
+lemma:  machine
+source:  {'title': 'Pract. of Wild', 'author': 'G. Snyder', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476237
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476096
+datestring:  1990
+first_in_word:  False
+oed_reference:  machine, n., sense V.8b
+first_in_sense:  False
+
+","122209: the mind
+122210: mental capacity
+124580: lack of understanding
+124795: None
+124796: creature showing
+122209: the mind
+142646: will
+143483: intention
+143639: unintentional or unplanned character
+143654: None
+143655: unintentional or involuntary quality
+143656: automatic or mechanical quality
+143657: person acting with",,machine_nn01,machine_nn01-38476096
+0,"[['Britain and Ireland', 'Britain', 'Scotland']]",[['historical']],[],,False,1687—,1687,"A (usually wheeled) vehicle or conveyance, esp. one drawn by a horse or horses, or other draught animal or animals. Formerly esp.: a stagecoach or mail coach; (also) a brake, trap, or small carriage (chiefly Scottish). Now historical.",Archibald Lovell,machine_nn01-38474607,machine,False,1904,8,True,machine_nn01-g05,2000,[],"machine, n., sense III.5b",https://www.oed.com/view/Entry/111850#eid38474607,NN,"id:  machine_nn01-38474614
+text:  {'keyword': 'Machine', 'full_text': 'They make use of an Engine which they call Palanquin... This Machine hangs by a long Pole.', 'keyword_offset': 61}
+year:  1687
+lemma:  machine
+source:  {'title': 'Trav. into Levant', 'author': 'A. Lovell', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474614
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474607
+datestring:  1687
+first_in_word:  False
+oed_reference:  machine, n., sense III.5b
+first_in_sense:  True
+
+
+id:  machine_nn01-38474626
+text:  {'keyword': 'Machine', 'full_text': ""Tho' there is not any other Nation in the World, so plentifully provided with Carriages for that Journey..yet there are abundance of us, who will not be satisfied with any other Machine, besides this of Mahomet."", 'keyword_offset': 178}
+year:  1704
+lemma:  machine
+source:  {'title': 'Disc. Mech. Operat. Spirit', 'author': 'J. Swift', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474626
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474607
+datestring:  1704
+first_in_word:  False
+oed_reference:  machine, n., sense III.5b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474639
+text:  {'keyword': 'Machine', 'full_text': 'His Serenity, accompanied by..the Boy who drew the Balls for the Election sitting in the same Machine, was carried out of the Church.', 'keyword_offset': 94}
+year:  1709
+lemma:  machine
+source:  {'title': 'London Gaz.', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474639
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474607
+datestring:  1709
+first_in_word:  False
+oed_reference:  machine, n., sense III.5b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474647
+text:  {'keyword': 'Machine', 'full_text': 'Went to London in the Oxford Machine.', 'keyword_offset': 29}
+year:  1759
+lemma:  machine
+source:  {'title': 'Diary', 'author': 'J. Newton', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474647
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474607
+datestring:  1759
+first_in_word:  False
+oed_reference:  machine, n., sense III.5b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474659
+text:  {'keyword': 'Machine', 'full_text': ""Return'd to Newnham in the Machine."", 'keyword_offset': 27}
+year:  1759
+lemma:  machine
+source:  {'title': 'Diary', 'author': 'J. Newton', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474659
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474607
+datestring:  1759
+first_in_word:  False
+oed_reference:  machine, n., sense III.5b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474671
+text:  {'keyword': 'machines', 'full_text': ""The poor man's son..sees his superiors carried about in machines."", 'keyword_offset': 56}
+year:  1759
+lemma:  machine
+source:  {'title': 'Theory Moral Sentiments', 'author': 'A. Smith', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474671
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474607
+datestring:  1759
+first_in_word:  False
+oed_reference:  machine, n., sense III.5b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474680
+text:  {'keyword': 'Machine', 'full_text': 'A Machine going out to, and coming in from, London three Times a Week in the Summer.', 'keyword_offset': 2}
+year:  1769
+lemma:  machine
+source:  {'title': ""Defoe's Tour Great Brit."", 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474680
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474607
+datestring:  1769
+first_in_word:  False
+oed_reference:  machine, n., sense III.5b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474689
+text:  {'keyword': 'machine', 'full_text': 'Your very kind letter of the 15th,..I received by the machine.', 'keyword_offset': 54}
+year:  1772
+lemma:  machine
+source:  {'title': 'Corr.', 'author': 'E. Burke', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474689
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474607
+datestring:  1772
+first_in_word:  False
+oed_reference:  machine, n., sense III.5b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474700
+text:  {'keyword': 'machine', 'full_text': 'I came in a little open machine we keep for these journies.', 'keyword_offset': 24}
+year:  1791
+lemma:  machine
+source:  {'title': 'Let.', 'author': 'A. Grant', 'gender': 'female'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474700
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474607
+datestring:  1791
+first_in_word:  False
+oed_reference:  machine, n., sense III.5b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474713
+text:  {'keyword': 'machine', 'full_text': 'A new-invented machine which went without horses.', 'keyword_offset': 15}
+year:  1791
+lemma:  machine
+source:  {'title': 'Life Johnson', 'author': 'J. Boswell', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474713
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474607
+datestring:  1791
+first_in_word:  False
+oed_reference:  machine, n., sense III.5b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474723
+text:  {'keyword': 'machines', 'full_text': 'Those complicated unwieldy and dangerous machines called locomotive engines or steam horses.', 'keyword_offset': 41}
+year:  1815
+lemma:  machine
+source:  {'title': 'Specif. Patent 3959', 'author': 'De Baader', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474723
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474607
+datestring:  1815
+first_in_word:  False
+oed_reference:  machine, n., sense III.5b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474731
+text:  {'keyword': 'machine', 'full_text': 'To loss by death of two horses before the machine commenced running.', 'keyword_offset': 42}
+year:  1822
+lemma:  machine
+source:  {'title': 'Acc. Establ. Gen. P.-O.', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474731
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474607
+datestring:  1822
+first_in_word:  False
+oed_reference:  machine, n., sense III.5b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474742
+text:  {'keyword': 'machine', 'full_text': 'Every cart, wagon, or other machine, drawn by two or four oxen.', 'keyword_offset': 28}
+year:  1832
+lemma:  machine
+source:  {'title': 'Mass. Stat.', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474742
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474607
+datestring:  1832
+first_in_word:  False
+oed_reference:  machine, n., sense III.5b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474749
+text:  {'keyword': 'machines', 'full_text': 'Such locomotive machines, impelled by steam power, as have been contrived for use upon common roads.', 'keyword_offset': 16}
+year:  1842
+lemma:  machine
+source:  {'title': 'Penny Cycl.', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474749
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474607
+datestring:  1842
+first_in_word:  False
+oed_reference:  machine, n., sense III.5b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474757
+text:  {'keyword': 'machines', 'full_text': ""We had brought several of the great traders' wagons down with us; and these immense machines, with their long ten-mule teams, proved a source of wonder and amusement to the teamsters."", 'keyword_offset': 84}
+year:  1847
+lemma:  machine
+source:  {'title': 'Campaign in New Mexico', 'author': 'F. S. Edwards', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474757
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474607
+datestring:  1847
+first_in_word:  False
+oed_reference:  machine, n., sense III.5b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474765
+text:  {'keyword': 'machines', 'full_text': 'In that year, and for some little time afterwards, coaches which carried the mails were called diligences or machines, and the coachmen were called machine-drivers.', 'keyword_offset': 109}
+year:  1893
+lemma:  machine
+source:  {'title': 'Hist. Post Office', 'author': 'H. Joyce', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474765
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474607
+datestring:  1893
+first_in_word:  False
+oed_reference:  machine, n., sense III.5b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474776
+text:  {'keyword': 'machine', 'full_text': 'I would bring a machine and drive you up to the Drill-Hall.', 'keyword_offset': 16}
+year:  1894
+lemma:  machine
+source:  {'title': 'Highland Cousins', 'author': 'W. Black', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474776
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474607
+datestring:  1894
+first_in_word:  False
+oed_reference:  machine, n., sense III.5b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474785
+text:  {'keyword': 'machine', 'full_text': 'The little machine shook and rocked tumultuously... The driver lashed; the pony..darted off at a gallop.', 'keyword_offset': 11}
+year:  1900
+lemma:  machine
+source:  {'title': 'Lord Jim', 'author': 'J. Conrad', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474785
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474607
+datestring:  1900
+first_in_word:  False
+oed_reference:  machine, n., sense III.5b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474804
+text:  {'keyword': 'Machines', 'full_text': 'Close and Open Machines suitable for Marriage and Picnic sent anywhere with good horses and careful drivers.', 'keyword_offset': 15}
+year:  1911
+lemma:  machine
+source:  {'title': 'G.N.S.R. Tourist Guide', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474804
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474607
+datestring:  1911
+first_in_word:  False
+oed_reference:  machine, n., sense III.5b
+first_in_sense:  False
+
+
+id:  machine_nn01-38474811
+text:  {'keyword': 'machine', 'full_text': 'The chaise lost not a moment:..the elegant black and yellow machine ran steadily north..never lacking for horses at any stage on the road.', 'keyword_offset': 60}
+year:  1986
+lemma:  machine
+source:  {'title': 'Reverse of Medal', 'author': ""P. O'Brian"", 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474811
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474607
+datestring:  1986
+first_in_word:  False
+oed_reference:  machine, n., sense III.5b
+first_in_sense:  False
+
+","153072: society
+198379: travel
+200757: means of travel
+201351: a conveyance
+202575: None
+153072: society
+198379: travel
+200757: means of travel
+201351: a conveyance
+201370: vehicle
+202530: None
+153072: society
+198379: travel
+200757: means of travel
+201351: a conveyance
+201370: vehicle
+202408: public service vehicle
+202418: None
+202421: stagecoach or mail coach",,machine_nn01,machine_nn01-38474607
+0,[],[],"[['Sciences', 'Physical Sciences'], ['Technology', 'Engineering', 'Mechanics']]",,False,1704—,1704,Mechanics. Anything that transmits force or directs its application.,John Harris,machine_nn01-38475923,machine,False,1904,20,True,machine_nn01-g07,2000,"['simple, compound machine: see the first element.']","machine, n., sense IV.7",https://www.oed.com/view/Entry/111850#eid38475923,NN,"id:  machine_nn01-38475930
+text:  {'keyword': 'Machine', 'full_text': 'Machine, or Engine, in Mechanicks, is whatsoever hath Force sufficient either to raise or stop the Motion of a Body... Simple Machines are commonly reckoned to be Six in Number, viz. the Ballance, Leaver, Pulley, Wheel, Wedge, and Screw... Compound Machines, or Engines, are innumerable.', 'keyword_offset': 0}
+year:  1704
+lemma:  machine
+source:  {'title': 'Lexicon Technicum', 'author': 'J. Harris', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475930
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475923
+datestring:  1704
+first_in_word:  False
+oed_reference:  machine, n., sense IV.7
+first_in_sense:  True
+
+
+id:  machine_nn01-38475939
+text:  {'keyword': 'machine', 'full_text': 'By this singular power of transmitting pressure, a fluid becomes, in the strictest sense of the term, a machine.', 'keyword_offset': 104}
+year:  1831
+lemma:  machine
+source:  {'title': 'Hydrostatics', 'author': 'D. Lardner', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475939
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475923
+datestring:  1831
+first_in_word:  False
+oed_reference:  machine, n., sense IV.7
+first_in_sense:  False
+
+
+id:  machine_nn01-38475947
+text:  {'keyword': 'machines', 'full_text': 'By means of these simple machines it must not be supposed that we beget or increase force.', 'keyword_offset': 25}
+year:  1839
+lemma:  machine
+source:  {'title': 'Elements Nat. Philos.', 'author': 'G. Bird', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475947
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475923
+datestring:  1839
+first_in_word:  False
+oed_reference:  machine, n., sense IV.7
+first_in_sense:  False
+
+
+id:  machine_nn01-38475955
+text:  {'keyword': 'machine', 'full_text': ""A man's arm is a machine."", 'keyword_offset': 17}
+year:  1866
+lemma:  machine
+source:  {'title': 'Reign of Law', 'author': 'Duke of Argyll', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475955
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475923
+datestring:  1866
+first_in_word:  False
+oed_reference:  machine, n., sense IV.7
+first_in_sense:  False
+
+
+id:  machine_nn01-38475963
+text:  {'keyword': 'machine', 'full_text': 'Fig. 26 shows a lever, the simplest machine used by the builder.', 'keyword_offset': 36}
+year:  1944
+lemma:  machine
+source:  {'title': None, 'author': 'C. A. R. Eslick', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475963
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475923
+datestring:  1944
+first_in_word:  False
+oed_reference:  machine, n., sense IV.7
+first_in_sense:  False
+
+
+id:  machine_nn01-38475982
+text:  {'keyword': 'machines', 'full_text': 'Frames and machines are two common types of structures which are often composed of pin-connected multiforce members.', 'keyword_offset': 11}
+year:  1992
+lemma:  machine
+source:  {'title': 'Engin. Mech.: Statics', 'author': 'R. C. Hibbeler', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475982
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475923
+datestring:  1992
+first_in_word:  False
+oed_reference:  machine, n., sense IV.7
+first_in_sense:  False
+
+","153072: society
+208185: occupation and work
+211995: equipment
+213839: machine
+213903: machines which impart power
+214198: None
+1: the world
+67134: matter
+75461: physics
+75462: mechanics
+75463: force
+75580: None
+75656: active mechanical force
+75660: ratio of load to force applied
+75661: mechanical advantage by use of machine",,machine_nn01,machine_nn01-38475923
+0,[],"[['colloquial and slang'], ['rare']]","[['Sciences', 'Medicine', 'Anatomy']]",,False,1749—,1749,slang. The penis; the female genitals (rare). Also: †a condom (obsolete).,John Cleland,machine_nn01-38476316,machine,False,1904,24,True,machine_nn01-g09,2000,[],"machine, n., sense V.9",https://www.oed.com/view/Entry/111850#eid38476316,NN,"id:  machine_nn01-38476322
+text:  {'keyword': 'machine', 'full_text': 'Coming out with that formidable machine of his, he lets the fury loose.', 'keyword_offset': 32}
+year:  1749
+lemma:  machine
+source:  {'title': 'Mem. Woman of Pleasure', 'author': 'J. Cleland', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476322
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476316
+datestring:  1749
+first_in_word:  False
+oed_reference:  machine, n., sense V.9
+first_in_sense:  True
+
+
+id:  machine_nn01-38476331
+text:  {'keyword': 'Machines', 'full_text': 'Machines,..See Cundum.', 'keyword_offset': 0}
+year:  1785
+lemma:  machine
+source:  {'title': 'Classical Dict. Vulgar Tongue', 'author': 'F. Grose', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476331
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476316
+datestring:  1785
+first_in_word:  False
+oed_reference:  machine, n., sense V.9
+first_in_sense:  False
+
+
+id:  machine_nn01-38476340
+text:  {'keyword': 'machine', 'full_text': 'I then seized his stiff machine in my grasp.', 'keyword_offset': 24}
+year:  1863
+lemma:  machine
+source:  {'title': 'Festival of Passions', 'author': '‘Philo Cunnus’', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476340
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476316
+datestring:  c1863
+first_in_word:  False
+oed_reference:  machine, n., sense V.9
+first_in_sense:  False
+
+
+id:  machine_nn01-38476349
+text:  {'keyword': 'machine', 'full_text': 'It entered quite deep in her sucking machine.', 'keyword_offset': 37}
+year:  1865
+lemma:  machine
+source:  {'title': 'Love Feast', 'author': '‘Philocomus’', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476349
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476316
+datestring:  1865
+first_in_word:  False
+oed_reference:  machine, n., sense V.9
+first_in_sense:  False
+
+
+id:  machine_nn01-38476358
+text:  {'keyword': 'Machine', 'full_text': 'Machine,..1. The female pudendum... 2. The penis.', 'keyword_offset': 0}
+year:  1896
+lemma:  machine
+source:  {'title': 'Slang', 'author': 'J. S. Farmer', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476358
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476316
+datestring:  1896
+first_in_word:  False
+oed_reference:  machine, n., sense V.9
+first_in_sense:  False
+
+
+id:  machine_nn01-38476372
+text:  {'keyword': 'machine', 'full_text': 'I want you awfully again; just feel my love; he said, putting my hand on his stiff machine.', 'keyword_offset': 83}
+year:  1930
+lemma:  machine
+source:  {'title': 'Confessions of Virtuous Wife', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476372
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476316
+datestring:  c1930
+first_in_word:  False
+oed_reference:  machine, n., sense V.9
+first_in_sense:  False
+
+
+id:  machine_nn01-38476379
+text:  {'keyword': 'machine', 'full_text': 'He had black leather pants so tight that his machine showed through.', 'keyword_offset': 45}
+year:  1969
+lemma:  machine
+source:  {'title': 'Pop from Beginning', 'author': 'N. Cohn', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476379
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476316
+datestring:  1969
+first_in_word:  False
+oed_reference:  machine, n., sense V.9
+first_in_sense:  False
+
+
+id:  machine_nn01-38476388
+text:  {'keyword': 'machine', 'full_text': 'Penis..machine, meat,..member.', 'keyword_offset': 7}
+year:  1983
+lemma:  machine
+source:  {'title': 'Maledicta 1982', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476388
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476316
+datestring:  1983
+first_in_word:  False
+oed_reference:  machine, n., sense V.9
+first_in_sense:  False
+
+","1: the world
+8835: life
+25507: the body
+28377: sex organs
+28378: male sex organs
+28384: None
+28386: penis
+1: the world
+62186: physical sensation
+62978: sexual relations
+63430: contraception or birth control
+63435: None
+63438: contraceptive device
+63441: condom",,machine_nn01,machine_nn01-38476316
+0,[],[],[],1870,True,1763—1870,1763,= bathing-machine n. at  bathing n. compounds . Obsolete.,Ipswich Jrnl.,machine_nn01-38474820,machine,False,1904,9,True,machine_nn01-g05,2000,[],"machine, n., sense III.5c",https://www.oed.com/view/Entry/111850#eid38474820,NN,"id:  machine_nn01-38474829
+text:  {'keyword': 'Machine', 'full_text': 'At Aldeburgh in Suffolk..for the Conveniency of those who choose Bathing in the real Ocean, there is a curious Machine, that, by the Assistance of a Single Person, may be run into the Sea to any Depth proper for Bathing.', 'keyword_offset': 111}
+year:  1763
+lemma:  machine
+source:  {'title': 'Ipswich Jrnl.', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474829
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474820
+datestring:  1763
+first_in_word:  False
+oed_reference:  machine, n., sense III.5c
+first_in_sense:  True
+
+
+id:  machine_nn01-38474837
+text:  {'keyword': 'Machines', 'full_text': 'I went down to the bathing House where I found a great Number of Ladies and Gentlemen waiting to take their turn in the Machines.', 'keyword_offset': 120}
+year:  1788
+lemma:  machine
+source:  {'title': 'Let.', 'author': 'E. Sheridan', 'gender': 'female'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474837
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474820
+datestring:  1788
+first_in_word:  False
+oed_reference:  machine, n., sense III.5c
+first_in_sense:  False
+
+
+id:  machine_nn01-38474846
+text:  {'keyword': 'machines', 'full_text': ""Southport..is sadly exposing..and the modest complain much, gentlemen's and ladies' machines standing promiscuously in the water!"", 'keyword_offset': 84}
+year:  1825
+lemma:  machine
+source:  {'title': 'Jrnl.', 'author': 'E. Weeton', 'gender': 'female'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474846
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474820
+datestring:  1825
+first_in_word:  False
+oed_reference:  machine, n., sense III.5c
+first_in_sense:  False
+
+
+id:  machine_nn01-38474857
+text:  {'keyword': 'machine', 'full_text': 'I got into the wrong machine first.', 'keyword_offset': 21}
+year:  1859
+lemma:  machine
+source:  {'title': 'All Year Round', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474857
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474820
+datestring:  1859
+first_in_word:  False
+oed_reference:  machine, n., sense III.5c
+first_in_sense:  False
+
+
+id:  machine_nn01-38474867
+text:  {'keyword': 'machines', 'full_text': 'We have a flat sandy shore, and you see half a dozen fat men at a time scampering out of the machines.', 'keyword_offset': 93}
+year:  1870
+lemma:  machine
+source:  {'title': 'Lett.', 'author': 'G. Meredith', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474867
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474820
+datestring:  1870
+first_in_word:  False
+oed_reference:  machine, n., sense III.5c
+first_in_sense:  False
+
+","153072: society
+198379: travel
+200757: means of travel
+201351: a conveyance
+201370: vehicle
+202480: other vehicles according to specific use
+202483: None
+202500: bathing-machine
+153072: society
+222360: leisure
+222361: entertainment
+222459: pastimes
+223839: other amusements or entertainments
+223844: None
+223848: bathing
+223850: equipment",,machine_nn01,machine_nn01-38474820
+0,"[['Australasia', 'Australia'], ['Australasia', 'New Zealand']]",[],"[['Technology', 'Engineering', 'Mechanics']]",,False,1782—,1782,"Used contextually for the particular kind of machine which the speaker or writer intends, as: a sewing machine; a printing machine or mechanical printing press; a shearing-machine (Australian and New Zealand); a typewriter; a calculating machine or computer; a slot machine; a washing machine; etc. Cf. sense 6a.",James Woodforde,machine_nn01-38475494,machine,False,1904,17,True,machine_nn01-g06,2000,[],"machine, n., sense IV.6c",https://www.oed.com/view/Entry/111850#eid38475494,NN,"id:  machine_nn01-38475502
+text:  {'keyword': 'machine', 'full_text': ""She made it up also in the Buffon Fashion, she having borrowed Mrs. Custance's machine."", 'keyword_offset': 79}
+year:  1782
+lemma:  machine
+source:  {'title': 'Diary', 'author': 'J. Woodforde', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475502
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1782
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  True
+
+
+id:  machine_nn01-38475513
+text:  {'keyword': 'machine', 'full_text': 'It may be of some amusement to some of your readers to see a machine rise in the air by mechanical means... The little machine is completed.', 'keyword_offset': 61}
+year:  1809
+lemma:  machine
+source:  {'title': 'Jrnl. Nat. Philos.', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475513
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1809
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  False
+
+
+id:  machine_nn01-38475521
+text:  {'keyword': 'machine', 'full_text': 'The machine being put in motion, the paper which is to be printed is laid upon a board, passed through, and receives the impression on one side.', 'keyword_offset': 4}
+year:  1825
+lemma:  machine
+source:  {'title': 'Typographia', 'author': 'T. C. Hansard', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475521
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1825
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  False
+
+
+id:  machine_nn01-38475529
+text:  {'keyword': 'machine', 'full_text': 'One machine was to perform the work of eight presses.', 'keyword_offset': 4}
+year:  1825
+lemma:  machine
+source:  {'title': 'Typographia', 'author': 'T. C. Hansard', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475529
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1825
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  False
+
+
+id:  machine_nn01-38475550
+text:  {'keyword': 'machine', 'full_text': 'One thousand perfect copies..could only have been daily produced at one press by the labour of two men. The machine produces sixteen thousand copies.', 'keyword_offset': 108}
+year:  1833
+lemma:  machine
+source:  {'title': 'Penny Mag.', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475550
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1833
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  False
+
+
+id:  machine_nn01-38475567
+text:  {'keyword': 'machine', 'full_text': 'I allow myself..three new stuff dresses, the latter never cost me more than £1 10s. each, as I have a machine and make all at home.', 'keyword_offset': 102}
+year:  1872
+lemma:  machine
+source:  {'title': 'Young Englishwoman', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475567
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1872
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  False
+
+
+id:  machine_nn01-38475576
+text:  {'keyword': 'machine', 'full_text': 'The machine with which this letter is written is a Hammond.', 'keyword_offset': 4}
+year:  1891
+lemma:  machine
+source:  {'title': None, 'author': 'W. D. Howells', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475576
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1891
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  False
+
+
+id:  machine_nn01-38475608
+text:  {'keyword': 'machine', 'full_text': 'My dear Galsworthy, Excuse my writing by machine; Christine at this moment monopolizes the only pen there is in the house.', 'keyword_offset': 41}
+year:  1900
+lemma:  machine
+source:  {'title': 'Let.', 'author': 'F. M. Ford', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475608
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1900
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  False
+
+
+id:  machine_nn01-38475618
+text:  {'keyword': 'machines', 'full_text': 'In sheds where machines are used..the shearers to pay for combs and cutters at cost price.', 'keyword_offset': 15}
+year:  1906
+lemma:  machine
+source:  {'title': 'Awards, Recomm. (N.Z. Dept. Labour)', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475618
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1906
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  False
+
+
+id:  machine_nn01-38475626
+text:  {'keyword': 'machine', 'full_text': 'In the printing office the hand press is spoken of as the ‘press’ and the machine press as the ‘machine’... The press can be worked by hand power only; the machine may be driven by steam, gas, or other motive power.', 'keyword_offset': 74}
+year:  1915
+lemma:  machine
+source:  {'title': ""Southward's Mod. Printing"", 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475626
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1915
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  False
+
+
+id:  machine_nn01-38475635
+text:  {'keyword': 'machine', 'full_text': 'First of all, before starting your sewing, give the machine a thorough overhauling.', 'keyword_offset': 52}
+year:  1926
+lemma:  machine
+source:  {'title': ""People's Home Jrnl."", 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475635
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1926
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  False
+
+
+id:  machine_nn01-38475654
+text:  {'keyword': 'machine', 'full_text': 'She sat down at a typewriter and put her case on the floor; she always tried to get the same machine, because one got used to a machine.', 'keyword_offset': 93}
+year:  1931
+lemma:  machine
+source:  {'title': 'Saraband', 'author': 'E. Bliss', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475654
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1931
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  False
+
+
+id:  machine_nn01-38475662
+text:  {'keyword': 'machines', 'full_text': '‘Anyone,’ declared, ‘could put up tallies with machines. With the tongs now—’..Harry produced half a dozen pairs of tongs and some sheep.', 'keyword_offset': 47}
+year:  1940
+lemma:  machine
+source:  {'title': 'Bulletin (Sydney)', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475662
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1940
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  False
+
+
+id:  machine_nn01-38475672
+text:  {'keyword': 'machines', 'full_text': 'They will wind up at Las Vegas playing the machines.', 'keyword_offset': 43}
+year:  1941
+lemma:  machine
+source:  {'title': 'Let.', 'author': 'G. Marx', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475672
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1941
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  False
+
+
+id:  machine_nn01-38475691
+text:  {'keyword': 'machine', 'full_text': ""Harvard University's need for a machine such as the IBM Automatic Sequence Controlled Calculator has long been a matter of discussion."", 'keyword_offset': 32}
+year:  1946
+lemma:  machine
+source:  {'title': 'Ann. Computation Lab. Harvard Univ.', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475691
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1946
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  False
+
+
+id:  machine_nn01-295454392
+text:  {'keyword': 'Machine', 'full_text': 'Computer code (Machine code), the code representing the operations built into the hardware of the computer.', 'keyword_offset': 15}
+year:  1954
+lemma:  machine
+source:  {'title': 'First Gloss. Programming Terminol.', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid295454392
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1954
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  False
+
+
+id:  machine_nn01-38475706
+text:  {'keyword': 'machines', 'full_text': 'Relative quality of workmanship between blades and machines is a debatable point.', 'keyword_offset': 51}
+year:  1956
+lemma:  machine
+source:  {'title': 'Wool Away!', 'author': 'G. Bowen', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475706
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1956
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  False
+
+
+id:  machine_nn01-38475715
+text:  {'keyword': 'machine', 'full_text': 'The first two digits..tell the machine what to do.', 'keyword_offset': 31}
+year:  1957
+lemma:  machine
+source:  {'title': 'Digital Computer Programming', 'author': 'D. D. McCracken', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475715
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1957
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  False
+
+
+id:  machine_nn01-38475740
+text:  {'keyword': 'machine', 'full_text': 'A company which changes computers normally changes to a machine which is considerably faster than the old one.', 'keyword_offset': 56}
+year:  1970
+lemma:  machine
+source:  {'title': 'Computers & Data Processing', 'author': 'O. Dopping', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475740
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1970
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  False
+
+
+id:  machine_nn01-38475748
+text:  {'keyword': 'machine', 'full_text': 'He was a tailor now..; and he sat at his machine in his open shop.', 'keyword_offset': 41}
+year:  1984
+lemma:  machine
+source:  {'title': 'Finding Centre', 'author': 'V. S. Naipaul', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475748
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1984
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  False
+
+
+id:  machine_nn01-38475756
+text:  {'keyword': 'machines', 'full_text': ""There's nothing spooking the sheep. They're quiet enough. It could be one of the boys setting up machines."", 'keyword_offset': 97}
+year:  1986
+lemma:  machine
+source:  {'title': 'Marist Messenger', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475756
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1986
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  False
+
+
+id:  machine_nn01-38475764
+text:  {'keyword': 'machines', 'full_text': 'Mr Sharpe remembers playing illegal machines in the lobbies of adult cinemas.', 'keyword_offset': 36}
+year:  1993
+lemma:  machine
+source:  {'title': 'Economist', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475764
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475494
+datestring:  1993
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6c
+first_in_sense:  False
+
+","153072: society
+208185: occupation and work
+211995: equipment
+213839: machine
+214572: None
+214574: specific machine with which speaker is concerned",,machine_nn01,machine_nn01-38475494
+0,[],[['historical']],[],,False,1823—,1823,A bicycle or tricycle; a motorcycle. Formerly also: a dandy-horse or velocipede (now historical).,John Badcock,machine_nn01-38474877,machine,False,1904,10,True,machine_nn01-g05,2000,[],"machine, n., sense III.5d",https://www.oed.com/view/Entry/111850#eid38474877,NN,"id:  machine_nn01-38474891
+text:  {'keyword': 'machine', 'full_text': 'He never proceeded with his machine at a greater rate than five miles an hour, and yet named it Velocipede.', 'keyword_offset': 28}
+year:  1823
+lemma:  machine
+source:  {'title': 'Domest. Amusem.', 'author': 'J. Badcock', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474891
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474877
+datestring:  1823
+first_in_word:  False
+oed_reference:  machine, n., sense III.5d
+first_in_sense:  True
+
+
+id:  machine_nn01-38474899
+text:  {'keyword': 'machine', 'full_text': 'Tantalising the tollbar keepers on a ‘machine’.', 'keyword_offset': 38}
+year:  1871
+lemma:  machine
+source:  {'title': 'Porcupine', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474899
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474877
+datestring:  1871
+first_in_word:  False
+oed_reference:  machine, n., sense III.5d
+first_in_sense:  False
+
+
+id:  machine_nn01-38474907
+text:  {'keyword': 'machines', 'full_text': 'A glance at the tricycle trade..with full description of upwards of 250 machines.', 'keyword_offset': 72}
+year:  1883
+lemma:  machine
+source:  {'title': ""Tricyclists' Indispensable Ann."", 'author': 'H. Sturmey', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474907
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474877
+datestring:  1883
+first_in_word:  False
+oed_reference:  machine, n., sense III.5d
+first_in_sense:  False
+
+
+id:  machine_nn01-38474925
+text:  {'keyword': 'machines', 'full_text': ""Splendid cycles... Boys' machines at £5 10s."", 'keyword_offset': 25}
+year:  1899
+lemma:  machine
+source:  {'title': 'Northern Times (Golspie, Sutherland)', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474925
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474877
+datestring:  1899
+first_in_word:  False
+oed_reference:  machine, n., sense III.5d
+first_in_sense:  False
+
+
+id:  machine_nn01-38474935
+text:  {'keyword': 'machines', 'full_text': 'Cash prizes will be awarded to the drivers of machines taking part in the..Tourist Trophy Race.', 'keyword_offset': 46}
+year:  1907
+lemma:  machine
+source:  {'title': 'Motor Cycle', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474935
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474877
+datestring:  1907
+first_in_word:  False
+oed_reference:  machine, n., sense III.5d
+first_in_sense:  False
+
+
+id:  machine_nn01-38474943
+text:  {'keyword': 'machine', 'full_text': 'To motor cyclists and riders of motor-assisted pedal cycles..you must not carry more than one passenger on a two-wheeled machine.', 'keyword_offset': 121}
+year:  1954
+lemma:  machine
+source:  {'title': 'Highway Code', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474943
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474877
+datestring:  1954
+first_in_word:  False
+oed_reference:  machine, n., sense III.5d
+first_in_sense:  False
+
+
+id:  machine_nn01-38474950
+text:  {'keyword': 'machines', 'full_text': 'For us, it was back to our bicycles. We stacked our machines in the back of the car and set off for gently contoured Norfolk.', 'keyword_offset': 52}
+year:  1972
+lemma:  machine
+source:  {'title': 'Daily Tel.', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474950
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474877
+datestring:  1972
+first_in_word:  False
+oed_reference:  machine, n., sense III.5d
+first_in_sense:  False
+
+
+id:  machine_nn01-38474958
+text:  {'keyword': 'machine', 'full_text': ""When the bike was brought round to Joan's home..she..kick-started the machine without any difficulty and set off."", 'keyword_offset': 70}
+year:  1991
+lemma:  machine
+source:  {'title': 'Choice', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474958
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474877
+datestring:  1991
+first_in_word:  False
+oed_reference:  machine, n., sense III.5d
+first_in_sense:  False
+
+
+id:  machine_nn01-38474966
+text:  {'keyword': 'machines', 'full_text': 'The cyclists..took on the circular 21- or 42-mile routes on a wide variety of pedal-powered machines.', 'keyword_offset': 92}
+year:  1992
+lemma:  machine
+source:  {'title': 'National Trust Mag.', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474966
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474877
+datestring:  1992
+first_in_word:  False
+oed_reference:  machine, n., sense III.5d
+first_in_sense:  False
+
+","153072: society
+198379: travel
+200757: means of travel
+201351: a conveyance
+201370: vehicle
+201563: vehicle propelled by feet
+201573: None
+201575: cycle",,machine_nn01,machine_nn01-38474877
+0,"[['North America', 'United States']]",[['colloquial and slang']],[],1890,True,1848—90,1848,U.S. colloquial. A fire engine. Obsolete.,N.Y. Herald,machine_nn01-38474974,machine,False,1904,11,True,machine_nn01-g05,2000,[],"machine, n., sense III.5e",https://www.oed.com/view/Entry/111850#eid38474974,NN,"id:  machine_nn01-1038760531
+text:  {'keyword': 'machine', 'full_text': 'A fac simile of the renowned Mose, which, like the original, looks as though he had ‘determined to not run wid de machine any more’.', 'keyword_offset': 114}
+year:  1848
+lemma:  machine
+source:  {'title': 'N.Y. Herald', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid1038760531
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474974
+datestring:  1848
+first_in_word:  False
+oed_reference:  machine, n., sense III.5e
+first_in_sense:  True
+
+
+id:  machine_nn01-38474989
+text:  {'keyword': 'Machine', 'full_text': ""Machine, the name for a fire-engine among the New York ‘b'hoys’."", 'keyword_offset': 0}
+year:  1859
+lemma:  machine
+source:  {'title': 'Dict. Americanisms', 'author': 'J. R. Bartlett', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38474989
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474974
+datestring:  1859
+first_in_word:  False
+oed_reference:  machine, n., sense III.5e
+first_in_sense:  False
+
+
+id:  machine_nn01-38475006
+text:  {'keyword': 'machine', 'full_text': 'To run with the machine, to accompany a fire-engine to a fire.', 'keyword_offset': 16}
+year:  1890
+lemma:  machine
+source:  {'title': 'Cent. Dict.', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475006
+word_id:  machine_nn01
+sense_id:  machine_nn01-38474974
+datestring:  1890
+first_in_word:  False
+oed_reference:  machine, n., sense III.5e
+first_in_sense:  False
+
+","1: the world
+67134: matter
+71763: properties of materials
+71864: temperature
+72718: coldness
+72764: extinguishing fire
+72775: None
+72778: fire-fighting
+72790: a substance or apparatus for extinguishing
+72805: fire-engine",,machine_nn01,machine_nn01-38474974
+0,"[['North America', 'United States']]",[],[['Politics']],,False,1860—,1860,Originally U.S. The controlling organization of a political party or similar body; any organization or group displaying impressive or ruthless efficiency.,A. Burlingame,machine_nn01-38476397,machine,False,1904,25,True,machine_nn01-g10,2000,"['party, propaganda, war machine: see the first element.']","machine, n., sense V.10",https://www.oed.com/view/Entry/111850#eid38476397,NN,"id:  machine_nn01-38476417
+text:  {'keyword': 'machine', 'full_text': 'Our old policy of ‘running with the Seward machine’ is the true one.', 'keyword_offset': 43}
+year:  1860
+lemma:  machine
+source:  {'title': 'Let.', 'author': 'A. Burlingame', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476417
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476397
+datestring:  1860
+first_in_word:  False
+oed_reference:  machine, n., sense V.10
+first_in_sense:  True
+
+
+id:  machine_nn01-38476449
+text:  {'keyword': 'machine', 'full_text': 'An election which gives to Lord Randolph Churchill the practical control of the Conservative electioneering machine.', 'keyword_offset': 108}
+year:  1884
+lemma:  machine
+source:  {'title': ""L'pool Mercury"", 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476449
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476397
+datestring:  1884
+first_in_word:  False
+oed_reference:  machine, n., sense V.10
+first_in_sense:  False
+
+
+id:  machine_nn01-38476466
+text:  {'keyword': 'Machine', 'full_text': 'The officials..in whose gift this patronage lies place it at the disposal of the leaders of the Machine. Now there are three Machines in New York; two Democratic, because the Democratic party..is divided into two factions.., and one Republican.', 'keyword_offset': 96}
+year:  1887
+lemma:  machine
+source:  {'title': None, 'author': 'W. M. Ivins', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476466
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476397
+datestring:  1887
+first_in_word:  False
+oed_reference:  machine, n., sense V.10
+first_in_sense:  False
+
+
+id:  machine_nn01-38476493
+text:  {'keyword': 'machine', 'full_text': 'The Nationalist Party..are working the machine with unflagging energy.', 'keyword_offset': 39}
+year:  1901
+lemma:  machine
+source:  {'title': 'N. Amer. Rev.', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476493
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476397
+datestring:  1901
+first_in_word:  False
+oed_reference:  machine, n., sense V.10
+first_in_sense:  False
+
+
+id:  machine_nn01-38476501
+text:  {'keyword': 'machines', 'full_text': 'It is not the pressure groups as such which make it impossible for the state to act in the general interest..but pressure groups attached to and reinforced by political machines.', 'keyword_offset': 169}
+year:  1934
+lemma:  machine
+source:  {'title': 'Method of Freedom', 'author': 'W. Lippmann', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476501
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476397
+datestring:  1934
+first_in_word:  False
+oed_reference:  machine, n., sense V.10
+first_in_sense:  False
+
+
+id:  machine_nn01-38476509
+text:  {'keyword': 'machine', 'full_text': 'Britain unaided could not hold out against the spectacular German machine.', 'keyword_offset': 66}
+year:  1941
+lemma:  machine
+source:  {'title': 'Ann. Reg. 1940', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476509
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476397
+datestring:  1941
+first_in_word:  False
+oed_reference:  machine, n., sense V.10
+first_in_sense:  False
+
+
+id:  machine_nn01-38476542
+text:  {'keyword': 'machine', 'full_text': 'The Labour machine had failed to pick up..the magnitude of the swing towards Cyril Smith.', 'keyword_offset': 11}
+year:  1972
+lemma:  machine
+source:  {'title': 'Guardian', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476542
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476397
+datestring:  1972
+first_in_word:  False
+oed_reference:  machine, n., sense V.10
+first_in_sense:  False
+
+
+id:  machine_nn01-38476550
+text:  {'keyword': 'machine', 'full_text': 'The ‘Miracle Mets’..surprised everyone by..swamping the ‘Big Red’ Cincinnati machine in the National League playoffs.', 'keyword_offset': 77}
+year:  1973
+lemma:  machine
+source:  {'title': 'Black Panther', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476550
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476397
+datestring:  1973
+first_in_word:  False
+oed_reference:  machine, n., sense V.10
+first_in_sense:  False
+
+
+id:  machine_nn01-38476558
+text:  {'keyword': 'machine', 'full_text': ""The Pink Floyd machine borrows Manchester City's Maine Road football ground."", 'keyword_offset': 15}
+year:  1989
+lemma:  machine
+source:  {'title': 'Face', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476558
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476397
+datestring:  1989
+first_in_word:  False
+oed_reference:  machine, n., sense V.10
+first_in_sense:  False
+
+","153072: society
+165531: authority
+166197: rule or government
+168151: politics
+168217: party politics
+168326: None
+168344: party machine",,machine_nn01,machine_nn01-38476397
+0,[],[],[],1883,True,1883,1883,A box or case in which fresh fish are sold wholesale. Cf. trunk n. 8b. Obsolete.,S. Plimsoll,machine_nn01-38475013,machine,False,1904,12,True,machine_nn01-g05,2000,['Probably extended from sense 6.'],"machine, n., sense III.5f",https://www.oed.com/view/Entry/111850#eid38475013,NN,"id:  machine_nn01-38475026
+text:  {'keyword': 'machine', 'full_text': 'The box..is called by many names, as ‘van’, ‘machine’, ‘tank’, ‘trunk’, &c.', 'keyword_offset': 45}
+year:  1883
+lemma:  machine
+source:  {'title': '19th Cent.', 'author': 'S. Plimsoll', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475026
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475013
+datestring:  1883
+first_in_word:  False
+oed_reference:  machine, n., sense III.5f
+first_in_sense:  True
+
+
+id:  machine_nn01-38475036
+text:  {'keyword': 'machines', 'full_text': 'The ‘kit’ haddocks are put loose into what are called machines. These machines are long boxes lined with lead..divided internally into four equal spaces.', 'keyword_offset': 54}
+year:  1883
+lemma:  machine
+source:  {'title': '19th Cent.', 'author': 'S. Plimsoll', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475036
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475013
+datestring:  1883
+first_in_word:  False
+oed_reference:  machine, n., sense III.5f
+first_in_sense:  False
+
+","1: the world
+45969: food and drink
+45970: food
+46185: animals for food
+46320: seafood
+46337: None
+46338: fish
+46370: quantity of fish
+46371: container for",,machine_nn01,machine_nn01-38475013
+0,"[['Australasia', 'Australia'], ['Australasia', 'New Zealand']]",[['colloquial and slang']],"[['Sport and Leisure', 'Games', 'Gambling']]",,False,1891—,1891,Australian and New Zealand colloquial. A totalizator.,G. P. Williams,machine_nn01-38475772,machine,False,1904,18,True,machine_nn01-g06,2000,[],"machine, n., sense IV.6d",https://www.oed.com/view/Entry/111850#eid38475772,NN,"id:  machine_nn01-38475778
+text:  {'keyword': 'machine', 'full_text': 'What a lot you left behind in the ‘machine’.', 'keyword_offset': 35}
+year:  1891
+lemma:  machine
+source:  {'title': None, 'author': 'G. P. Williams', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475778
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475772
+datestring:  1891
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6d
+first_in_sense:  True
+
+
+id:  machine_nn01-38475800
+text:  {'keyword': 'machine', 'full_text': 'The bookmakers would not pay 30–1 as the machine is doing.', 'keyword_offset': 41}
+year:  1900
+lemma:  machine
+source:  {'title': 'Tales Colonial Turf', 'author': 'J. Scott', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475800
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475772
+datestring:  1900
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6d
+first_in_sense:  False
+
+
+id:  machine_nn01-38475808
+text:  {'keyword': 'machine', 'full_text': 'His or her investment on the machine, either straight-out or for a place.', 'keyword_offset': 29}
+year:  1903
+lemma:  machine
+source:  {'title': 'Sporting News (Launceston, Tasmania)', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475808
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475772
+datestring:  1903
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6d
+first_in_sense:  False
+
+
+id:  machine_nn01-38475817
+text:  {'keyword': 'machine', 'full_text': 'An electric machine has a tremendous advantage over the old manual totalisator.', 'keyword_offset': 12}
+year:  1939
+lemma:  machine
+source:  {'title': 'Taranaki (New Plymouth) Herald', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475817
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475772
+datestring:  1939
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6d
+first_in_sense:  False
+
+
+id:  machine_nn01-38475826
+text:  {'keyword': 'machine', 'full_text': 'Each paid more than £25 on the win machine.', 'keyword_offset': 35}
+year:  1949
+lemma:  machine
+source:  {'title': 'Southern Cross (Wellington)', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475826
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475772
+datestring:  1949
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6d
+first_in_sense:  False
+
+","153072: society
+222360: leisure
+222361: entertainment
+222459: pastimes
+223668: betting
+223702: None
+223744: book-maker's equipment
+223746: totalizator",,machine_nn01,machine_nn01-38475772
+0,[],[],"[['Transport', 'Aviation']]",,False,1896—,1896,An aircraft or airship. Cf. sense 6b.,H. S. Maxim,machine_nn01-38475046,machine,False,1904,13,True,machine_nn01-g05,2000,[],"machine, n., sense III.5g",https://www.oed.com/view/Entry/111850#eid38475046,NN,"id:  machine_nn01-38475059
+text:  {'keyword': 'machine', 'full_text': 'The next machine..was on the kite or aeroplane system.', 'keyword_offset': 9}
+year:  1896
+lemma:  machine
+source:  {'title': 'Aeronaut. Ann.', 'author': 'H. S. Maxim', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475059
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475046
+datestring:  1896
+first_in_word:  False
+oed_reference:  machine, n., sense III.5g
+first_in_sense:  True
+
+
+id:  machine_nn01-38475067
+text:  {'keyword': 'machine', 'full_text': ""Any machine—'plane or dirigible."", 'keyword_offset': 4}
+year:  1909
+lemma:  machine
+source:  {'title': 'Aeronautics', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475067
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475046
+datestring:  1909
+first_in_word:  False
+oed_reference:  machine, n., sense III.5g
+first_in_sense:  False
+
+
+id:  machine_nn01-38475075
+text:  {'keyword': 'machines', 'full_text': 'He paid more attention now to watching for enemy machines, and never failed..to rush his pilot to a machine and into the air if a German was reported in sight.', 'keyword_offset': 49}
+year:  1919
+lemma:  machine
+source:  {'title': 'Old Contemptibles', 'author': '‘B. Cable’', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475075
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475046
+datestring:  1919
+first_in_word:  False
+oed_reference:  machine, n., sense III.5g
+first_in_sense:  False
+
+
+id:  machine_nn01-38475083
+text:  {'keyword': 'machine', 'full_text': 'The machine before them opened out and trundled down the runway.', 'keyword_offset': 4}
+year:  1944
+lemma:  machine
+source:  {'title': 'Pastoral', 'author': '‘N. Shute’', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475083
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475046
+datestring:  1944
+first_in_word:  False
+oed_reference:  machine, n., sense III.5g
+first_in_sense:  False
+
+
+id:  machine_nn01-38475091
+text:  {'keyword': 'machine', 'full_text': 'The pilot got the damaged machine 60 feet into the air before it rolled over and crashed.', 'keyword_offset': 26}
+year:  1993
+lemma:  machine
+source:  {'title': ""Men's Health"", 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475091
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475046
+datestring:  1993
+first_in_word:  False
+oed_reference:  machine, n., sense III.5g
+first_in_sense:  False
+
+","153072: society
+198379: travel
+206909: air or space travel
+207619: a means of conveyance through the air
+208130: None
+208136: an aircraft",,machine_nn01,machine_nn01-38475046
+0,"[['North America', 'United States']]",[],"[['Transport', 'Motoring']]",,False,1901—,1901,"Originally and chiefly U.S. A motor vehicle, esp. a car.",McClure's Magazine,machine_nn01-38475099,machine,False,1904,14,True,machine_nn01-g05,2000,[],"machine, n., sense III.5h",https://www.oed.com/view/Entry/111850#eid38475099,NN,"id:  machine_nn01-38475104
+text:  {'keyword': 'machine', 'full_text': 'His assistant crouching at his feet out of range of the swift-flying currents of air produced by the mad flight of the machine.', 'keyword_offset': 119}
+year:  1901
+lemma:  machine
+source:  {'title': ""McClure's Mag."", 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475104
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475099
+datestring:  1901
+first_in_word:  False
+oed_reference:  machine, n., sense III.5h
+first_in_sense:  True
+
+
+id:  machine_nn01-38475120
+text:  {'keyword': 'machine', 'full_text': 'The reliability of the machine was so amazing that, in seven years of business, not a single breakdown had been reported.', 'keyword_offset': 23}
+year:  1915
+lemma:  machine
+source:  {'title': 'Sat. Evening Post', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475120
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475099
+datestring:  1915
+first_in_word:  False
+oed_reference:  machine, n., sense III.5h
+first_in_sense:  False
+
+
+id:  machine_nn01-38475136
+text:  {'keyword': 'machine', 'full_text': 'The machine that had been trailing us came into sight around a bend in the road..and unloaded its cargo of men and weapons.', 'keyword_offset': 4}
+year:  1929
+lemma:  machine
+source:  {'title': 'Red Harvest', 'author': 'D. Hammett', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475136
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475099
+datestring:  1929
+first_in_word:  False
+oed_reference:  machine, n., sense III.5h
+first_in_sense:  False
+
+
+id:  machine_nn01-38475144
+text:  {'keyword': 'machines', 'full_text': 'Because we have the automobile, we can go far and fast and when we get there, we have other machines to use—the tractor or whatever else you may want to use.', 'keyword_offset': 92}
+year:  1954
+lemma:  machine
+source:  {'title': 'Natural House', 'author': 'F. L. Wright', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475144
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475099
+datestring:  1954
+first_in_word:  False
+oed_reference:  machine, n., sense III.5h
+first_in_sense:  False
+
+
+id:  machine_nn01-38475153
+text:  {'keyword': 'machine', 'full_text': 'Our grandfather would get into a recurrent fantasy..about buying a machine, which was his word for an automobile.', 'keyword_offset': 67}
+year:  1970
+lemma:  machine
+source:  {'title': 'Hidden Wound', 'author': 'W. Berry', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475153
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475099
+datestring:  1970
+first_in_word:  False
+oed_reference:  machine, n., sense III.5h
+first_in_sense:  False
+
+","153072: society
+198379: travel
+200757: means of travel
+201351: a conveyance
+201370: vehicle
+201885: powered vehicle
+202077: motor car
+202100: None",,machine_nn01,machine_nn01-38475099
+0,[],[],"[['Arts', 'Visual Arts', 'Painting and Drawing', 'Painting']]",,False,1926—,1926,"Painting. A painting of large size, esp. one whose subject matter and composition are complicated, contrived, or exaggerated.",Roger Fry,machine_nn01-38476566,machine,False,1976,26,True,machine_nn01-g11,2000,[],"machine, n., sense V.11",https://www.oed.com/view/Entry/111850#eid38476566,NN,"id:  machine_nn01-38476571
+text:  {'keyword': 'machines', 'full_text': 'Poetry gained on him, nymphs began to crowd into his landscapes:..trees, sky and water adapted themselves to these intruders and became the vapid, vaporous poetical machines.', 'keyword_offset': 165}
+year:  1926
+lemma:  machine
+source:  {'title': 'Transformations', 'author': 'R. Fry', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476571
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476566
+datestring:  1926
+first_in_word:  False
+oed_reference:  machine, n., sense V.11
+first_in_sense:  True
+
+
+id:  machine_nn01-38476579
+text:  {'keyword': 'machines', 'full_text': 'He was too poor in spirit ever to try, himself, to paint one of the big machines which made one an historical painter.', 'keyword_offset': 72}
+year:  1932
+lemma:  machine
+source:  {'title': 'Characteristics French Art', 'author': 'R. Fry', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476579
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476566
+datestring:  1932
+first_in_word:  False
+oed_reference:  machine, n., sense V.11
+first_in_sense:  False
+
+
+id:  machine_nn01-38476588
+text:  {'keyword': 'machines', 'full_text': 'The small pictures and the machines appear to be the different sides of the same coin.', 'keyword_offset': 27}
+year:  1965
+lemma:  machine
+source:  {'title': 'Listener', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476588
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476566
+datestring:  1965
+first_in_word:  False
+oed_reference:  machine, n., sense V.11
+first_in_sense:  False
+
+
+id:  machine_nn01-38476597
+text:  {'keyword': 'machine', 'full_text': ""Jean-Antoine Gros's equestrian portrait of Murat..is a finicky machine of a painting in which the scenes of battle..seem to belong to a world other than the one inhabited by..Murat."", 'keyword_offset': 63}
+year:  1991
+lemma:  machine
+source:  {'title': 'N.Y. Times', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476597
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476566
+datestring:  1991
+first_in_word:  False
+oed_reference:  machine, n., sense V.11
+first_in_sense:  False
+
+","153072: society
+222360: leisure
+224508: the arts
+227402: visual arts
+227682: painting and drawing
+227729: painting
+228006: None
+228009: a painting
+228011: of specific size or shape",,machine_nn01,machine_nn01-38476566
+0,[],[],[],,False,1927—,1927,figurative.machine for living (in): a house or other habitation considered as a functional entity. Also in imitative phrases.,‘Le Corbusier’'s Towards New Archit.,machine_nn01-38476245,machine for living,False,1976,23,True,machine_nn01-g08,2000,[],"machine, n., sense V.8c",https://www.oed.com/view/Entry/111850#eid38476245,NN,"id:  machine_nn01-38476264
+text:  {'keyword': 'machine for living in', 'full_text': 'The house is a machine for living in.', 'keyword_offset': 15}
+year:  1927
+lemma:  machine for living
+source:  {'title': 'Towards New Archit.', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476264
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476245
+datestring:  1927
+first_in_word:  False
+oed_reference:  machine, n., sense V.8c
+first_in_sense:  True
+
+
+id:  machine_nn01-38476281
+text:  {'keyword': None, 'full_text': ""Le Corbusier himself could hardly have done the trick better: King's is the perfect machine-for-praying-in."", 'keyword_offset': None}
+year:  1934
+lemma:  machine for living
+source:  {'title': 'Beyond Mexique Bay', 'author': 'A. Huxley', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476281
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476245
+datestring:  1934
+first_in_word:  False
+oed_reference:  machine, n., sense V.8c
+first_in_sense:  False
+
+
+id:  machine_nn01-38476289
+text:  {'keyword': 'Machine-for-Living', 'full_text': ""The house was actually the world's first tangible embodiment of what one French architect hopefully designated as a ‘Machine-for-Living’."", 'keyword_offset': 117}
+year:  1960
+lemma:  machine for living
+source:  {'title': 'Dymaxion World Buckminster Fuller', 'author': 'R. W. Marks', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476289
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476245
+datestring:  1960
+first_in_word:  False
+oed_reference:  machine, n., sense V.8c
+first_in_sense:  False
+
+
+id:  machine_nn01-38476297
+text:  {'keyword': None, 'full_text': 'The whole house was..a machine for Mrs Richier to live in.', 'keyword_offset': None}
+year:  1966
+lemma:  machine for living
+source:  {'title': 'Nell Alone', 'author': '‘J. Melville’', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476297
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476245
+datestring:  1966
+first_in_word:  False
+oed_reference:  machine, n., sense V.8c
+first_in_sense:  False
+
+
+id:  machine_nn01-38476305
+text:  {'keyword': 'machines for living', 'full_text': 'Georgian town houses probably worked fairly well as machines for living.', 'keyword_offset': 52}
+year:  1990
+lemma:  machine for living
+source:  {'title': 'Life in Georgian City', 'author': 'D. Cruickshank', 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38476305
+word_id:  machine_nn01
+sense_id:  machine_nn01-38476245
+datestring:  1990
+first_in_word:  False
+oed_reference:  machine, n., sense V.8c
+first_in_sense:  False
+
+","153072: society
+157909: inhabiting and dwelling
+158520: inhabited place
+158897: dwelling place or abode
+158994: a dwelling
+158995: a house
+159066: None",,machine_nn01,machine_nn01-38476245
+0,[],[],"[['Sciences', 'Mathematics'], ['Technology', 'Computing']]",,False,1936—,1936,"A conceptual, abstract, or theoretical mechanism or device; spec. a model or a mathematical abstraction of an existing or hypothetical computer. Cf. Turing machine n.",Alan Turing,machine_nn01-38475835,machine,False,2000,19,True,machine_nn01-g06,,[],"machine, n., sense IV.6e",https://www.oed.com/view/Entry/111850#eid38475835,NN,"id:  machine_nn01-38475852
+text:  {'keyword': 'machine', 'full_text': 'We may compare a man in the process of computing a real number to a machine which is only capable of a finite number of conditions q1, q2.., qR which will be called ‘m-configurations’. The machine is supplied with a ‘tape’ (the analogue of paper) running through it.', 'keyword_offset': 68}
+year:  1936
+lemma:  machine
+source:  {'title': 'Proc. London Math. Soc.', 'author': 'A. M. Turing', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475852
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475835
+datestring:  1936
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6e
+first_in_sense:  True
+
+
+id:  machine_nn01-38475869
+text:  {'keyword': 'machine', 'full_text': 'Suppose that we have a machine that can be in any one of a finite number of different internal states... Any language that can be produced by a machine of this sort we call a finite state language; and we can call the machine itself a finite state grammar.', 'keyword_offset': 23}
+year:  1957
+lemma:  machine
+source:  {'title': 'Syntactic Structures', 'author': 'N. Chomsky', 'gender': 'male'}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475869
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475835
+datestring:  1957
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6e
+first_in_sense:  False
+
+
+id:  machine_nn01-38475889
+text:  {'keyword': 'machine', 'full_text': 'The experience of the last twenty years has shown that, apart from mathematical subtleties, all the various attempted definitions of ‘machine’ prove to be practically identical... All have tended towards the various forms of ‘semi-group’: a set of states (the machine) and an operator (its laws) such that unlimitedly repeated action by the operator on the states cannot generate a state outside the set.', 'keyword_offset': 134}
+year:  1968
+lemma:  machine
+source:  {'title': 'Brit. Jrnl. Psychiatry', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475889
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475835
+datestring:  1968
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6e
+first_in_sense:  False
+
+
+id:  machine_nn01-38475915
+text:  {'keyword': 'machines', 'full_text': 'Theoretical logical ‘machines’..also provide..the basis for the ‘state machine’, an intriguing alternative to the more conventional procedural, functional or declarative programming languages.', 'keyword_offset': 21}
+year:  1992
+lemma:  machine
+source:  {'title': 'New Scientist', 'author': None, 'gender': None}
+oed_url:  https://www.oed.com/view/Entry/111850#eid38475915
+word_id:  machine_nn01
+sense_id:  machine_nn01-38475835
+datestring:  1992
+first_in_word:  False
+oed_reference:  machine, n., sense IV.6e
+first_in_sense:  False
+
+","153072: society
+116218: computing and information technology
+116219: hardware
+116319: computer
+116331: None
+116332: notional",,machine_nn01,machine_nn01-38475835

@@ -1,0 +1,1635 @@
+{
+    "meta": {
+        "total": 26,
+        "count": 26,
+        "offset": 0,
+        "limit": 10000,
+        "provider": "Oxford University Press",
+        "cite": "Oxford English Dictionary API, Oxford University Press, 0.0.0.0/oed/api/v0.2/word/machine_nn01/senses/?offset=0&limit=10000 . Accessed 18 September 2020"
+    },
+    "links": {
+        "self": "/oed/api/v0.2/word/machine_nn01/senses/?offset=0&limit=10000",
+        "prev": null,
+        "next": null,
+        "first": "/oed/api/v0.2/word/machine_nn01/senses/?offset=0&limit=10000",
+        "last": "/oed/api/v0.2/word/machine_nn01/senses/?offset=0&limit=10000"
+    },
+    "data": [
+        {
+            "id": "machine_nn01-38473945",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g01",
+                "position_in_entry": 1
+            },
+            "lemma": "machine",
+            "notes": [],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38473945",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1545,
+                "obsolete": false,
+                "rangestring": "1545—"
+            },
+            "first_use": "J. Schäfer",
+            "categories": {
+                "topic": [],
+                "region": [],
+                "register": [
+                    [
+                        "rare"
+                    ]
+                ]
+            },
+            "definition": "A material or immaterial structure, esp. the fabric of the world or of the universe; a construction or edifice. Now rare.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense I.1a",
+            "quotation_ids": [
+                "machine_nn01-38473950",
+                "machine_nn01-38473961",
+                "machine_nn01-38473973",
+                "machine_nn01-38473981",
+                "machine_nn01-38473999",
+                "machine_nn01-38474007",
+                "machine_nn01-38474047",
+                "machine_nn01-38474058",
+                "machine_nn01-38474068",
+                "machine_nn01-38474079",
+                "machine_nn01-38474089"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "1",
+                    "111290",
+                    "118635",
+                    "119024",
+                    "120162",
+                    "120172"
+                ],
+                [
+                    "1",
+                    "111290",
+                    "118635",
+                    "119024",
+                    "120162",
+                    "120172",
+                    "120173"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38474233",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g03",
+                "position_in_entry": 4
+            },
+            "lemma": "machine",
+            "notes": [],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38474233",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1583,
+                "obsolete": false,
+                "rangestring": "1583—"
+            },
+            "first_use": "Brian Melbancke",
+            "categories": {
+                "topic": [
+                    [
+                        "Military",
+                        "Weaponry"
+                    ]
+                ],
+                "region": [],
+                "register": [
+                    [
+                        "historical"
+                    ]
+                ]
+            },
+            "definition": "A military engine or siege-tower. Cf. war machine n. (a) at  war n.1 compounds 4. Now historical.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense II.3",
+            "quotation_ids": [
+                "machine_nn01-38474243",
+                "machine_nn01-38474252",
+                "machine_nn01-38474260",
+                "machine_nn01-38474268",
+                "machine_nn01-38474281",
+                "machine_nn01-38474290"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "153072",
+                    "160439",
+                    "163207",
+                    "163208",
+                    "163377",
+                    "163378"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38474097",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g01",
+                "position_in_entry": 2
+            },
+            "lemma": "machine",
+            "notes": [],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38474097",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": 1707,
+                "start": 1595,
+                "obsolete": true,
+                "rangestring": "1595—1707"
+            },
+            "first_use": "Elizabeth I",
+            "categories": {
+                "topic": [],
+                "region": [],
+                "register": []
+            },
+            "definition": "spec. A scheme or plot. Obsolete.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense I.1b",
+            "quotation_ids": [
+                "machine_nn01-38474102",
+                "machine_nn01-38474122",
+                "machine_nn01-38474131"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "1",
+                    "84689",
+                    "87987",
+                    "87988",
+                    "87989",
+                    "88083",
+                    "88109",
+                    "88117",
+                    "88125",
+                    "88126"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38474140",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g02",
+                "position_in_entry": 3
+            },
+            "lemma": "machine",
+            "notes": [],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38474140",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1604,
+                "obsolete": false,
+                "rangestring": "1604—"
+            },
+            "first_use": "William Shakespeare",
+            "categories": {
+                "topic": [
+                    [
+                        "Sciences",
+                        "Medicine",
+                        "Anatomy"
+                    ]
+                ],
+                "region": [],
+                "register": []
+            },
+            "definition": "A living body, esp. the human body considered in general or individually. Now chiefly figurative from sense 6b (cf. sense 8b).",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense I.2",
+            "quotation_ids": [
+                "machine_nn01-38474151",
+                "machine_nn01-38474160",
+                "machine_nn01-38474169",
+                "machine_nn01-38474177",
+                "machine_nn01-38474186",
+                "machine_nn01-38474195",
+                "machine_nn01-38474203",
+                "machine_nn01-38474212",
+                "machine_nn01-38474223"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "1",
+                    "8835",
+                    "25507",
+                    "29189"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38474301",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g04",
+                "position_in_entry": 5
+            },
+            "lemma": "machine",
+            "notes": [
+                "In early use predominantly a ‘flying’ car along with the mechanism used to lower it to the stage, often as the climax of a production."
+            ],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38474301",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1609,
+                "obsolete": false,
+                "rangestring": "1609—"
+            },
+            "first_use": "Ben Jonson",
+            "categories": {
+                "topic": [
+                    [
+                        "Arts",
+                        "Performing Arts",
+                        "Theatre"
+                    ]
+                ],
+                "region": [],
+                "register": [
+                    [
+                        "historical"
+                    ],
+                    [
+                        "poetic and literary"
+                    ]
+                ]
+            },
+            "definition": "Theatre. A (usually movable) contrivance for the production of stage-effects; (in plural) stage machinery. Also figurative. Cf. god from the machine at  god n. int.phrases 4e and deus ex machina n. Now historical and poetic.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense II.4a",
+            "quotation_ids": [
+                "machine_nn01-38474320",
+                "machine_nn01-38474329",
+                "machine_nn01-38474336",
+                "machine_nn01-38474363",
+                "machine_nn01-38474372",
+                "machine_nn01-38474380",
+                "machine_nn01-38474388",
+                "machine_nn01-38474396"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "153072",
+                    "222360",
+                    "224508",
+                    "232933",
+                    "232967",
+                    "233050",
+                    "233119",
+                    "233127",
+                    "233139"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38474548",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g05",
+                "position_in_entry": 7
+            },
+            "lemma": "machine",
+            "notes": [],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38474548",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1637,
+                "obsolete": false,
+                "rangestring": "1637—"
+            },
+            "first_use": "Thomas Heywood",
+            "categories": {
+                "topic": [
+                    [
+                        "Transport",
+                        "Nautical"
+                    ]
+                ],
+                "region": [],
+                "register": [
+                    [
+                        "colloquial and slang"
+                    ]
+                ]
+            },
+            "definition": "A ship or other vessel. Now colloquial: a boat.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense III.5a",
+            "quotation_ids": [
+                "machine_nn01-38474552",
+                "machine_nn01-38474562",
+                "machine_nn01-38474572",
+                "machine_nn01-38474581",
+                "machine_nn01-38474590",
+                "machine_nn01-38474599"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "153072",
+                    "198379",
+                    "202986",
+                    "204466",
+                    "206654"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38475164",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g06",
+                "position_in_entry": 15
+            },
+            "lemma": "machine",
+            "notes": [],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38475164",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1648,
+                "obsolete": false,
+                "rangestring": "1648—"
+            },
+            "first_use": "Moderate",
+            "categories": {
+                "topic": [],
+                "region": [
+                    [
+                        "North America",
+                        "Canada"
+                    ]
+                ],
+                "register": [
+                    [
+                        "archaic"
+                    ],
+                    [
+                        "regional"
+                    ]
+                ]
+            },
+            "definition": "In general use: an apparatus, device, instrument, or implement (now archaic and Canadian regional (Newfoundland)); an appliance; a vending machine. Cf. sense 6c.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense IV.6a",
+            "quotation_ids": [
+                "machine_nn01-208243324",
+                "machine_nn01-38475174",
+                "machine_nn01-38475182",
+                "machine_nn01-38475192",
+                "machine_nn01-38475201",
+                "machine_nn01-38475211",
+                "machine_nn01-38475223",
+                "machine_nn01-38475231",
+                "machine_nn01-38475239",
+                "machine_nn01-38475247",
+                "machine_nn01-38475258",
+                "machine_nn01-38475275"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "1",
+                    "84689",
+                    "87987",
+                    "87988",
+                    "87989",
+                    "88083",
+                    "88109",
+                    "88117",
+                    "88146",
+                    "88147"
+                ],
+                [
+                    "153072",
+                    "208185",
+                    "211995",
+                    "211996",
+                    "212078"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38475286",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g06",
+                "position_in_entry": 16
+            },
+            "lemma": "machine",
+            "notes": [
+                "In 19th- and early 20th-cent. use, the word tended to be applied to devices performing, (relatively) independently of the strength or skill of the operator, work that had formerly been done by hand. Its use has been extended to devices that perform tasks which previously required human mental activity."
+            ],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38475286",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1659,
+                "obsolete": false,
+                "rangestring": "1659—"
+            },
+            "first_use": "T. St. Serfe",
+            "categories": {
+                "topic": [
+                    [
+                        "Technology",
+                        "Electrical"
+                    ],
+                    [
+                        "Technology",
+                        "Engineering",
+                        "Mechanics"
+                    ]
+                ],
+                "region": [],
+                "register": []
+            },
+            "definition": "A complex device, consisting of a number of interrelated parts, each having a definite function, together applying, using, or generating mechanical or (later) electrical power to perform a certain kind of work (often specified by a preceding verbal noun).",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense IV.6b",
+            "quotation_ids": [
+                "machine_nn01-38475290",
+                "machine_nn01-38475300",
+                "machine_nn01-38475325",
+                "machine_nn01-38475337",
+                "machine_nn01-38475346",
+                "machine_nn01-38475356",
+                "machine_nn01-38475365",
+                "machine_nn01-38475375",
+                "machine_nn01-38475383",
+                "machine_nn01-38475392",
+                "machine_nn01-38475400",
+                "machine_nn01-38475409",
+                "machine_nn01-38475420",
+                "machine_nn01-38475428",
+                "machine_nn01-38475436",
+                "machine_nn01-38475446",
+                "machine_nn01-38475454",
+                "machine_nn01-38475462",
+                "machine_nn01-38475470",
+                "machine_nn01-38475478",
+                "machine_nn01-38475486"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": true,
+            "semantic_class_ids": [
+                [
+                    "153072",
+                    "208185",
+                    "211995",
+                    "213839",
+                    "214572"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38474405",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g04",
+                "position_in_entry": 6
+            },
+            "lemma": "machine",
+            "notes": [],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38474405",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1674,
+                "obsolete": false,
+                "rangestring": "1674—"
+            },
+            "first_use": "Thomas Rymer",
+            "categories": {
+                "topic": [],
+                "region": [],
+                "register": [
+                    [
+                        "rare"
+                    ]
+                ]
+            },
+            "definition": "In literature, etc.: a contrivance for the sake of effect; a supernatural agency, personage, or incident introduced into a narrative; the interposition of one of these. Now rare.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense II.4b",
+            "quotation_ids": [
+                "machine_nn01-38474409",
+                "machine_nn01-38474419",
+                "machine_nn01-38474449",
+                "machine_nn01-38474466",
+                "machine_nn01-38474507",
+                "machine_nn01-38474516",
+                "machine_nn01-38474525",
+                "machine_nn01-38474534"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": []
+        },
+        {
+            "id": "machine_nn01-38475994",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g08",
+                "position_in_entry": 21
+            },
+            "lemma": "machine",
+            "notes": [],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38475994",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1676,
+                "obsolete": false,
+                "rangestring": "1676—"
+            },
+            "first_use": "Thomas Guidott",
+            "categories": {
+                "topic": [],
+                "region": [],
+                "register": []
+            },
+            "definition": "figurative in general use.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense V.8a",
+            "quotation_ids": [
+                "machine_nn01-38475998",
+                "machine_nn01-38476016",
+                "machine_nn01-38476026",
+                "machine_nn01-38476037",
+                "machine_nn01-38476047",
+                "machine_nn01-38476055",
+                "machine_nn01-38476065",
+                "machine_nn01-38476075",
+                "machine_nn01-38476085"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": []
+        },
+        {
+            "id": "machine_nn01-38476096",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g08",
+                "position_in_entry": 22
+            },
+            "lemma": "machine",
+            "notes": [],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38476096",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1676,
+                "obsolete": false,
+                "rangestring": "1676—"
+            },
+            "first_use": "B. Lamy's Art of Speaking",
+            "categories": {
+                "topic": [],
+                "region": [],
+                "register": []
+            },
+            "definition": "figurative. A living being considered to move or act automatically or mechanically, rather than of its own volition; esp. a person who acts mechanically or unthinkingly, as from habit or obedience; a person who acts with mechanical precision or efficiency. Also: a system or organization of an impersonal or inflexible character.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense V.8b",
+            "quotation_ids": [
+                "machine_nn01-38476101",
+                "machine_nn01-38476114",
+                "machine_nn01-38476124",
+                "machine_nn01-38476134",
+                "machine_nn01-38476147",
+                "machine_nn01-38476157",
+                "machine_nn01-38476166",
+                "machine_nn01-38476183",
+                "machine_nn01-38476192",
+                "machine_nn01-38476201",
+                "machine_nn01-38476209",
+                "machine_nn01-38476219",
+                "machine_nn01-38476228",
+                "machine_nn01-38476237"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "122209",
+                    "122210",
+                    "124580",
+                    "124795",
+                    "124796"
+                ],
+                [
+                    "122209",
+                    "142646",
+                    "143483",
+                    "143639",
+                    "143654",
+                    "143655",
+                    "143656",
+                    "143657"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38474607",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g05",
+                "position_in_entry": 8
+            },
+            "lemma": "machine",
+            "notes": [],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38474607",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1687,
+                "obsolete": false,
+                "rangestring": "1687—"
+            },
+            "first_use": "Archibald Lovell",
+            "categories": {
+                "topic": [],
+                "region": [
+                    [
+                        "Britain and Ireland",
+                        "Britain",
+                        "Scotland"
+                    ]
+                ],
+                "register": [
+                    [
+                        "historical"
+                    ]
+                ]
+            },
+            "definition": "A (usually wheeled) vehicle or conveyance, esp. one drawn by a horse or horses, or other draught animal or animals. Formerly esp.: a stagecoach or mail coach; (also) a brake, trap, or small carriage (chiefly Scottish). Now historical.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense III.5b",
+            "quotation_ids": [
+                "machine_nn01-38474614",
+                "machine_nn01-38474626",
+                "machine_nn01-38474639",
+                "machine_nn01-38474647",
+                "machine_nn01-38474659",
+                "machine_nn01-38474671",
+                "machine_nn01-38474680",
+                "machine_nn01-38474689",
+                "machine_nn01-38474700",
+                "machine_nn01-38474713",
+                "machine_nn01-38474723",
+                "machine_nn01-38474731",
+                "machine_nn01-38474742",
+                "machine_nn01-38474749",
+                "machine_nn01-38474757",
+                "machine_nn01-38474765",
+                "machine_nn01-38474776",
+                "machine_nn01-38474785",
+                "machine_nn01-38474804",
+                "machine_nn01-38474811"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "153072",
+                    "198379",
+                    "200757",
+                    "201351",
+                    "202575"
+                ],
+                [
+                    "153072",
+                    "198379",
+                    "200757",
+                    "201351",
+                    "201370",
+                    "202530"
+                ],
+                [
+                    "153072",
+                    "198379",
+                    "200757",
+                    "201351",
+                    "201370",
+                    "202408",
+                    "202418",
+                    "202421"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38475923",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g07",
+                "position_in_entry": 20
+            },
+            "lemma": "machine",
+            "notes": [
+                "simple, compound machine: see the first element."
+            ],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38475923",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1704,
+                "obsolete": false,
+                "rangestring": "1704—"
+            },
+            "first_use": "John Harris",
+            "categories": {
+                "topic": [
+                    [
+                        "Sciences",
+                        "Physical Sciences"
+                    ],
+                    [
+                        "Technology",
+                        "Engineering",
+                        "Mechanics"
+                    ]
+                ],
+                "region": [],
+                "register": []
+            },
+            "definition": "Mechanics. Anything that transmits force or directs its application.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense IV.7",
+            "quotation_ids": [
+                "machine_nn01-38475930",
+                "machine_nn01-38475939",
+                "machine_nn01-38475947",
+                "machine_nn01-38475955",
+                "machine_nn01-38475963",
+                "machine_nn01-38475982"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "153072",
+                    "208185",
+                    "211995",
+                    "213839",
+                    "213903",
+                    "214198"
+                ],
+                [
+                    "1",
+                    "67134",
+                    "75461",
+                    "75462",
+                    "75463",
+                    "75580",
+                    "75656",
+                    "75660",
+                    "75661"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38476316",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g09",
+                "position_in_entry": 24
+            },
+            "lemma": "machine",
+            "notes": [],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38476316",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1749,
+                "obsolete": false,
+                "rangestring": "1749—"
+            },
+            "first_use": "John Cleland",
+            "categories": {
+                "topic": [
+                    [
+                        "Sciences",
+                        "Medicine",
+                        "Anatomy"
+                    ]
+                ],
+                "region": [],
+                "register": [
+                    [
+                        "colloquial and slang"
+                    ],
+                    [
+                        "rare"
+                    ]
+                ]
+            },
+            "definition": "slang. The penis; the female genitals (rare). Also: †a condom (obsolete).",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense V.9",
+            "quotation_ids": [
+                "machine_nn01-38476322",
+                "machine_nn01-38476331",
+                "machine_nn01-38476340",
+                "machine_nn01-38476349",
+                "machine_nn01-38476358",
+                "machine_nn01-38476372",
+                "machine_nn01-38476379",
+                "machine_nn01-38476388"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "1",
+                    "8835",
+                    "25507",
+                    "28377",
+                    "28378",
+                    "28384",
+                    "28386"
+                ],
+                [
+                    "1",
+                    "62186",
+                    "62978",
+                    "63430",
+                    "63435",
+                    "63438",
+                    "63441"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38474820",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g05",
+                "position_in_entry": 9
+            },
+            "lemma": "machine",
+            "notes": [],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38474820",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": 1870,
+                "start": 1763,
+                "obsolete": true,
+                "rangestring": "1763—1870"
+            },
+            "first_use": "Ipswich Jrnl.",
+            "categories": {
+                "topic": [],
+                "region": [],
+                "register": []
+            },
+            "definition": "= bathing-machine n. at  bathing n. compounds . Obsolete.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense III.5c",
+            "quotation_ids": [
+                "machine_nn01-38474829",
+                "machine_nn01-38474837",
+                "machine_nn01-38474846",
+                "machine_nn01-38474857",
+                "machine_nn01-38474867"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "153072",
+                    "198379",
+                    "200757",
+                    "201351",
+                    "201370",
+                    "202480",
+                    "202483",
+                    "202500"
+                ],
+                [
+                    "153072",
+                    "222360",
+                    "222361",
+                    "222459",
+                    "223839",
+                    "223844",
+                    "223848",
+                    "223850"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38475494",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g06",
+                "position_in_entry": 17
+            },
+            "lemma": "machine",
+            "notes": [],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38475494",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1782,
+                "obsolete": false,
+                "rangestring": "1782—"
+            },
+            "first_use": "James Woodforde",
+            "categories": {
+                "topic": [
+                    [
+                        "Technology",
+                        "Engineering",
+                        "Mechanics"
+                    ]
+                ],
+                "region": [
+                    [
+                        "Australasia",
+                        "Australia"
+                    ],
+                    [
+                        "Australasia",
+                        "New Zealand"
+                    ]
+                ],
+                "register": []
+            },
+            "definition": "Used contextually for the particular kind of machine which the speaker or writer intends, as: a sewing machine; a printing machine or mechanical printing press; a shearing-machine (Australian and New Zealand); a typewriter; a calculating machine or computer; a slot machine; a washing machine; etc. Cf. sense 6a.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense IV.6c",
+            "quotation_ids": [
+                "machine_nn01-38475502",
+                "machine_nn01-38475513",
+                "machine_nn01-38475521",
+                "machine_nn01-38475529",
+                "machine_nn01-38475550",
+                "machine_nn01-38475567",
+                "machine_nn01-38475576",
+                "machine_nn01-38475608",
+                "machine_nn01-38475618",
+                "machine_nn01-38475626",
+                "machine_nn01-38475635",
+                "machine_nn01-38475654",
+                "machine_nn01-38475662",
+                "machine_nn01-38475672",
+                "machine_nn01-38475691",
+                "machine_nn01-295454392",
+                "machine_nn01-38475706",
+                "machine_nn01-38475715",
+                "machine_nn01-38475740",
+                "machine_nn01-38475748",
+                "machine_nn01-38475756",
+                "machine_nn01-38475764"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "153072",
+                    "208185",
+                    "211995",
+                    "213839",
+                    "214572",
+                    "214574"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38474877",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g05",
+                "position_in_entry": 10
+            },
+            "lemma": "machine",
+            "notes": [],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38474877",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1823,
+                "obsolete": false,
+                "rangestring": "1823—"
+            },
+            "first_use": "John Badcock",
+            "categories": {
+                "topic": [],
+                "region": [],
+                "register": [
+                    [
+                        "historical"
+                    ]
+                ]
+            },
+            "definition": "A bicycle or tricycle; a motorcycle. Formerly also: a dandy-horse or velocipede (now historical).",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense III.5d",
+            "quotation_ids": [
+                "machine_nn01-38474891",
+                "machine_nn01-38474899",
+                "machine_nn01-38474907",
+                "machine_nn01-38474925",
+                "machine_nn01-38474935",
+                "machine_nn01-38474943",
+                "machine_nn01-38474950",
+                "machine_nn01-38474958",
+                "machine_nn01-38474966"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "153072",
+                    "198379",
+                    "200757",
+                    "201351",
+                    "201370",
+                    "201563",
+                    "201573",
+                    "201575"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38474974",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g05",
+                "position_in_entry": 11
+            },
+            "lemma": "machine",
+            "notes": [],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38474974",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": 1890,
+                "start": 1848,
+                "obsolete": true,
+                "rangestring": "1848—90"
+            },
+            "first_use": "N.Y. Herald",
+            "categories": {
+                "topic": [],
+                "region": [
+                    [
+                        "North America",
+                        "United States"
+                    ]
+                ],
+                "register": [
+                    [
+                        "colloquial and slang"
+                    ]
+                ]
+            },
+            "definition": "U.S. colloquial. A fire engine. Obsolete.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense III.5e",
+            "quotation_ids": [
+                "machine_nn01-1038760531",
+                "machine_nn01-38474989",
+                "machine_nn01-38475006"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "1",
+                    "67134",
+                    "71763",
+                    "71864",
+                    "72718",
+                    "72764",
+                    "72775",
+                    "72778",
+                    "72790",
+                    "72805"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38476397",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g10",
+                "position_in_entry": 25
+            },
+            "lemma": "machine",
+            "notes": [
+                "party, propaganda, war machine: see the first element."
+            ],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38476397",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1860,
+                "obsolete": false,
+                "rangestring": "1860—"
+            },
+            "first_use": "A. Burlingame",
+            "categories": {
+                "topic": [
+                    [
+                        "Politics"
+                    ]
+                ],
+                "region": [
+                    [
+                        "North America",
+                        "United States"
+                    ]
+                ],
+                "register": []
+            },
+            "definition": "Originally U.S. The controlling organization of a political party or similar body; any organization or group displaying impressive or ruthless efficiency.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense V.10",
+            "quotation_ids": [
+                "machine_nn01-38476417",
+                "machine_nn01-38476449",
+                "machine_nn01-38476466",
+                "machine_nn01-38476493",
+                "machine_nn01-38476501",
+                "machine_nn01-38476509",
+                "machine_nn01-38476542",
+                "machine_nn01-38476550",
+                "machine_nn01-38476558"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "153072",
+                    "165531",
+                    "166197",
+                    "168151",
+                    "168217",
+                    "168326",
+                    "168344"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38475013",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g05",
+                "position_in_entry": 12
+            },
+            "lemma": "machine",
+            "notes": [
+                "Probably extended from sense 6."
+            ],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38475013",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": 1883,
+                "start": 1883,
+                "obsolete": true,
+                "rangestring": "1883"
+            },
+            "first_use": "S. Plimsoll",
+            "categories": {
+                "topic": [],
+                "region": [],
+                "register": []
+            },
+            "definition": "A box or case in which fresh fish are sold wholesale. Cf. trunk n. 8b. Obsolete.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense III.5f",
+            "quotation_ids": [
+                "machine_nn01-38475026",
+                "machine_nn01-38475036"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "1",
+                    "45969",
+                    "45970",
+                    "46185",
+                    "46320",
+                    "46337",
+                    "46338",
+                    "46370",
+                    "46371"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38475772",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g06",
+                "position_in_entry": 18
+            },
+            "lemma": "machine",
+            "notes": [],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38475772",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1891,
+                "obsolete": false,
+                "rangestring": "1891—"
+            },
+            "first_use": "G. P. Williams",
+            "categories": {
+                "topic": [
+                    [
+                        "Sport and Leisure",
+                        "Games",
+                        "Gambling"
+                    ]
+                ],
+                "region": [
+                    [
+                        "Australasia",
+                        "Australia"
+                    ],
+                    [
+                        "Australasia",
+                        "New Zealand"
+                    ]
+                ],
+                "register": [
+                    [
+                        "colloquial and slang"
+                    ]
+                ]
+            },
+            "definition": "Australian and New Zealand colloquial. A totalizator.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense IV.6d",
+            "quotation_ids": [
+                "machine_nn01-38475778",
+                "machine_nn01-38475800",
+                "machine_nn01-38475808",
+                "machine_nn01-38475817",
+                "machine_nn01-38475826"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "153072",
+                    "222360",
+                    "222361",
+                    "222459",
+                    "223668",
+                    "223702",
+                    "223744",
+                    "223746"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38475046",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g05",
+                "position_in_entry": 13
+            },
+            "lemma": "machine",
+            "notes": [],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38475046",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1896,
+                "obsolete": false,
+                "rangestring": "1896—"
+            },
+            "first_use": "H. S. Maxim",
+            "categories": {
+                "topic": [
+                    [
+                        "Transport",
+                        "Aviation"
+                    ]
+                ],
+                "region": [],
+                "register": []
+            },
+            "definition": "An aircraft or airship. Cf. sense 6b.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense III.5g",
+            "quotation_ids": [
+                "machine_nn01-38475059",
+                "machine_nn01-38475067",
+                "machine_nn01-38475075",
+                "machine_nn01-38475083",
+                "machine_nn01-38475091"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "153072",
+                    "198379",
+                    "206909",
+                    "207619",
+                    "208130",
+                    "208136"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38475099",
+            "meta": {
+                "created": 1904,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g05",
+                "position_in_entry": 14
+            },
+            "lemma": "machine",
+            "notes": [],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38475099",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1901,
+                "obsolete": false,
+                "rangestring": "1901—"
+            },
+            "first_use": "McClure's Magazine",
+            "categories": {
+                "topic": [
+                    [
+                        "Transport",
+                        "Motoring"
+                    ]
+                ],
+                "region": [
+                    [
+                        "North America",
+                        "United States"
+                    ]
+                ],
+                "register": []
+            },
+            "definition": "Originally and chiefly U.S. A motor vehicle, esp. a car.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense III.5h",
+            "quotation_ids": [
+                "machine_nn01-38475104",
+                "machine_nn01-38475120",
+                "machine_nn01-38475136",
+                "machine_nn01-38475144",
+                "machine_nn01-38475153"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "153072",
+                    "198379",
+                    "200757",
+                    "201351",
+                    "201370",
+                    "201885",
+                    "202077",
+                    "202100"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38476566",
+            "meta": {
+                "created": 1976,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g11",
+                "position_in_entry": 26
+            },
+            "lemma": "machine",
+            "notes": [],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38476566",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1926,
+                "obsolete": false,
+                "rangestring": "1926—"
+            },
+            "first_use": "Roger Fry",
+            "categories": {
+                "topic": [
+                    [
+                        "Arts",
+                        "Visual Arts",
+                        "Painting and Drawing",
+                        "Painting"
+                    ]
+                ],
+                "region": [],
+                "register": []
+            },
+            "definition": "Painting. A painting of large size, esp. one whose subject matter and composition are complicated, contrived, or exaggerated.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense V.11",
+            "quotation_ids": [
+                "machine_nn01-38476571",
+                "machine_nn01-38476579",
+                "machine_nn01-38476588",
+                "machine_nn01-38476597"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "153072",
+                    "222360",
+                    "224508",
+                    "227402",
+                    "227682",
+                    "227729",
+                    "228006",
+                    "228009",
+                    "228011"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38476245",
+            "meta": {
+                "created": 1976,
+                "revised": true,
+                "updated": 2000,
+                "sense_group": "machine_nn01-g08",
+                "position_in_entry": 23
+            },
+            "lemma": "machine for living",
+            "notes": [],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38476245",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1927,
+                "obsolete": false,
+                "rangestring": "1927—"
+            },
+            "first_use": "‘Le Corbusier’'s Towards New Archit.",
+            "categories": {
+                "topic": [],
+                "region": [],
+                "register": []
+            },
+            "definition": "figurative.machine for living (in): a house or other habitation considered as a functional entity. Also in imitative phrases.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense V.8c",
+            "quotation_ids": [
+                "machine_nn01-38476264",
+                "machine_nn01-38476281",
+                "machine_nn01-38476289",
+                "machine_nn01-38476297",
+                "machine_nn01-38476305"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "153072",
+                    "157909",
+                    "158520",
+                    "158897",
+                    "158994",
+                    "158995",
+                    "159066"
+                ]
+            ]
+        },
+        {
+            "id": "machine_nn01-38475835",
+            "meta": {
+                "created": 2000,
+                "revised": true,
+                "updated": null,
+                "sense_group": "machine_nn01-g06",
+                "position_in_entry": 19
+            },
+            "lemma": "machine",
+            "notes": [],
+            "oed_url": "https://www.oed.com/view/Entry/111850#eid38475835",
+            "word_id": "machine_nn01",
+            "daterange": {
+                "end": null,
+                "start": 1936,
+                "obsolete": false,
+                "rangestring": "1936—"
+            },
+            "first_use": "Alan Turing",
+            "categories": {
+                "topic": [
+                    [
+                        "Sciences",
+                        "Mathematics"
+                    ],
+                    [
+                        "Technology",
+                        "Computing"
+                    ]
+                ],
+                "region": [],
+                "register": []
+            },
+            "definition": "A conceptual, abstract, or theoretical mechanism or device; spec. a model or a mathematical abstraction of an existing or hypothetical computer. Cf. Turing machine n.",
+            "transitivity": null,
+            "oed_reference": "machine, n., sense IV.6e",
+            "quotation_ids": [
+                "machine_nn01-38475852",
+                "machine_nn01-38475869",
+                "machine_nn01-38475889",
+                "machine_nn01-38475915"
+            ],
+            "part_of_speech": "NN",
+            "main_current_sense": false,
+            "semantic_class_ids": [
+                [
+                    "153072",
+                    "116218",
+                    "116219",
+                    "116319",
+                    "116331",
+                    "116332"
+                ]
+            ]
+        }
+    ]
+}
