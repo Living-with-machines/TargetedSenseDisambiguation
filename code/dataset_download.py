@@ -111,18 +111,53 @@ def parse_input_commands():
         return lemma_id
     else:
         parser.exit("ERROR: The lemma id is missing, you should query it for instance using -l machine_nn01")
-  
+
+# an overall dictionary of ids: descriptions to avoid asking multiple times for the same id to the API
+overall_sem_class_ids_dict = {}
+
+def semantic_class_ids_to_descriptions(semantic_class_lists,credentials):
+    """
+    read list of lists of semantic_class_ids and credentials for the API
+    return a dictionary of ids: descriptions
+    """    
+
+    sem_class_dict = {}
+
+    # this is divided in a list of lists - do we want to keep it?
+    # for the moment is converted in a single dictionary for each row
+    for semantic_class_ids in semantic_class_lists:
+        for sem_id in semantic_class_ids:
+            if sem_id in overall_sem_class_ids_dict:
+                sem_class_dict[sem_id] = overall_sem_class_ids_dict[sem_id]
+            else:
+                url_sem = "https://oed-researcher-api.oxfordlanguages.com/oed/api/v0.2/semanticclass/" + str(sem_id)
+                r_sem = requests.get(url_sem, headers=credentials)
+
+                if r_sem.status_code == 200: # check status code         
+                    entry_json_sem = json.dumps(r_sem.json())
+                    entry_sem = json.loads(entry_json_sem)
+                    sem_class_dict[sem_id] = entry_sem['data']['label']
+                    overall_sem_class_ids_dict[sem_id] = entry_sem['data']['label']       
+                else:
+                    print ("Missing description for the following sense_id:", sem_id)
+                    overall_sem_class_ids_dict[sem_id] = None       
+                    sem_class_dict[sem_id] = None
+
+    return sem_class_dict
+
 lemma_id = parse_input_commands()
 
 with open('../oed_experiments/oed_credentials.json') as f:
     credentials = json.load(f)
-
 
 #query the API and get the json response
 sense_json = query_oed(credentials,'word',lemma_id,'include_senses=true&include_quotations=true')
 
 # convert the json in a dataframe
 senses_df = convert_json_to_dataframe(sense_json)
+
+# convert semantic class ids to labels
+senses_df['semantic_class_ids'] = senses_df['semantic_class_ids'].apply(lambda x: semantic_class_ids_to_descriptions(x,credentials))
 
 # save the dataframe
 save_path = Path("../data")
