@@ -77,14 +77,25 @@ def query_oed(
         data = json.dumps(response.json())
         senses = json.loads(data)
 
-        senses_overview = pd.DataFrame()
-        for item in senses['data']["senses"]:
-            senses_overview = senses_overview.append(pd.io.json.json_normalize(item))
-
-        return senses_overview
+        return senses
     
     else:
         raise Exception(f"Error while accessing the API\nResponse code={response.status_code}")
+
+
+def convert_json_to_dataframe(senses):
+
+    """
+    Receive json of the OED API response
+    Return a dataframe
+    """    
+
+    senses_overview = pd.DataFrame()
+
+    for item in senses['data']["senses"]:
+        senses_overview = senses_overview.append(pd.io.json.json_normalize(item))
+
+    return senses_overview
 
 def parse_input_commands():
     """
@@ -106,8 +117,12 @@ lemma_id = parse_input_commands()
 with open('../oed_experiments/oed_credentials.json') as f:
     credentials = json.load(f)
 
-#query the API and get the dataframe
-senses_df = query_oed(credentials,'word',lemma_id,'include_senses=true&include_quotations=true')
+
+#query the API and get the json response
+sense_json = query_oed(credentials,'word',lemma_id,'include_senses=true&include_quotations=true')
+
+# convert the json in a dataframe
+senses_df = convert_json_to_dataframe(sense_json)
 
 # save the dataframe
 save_path = Path("../data")
