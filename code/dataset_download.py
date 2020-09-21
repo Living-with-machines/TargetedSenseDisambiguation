@@ -2,6 +2,7 @@ import json,pickle
 import requests
 import pandas as pd
 from pathlib import Path
+from argparse import ArgumentParser
 
 def query_oed(
           auth:dict,
@@ -85,16 +86,32 @@ def query_oed(
     else:
         raise Exception(f"Error while accessing the API\nResponse code={response.status_code}")
 
+def parse_input_commands():
+    """
+    read inputs from the command line
+    return the lemma_id
+    """    
+
+    parser = ArgumentParser()
+    parser.add_argument("-l", "--lemmaid", help="The lemma id to be used for creating the dataframe",)
+    args = parser.parse_args()
+    lemma_id = args.lemmaid
+    if lemma_id:
+        return lemma_id
+    else:
+        parser.exit("ERROR: The lemma id is missing, you should query it for instance using -l machine_nn01")
+  
+lemma_id = parse_input_commands()
+
 with open('../oed_experiments/oed_credentials.json') as f:
     credentials = json.load(f)
 
+#query the API and get the dataframe
+senses_df = query_oed(credentials,'word',lemma_id,'include_senses=true&include_quotations=true')
 
+# save the dataframe
 save_path = Path("../data")
 save_path.mkdir(exist_ok=True)
-
-lemma_id = "machine_nn01"
-
-senses_df = query_oed(credentials,'word',lemma_id,'include_senses=true&include_quotations=true')
 
 senses_df.to_pickle(save_path / (lemma_id+"_senses.pickle"))  
 
