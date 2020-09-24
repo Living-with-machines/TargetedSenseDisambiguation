@@ -159,7 +159,7 @@ def traverse_thesaurus(auth:dict,
 
     Given a dataframe with senses of a specific lemma
     This function attempts to find all sibling and descendants 
-    of the last semantic class (the leave) of each sense.
+    of the last semantic class (the leaf) of each sense.
     
     the start and end argument allow to define a date range
     these years are the added to current_in flag
@@ -216,3 +216,4 @@ if __name__ == "__main__":
     senses_df.to_pickle(save_path / f"senses_{lemma_id}.pickle")
 
     senses_df.to_csv(save_path / f"senses_{lemma_id}.tsv",sep='\t')
+
