@@ -1,7 +1,7 @@
 import json,pickle
 import requests
 import pandas as pd
-from pathlib import Path
+from pathlib import Path, PosixPath
 from argparse import ArgumentParser
 
 def query_oed(
@@ -145,24 +145,74 @@ def semantic_class_ids_to_descriptions(semantic_class_lists,credentials):
 
     return sem_class_dict
 
-lemma_id = parse_input_commands()
 
-with open('../oed_experiments/oed_credentials.json') as f:
-    credentials = json.load(f)
 
-#query the API and get the json response
-sense_json = query_oed(credentials,'word',lemma_id,'include_senses=true&include_quotations=true')
+def traverse_thesaurus(auth:dict,
+                  query_df:pd.DataFrame,
+                  save_to:PosixPath=Path("./data"),
+                  start:int=1750,
+                  end:int=1950):
+    """
+    TO DOs:
+     - get quotations
+     - merge all information into one dataframe
 
-# convert the json in a dataframe
-senses_df = convert_json_to_dataframe(sense_json)
+    Given a dataframe with senses of a specific lemma
+    This function attempts to find all sibling and descendants 
+    of the last semantic class (the leave) of each sense.
+    
+    the start and end argument allow to define a date range
+    these years are the added to current_in flag
+    
+    Arguments:
+        auth (dict): authenticationn credentials for the OED API
+        query_df (pd.DataFrame): pandas dataframe with and export of the OED API
+        save_to (PosixPath): where to store the output
+        start (int): sense should be current from this year
+        end (int): sense should be current until this year
+    
+    Returns
+        a dictionary which maps an semantic class idx 
+        to an array of senses that are siblings and descendants
+    """
 
-# convert semantic class ids to labels
-senses_df['semantic_class_ids'] = senses_df['semantic_class_ids'].apply(lambda x: semantic_class_ids_to_descriptions(x,credentials))
+    # get all leaves of paths shown in semantic_class_ids
+    # the last item of the lists in the semantic_class_ids columnns
+    semanticclass_ids = set([sc[-1] for scs in query_df.semantic_class_ids.to_list() for sc in scs])
+    # use branchsenses of the semanticclass endpoint
+    # this return an "array of senses that belong to the 
+    # semantic class specified by ID, plus senses that 
+    # belong to its child and descendant classes." 
+    # according the OED API documentation
+    responses = {idx : query_oed(auth,'semanticclass', idx, level='branchsenses',flags=f"current_in='{start}-{end}'")
+                     for idx in semanticclass_ids}
+    with open(save_to / 'tree_traversal.pickle','wb') as out_pickle:
+        pickle.dump(responses,out_pickle)
+    
+    return responses
+        
 
-# save the dataframe
-save_path = Path("../data")
-save_path.mkdir(exist_ok=True)
+if __name__ == "__main__":
 
-senses_df.to_pickle(save_path / (lemma_id+"_senses.pickle"))  
+    lemma_id = parse_input_commands()
 
-senses_df.to_csv(save_path / (lemma_id+"_senses.tsv"),sep='\t')
+    with open('../oed_experiments/oed_credentials.json') as f:
+        credentials = json.load(f)
+
+    #query the API and get the json response
+    sense_json = query_oed(credentials,'word',lemma_id,'include_senses=true&include_quotations=true')
+
+    # convert the json in a dataframe
+    senses_df = convert_json_to_dataframe(sense_json)
+
+    # convert semantic class ids to labels
+    #senses_df['semantic_class_ids'] = senses_df['semantic_class_ids'].apply(lambda x: semantic_class_ids_to_descriptions(x,credentials))
+
+    # save the dataframe
+
+    save_path = Path("../data")
+    save_path.mkdir(exist_ok=True)
+
+    senses_df.to_pickle(save_path / f"senses_{lemma_id}.pickle")
+
+    senses_df.to_csv(save_path / f"senses_{lemma_id}.tsv",sep='\t')
