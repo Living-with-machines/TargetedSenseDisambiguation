@@ -155,10 +155,6 @@ def traverse_thesaurus(auth:dict,
                   start:int=1750,
                   end:int=1950):
     """
-    TO DOs:
-     - get quotations
-     - merge all information into one dataframe
-
     Given a dataframe with senses of a specific lemma
     This function attempts to find all sibling and descendants 
     of the last semantic class (the leaf) of each sense.
@@ -186,7 +182,7 @@ def traverse_thesaurus(auth:dict,
     # semantic class specified by ID, plus senses that 
     # belong to its child and descendant classes." 
     # according the OED API documentation
-    responses = {idx : query_oed(auth,'semanticclass', idx, level='branchsenses',flags=f"current_in='{start}-{end}'")
+    responses = {idx : query_oed(auth,'semanticclass', idx, level='branchsenses',flags=f"current_in='{start}-{end}'&limit=1000")
                      for idx in semanticclass_ids}
     with open(save_to / 'tree_traversal.pickle','wb') as out_pickle:
         pickle.dump(responses,out_pickle)
