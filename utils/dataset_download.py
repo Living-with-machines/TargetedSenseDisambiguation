@@ -237,13 +237,72 @@ def get_quotations_from_thesaurus(auth:dict,tt:dict):
     for sense_idx,sem_class_idx in senses_with_semantic_class:
         # append {sense_id : quoations} to list under key sem_class_idx
         sem_class_idx2senses[sem_class_idx].append(
-                    {sense_idx : sense_idx2quotations[sense_idx]}
+                         sense_idx2quotations[sense_idx]
                             )
     # store output    
     with open('./data/tree_traversal_quotations.pickle','wb') as out_pickle:
         pickle.dump(sem_class_idx2senses,out_pickle)
     
     return sem_class_idx2senses
+
+def merge_pickled(seed_query, tree_traversal, tree_quotations):
+    """Function that merges all information.
+    Arguments:
+        seed_query (PosixPath): ...
+        tree_traversal (PosixPath): ...
+        tree_quotations (PosixPath): ...
+        
+        
+    Returns:
+        ... 
+    """
+    def reshape_word_export(df):
+        """Helper function to reshape information
+        obtain via de word endpoint
+        """
+        rows = []
+
+        for i,row in df.iterrows():    
+            for quotation in row.quotations:
+                quot_dict = dict(quotation)
+                quot_dict.update(dict(row))
+                quot_dict['sense_id'] = row.id
+                quot_dict["id_quotation"] = quot_dict.pop("id")
+                rows.append(quot_dict)
+
+        return pd.DataFrame(rows)
+    
+    with open(seed_query,'rb') as seed_pickle:
+        root = pickle.load(seed_pickle)
+    
+    with open(tree_traversal,'rb') as tree_pickle:
+        tree = pickle.load(open(tree_traversal,'rb'))
+        
+    with open(tree_quotations,'rb') as quotations_pickle:
+        quotations = pickle.load(quotations_pickle)
+        
+    tree_df = pd.concat(
+                    [pd.DataFrame.from_dict(sense,orient='index').T 
+                            for key in tree.keys() 
+                                 for sense in tree[key]['data']
+                            ]).reset_index(drop=True, inplace=False)
+        
+    quotations_df = pd.concat(
+                        [pd.DataFrame.from_dict(sense['data'],orient='columns')
+                            for key in quotations.keys() 
+                                 for sense in quotations[key]
+                            ]).reset_index(drop=True, inplace=False)
+
+    merged_df = tree_df.merge(quotations_df[['sense_id','id','source','text']],
+                           left_on='id', right_on='sense_id',suffixes=('','_quotation'))
+    merged_df['root'] = False # distinguish root senses for extended senses
+    
+    root_df = reshape_word_export(root)
+    root_df["root"] = True # distinguish root senses for extended senses
+    
+    columns = list(set(merged_df.columns).intersection(set(root_df.columns)))
+    
+    return pd.concat([root_df[columns],merged_df[columns]])
         
 
 if __name__ == "__main__":
