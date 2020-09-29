@@ -203,9 +203,8 @@ def get_quotations_from_thesaurus(auth:dict,tt:dict):
          map the lowest semantic class to all the sense ids
          
     Returns:
-        a nested dictionary which maps semantic class ids
-        for a dictionary which, in turn, maps sense ids to 
-        the quoations listed in the OED.
+        a dictionary which maps semantic class ids
+        to the quoations listed in the OED.
      
     """
     # get a set of tuples with all the sense idx in the first position
@@ -242,19 +241,30 @@ def get_quotations_from_thesaurus(auth:dict,tt:dict):
     return sem_class_idx2senses
 
 def merge_pickled(seed_query, tree_traversal, tree_quotations):
-    """Function that merges all information.
+    """Function that merges all information from previously
+    generated pickle files. This includes:
+        (a) Seed senses: senses retrieve via the word endpoint. 
+            This is the seed query from which we expand
+        (b) Expanded senses: expanded set of senses: using branchsenses we retrieve
+            siblings and descendants for each of the seed senses
+        (c) Quotations for expanded senses: a pickle file 
+            with all quotes for senses retrieved in (b)
     Arguments:
-        seed_query (PosixPath): ...
-        tree_traversal (PosixPath): ...
-        tree_quotations (PosixPath): ...
+        seed_query (PosixPath): Seed senses pickle file
+        tree_traversal (PosixPath): Expanded senses pickle file
+        tree_quotations (PosixPath): Quotations for expanded senses pickle file
         
         
     Returns:
-        ... 
+        a pd.DataFrame, one quotations per row 
     """
     def reshape_word_export(df):
         """Helper function to reshape information
-        obtain via de word endpoint
+        obtain via de word endpoint.
+        Argument:
+            df (pd.DataFrame): a dataframe derived via de work endpoint with quotation flag set to True
+        Returns:
+            a pd.DataFrame with one quotation per row
         """
         rows = []
 
@@ -295,7 +305,8 @@ def merge_pickled(seed_query, tree_traversal, tree_quotations):
     
     root_df = reshape_word_export(root)
     root_df["root"] = True # distinguish root senses for extended senses
-    
+   
+    # use only columns that appear in both root_df and merged_df
     columns = list(set(merged_df.columns).intersection(set(root_df.columns)))
     
     return pd.concat([root_df[columns],merged_df[columns]])
@@ -308,21 +319,33 @@ if __name__ == "__main__":
     with open('../oed_experiments/oed_credentials.json') as f:
         credentials = json.load(f)
 
+        
+    save_path = Path("./data")
+    save_path.mkdir(exist_ok=True)
+    
     #query the API and get the json response
-    sense_json = query_oed(credentials,'word',lemma_id,'include_senses=true&include_quotations=true')
+    sense_json = query_oed(credentials,'word',lemma_id,flags='include_senses=true&include_quotations=true')
 
     # convert the json in a dataframe
     senses_df = convert_json_to_dataframe(sense_json)
 
-    # convert semantic class ids to labels
-    #senses_df['semantic_class_ids'] = senses_df['semantic_class_ids'].apply(lambda x: semantic_class_ids_to_descriptions(x,credentials))
-
     # save the dataframe
-
-    save_path = Path("../data")
-    save_path.mkdir(exist_ok=True)
-
+    # as pickle
     senses_df.to_pickle(save_path / f"senses_{lemma_id}.pickle")
-
+    # as csv
     senses_df.to_csv(save_path / f"senses_{lemma_id}.tsv",sep='\t')
-
+    
+    # get all senses that are siblings and descendants
+    # of the semantic class of senses listed in previously obtained query 
+    responses = traverse_thesaurus(credentials,senses_df)
+    
+    # get all quoations for the senses in the responses variable
+    quotations = get_quotations_from_thesaurus(credentials,responses)
+    
+    # merge and save all information stored in the seperate pickle files
+    df = merge_pickled(Path("./data/senses_machine_nn01.pickle"),
+                   Path("./data/tree_traversal.pickle"),
+                   Path("./data/tree_traversal_quotations.pickle"))
+    
+    df.to_pickle(f"./data/{lemma_id}_all.pickle")
+   
