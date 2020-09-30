@@ -343,7 +343,7 @@ if __name__ == "__main__":
     quotations = get_quotations_from_thesaurus(credentials,responses)
     
     # merge and save all information stored in the seperate pickle files
-    df = merge_pickled(Path("./data/senses_machine_nn01.pickle"),
+    df = merge_pickled(Path(f"./data/senses_{lemma_id}.pickle"),
                    Path("./data/tree_traversal.pickle"),
                    Path("./data/tree_traversal_quotations.pickle"))
     
