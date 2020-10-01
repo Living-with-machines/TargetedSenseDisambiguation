@@ -282,7 +282,7 @@ def merge_pickled(seed_query, tree_traversal, tree_quotations):
         root = pickle.load(seed_pickle)
     
     with open(tree_traversal,'rb') as tree_pickle:
-        tree = pickle.load(open(tree_pickle,'rb'))
+        tree = pickle.load(tree_pickle)
         
     with open(tree_quotations,'rb') as quotations_pickle:
         quotations = pickle.load(quotations_pickle)
