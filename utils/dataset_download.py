@@ -149,7 +149,8 @@ def semantic_class_ids_to_descriptions(semantic_class_lists,credentials):
 
 
 
-def traverse_thesaurus(auth:dict,
+def get_branchsenses(auth:dict,
+                  lemma_id:str,
                   query_df:pd.DataFrame,
                   save_to:PosixPath=Path("./data"),
                   start:int=1750,
@@ -164,6 +165,7 @@ def traverse_thesaurus(auth:dict,
     
     Arguments:
         auth (dict): authenticationn credentials for the OED API
+        lemma_id (str): id of the lemma used for generating the seed dataframe
         query_df (pd.DataFrame): pandas dataframe with and export of the OED API
         save_to (PosixPath): where to store the output
         start (int): sense should be current from this year
@@ -184,8 +186,72 @@ def traverse_thesaurus(auth:dict,
     # according the OED API documentation
     responses = {idx : query_oed(auth,'semanticclass', idx, level='branchsenses',flags=f"current_in='{start}-{end}'&limit=1000")
                      for idx in semanticclass_ids}
-    with open(save_to / 'tree_traversal.pickle','wb') as out_pickle:
+    with open(save_to / f'branch_senses_{lemma_id}.pickle','wb') as out_pickle:
         pickle.dump(responses,out_pickle)
+    
+    return responses
+
+def get_synset(auth:dict,
+            lemma_id:str,
+            query_df:pd.DataFrame,
+            save_to:PosixPath=Path("./data"),
+            start:int=1750,
+            end:int=1950):
+    """
+    Given a dataframe with senses of a specific lemma
+    This function attempts to 
+        (a) get synonyms of each sense 
+        (b) get descendants of each sense + synonym senses
+
+    the start and end argument allow to define a date range
+    these years are the added to current_in flag
+    
+    Arguments:
+        auth (dict): authenticationn credentials for the OED API
+        lemma_id (str): id of the lemma used for generating the seed dataframe
+        query_df (pd.DataFrame): pandas dataframe with and export of the OED API
+        save_to (PosixPath): where to store the output
+        start (int): sense should be current from this year
+        end (int): sense should be current until this year
+    
+    Returns
+        a dictionary which maps an semantic class idx 
+        to an array of senses that are siblings and descendants
+    """
+
+    # get all semantic class ids for the sense in seed dataframe
+    query_semanticclass_ids = set([sc[-1] for scs in query_df.semantic_class_ids.to_list() for sc in scs])
+
+    # get all synonyms for each sense
+    synonyms = [query_oed(credentials,'sense',s,
+                          level='synonyms',
+                          flags=f"current_in='{start}-{end}'&limit=1000") 
+                                for s in tqdm(query_df.id.unique())]
+
+    # transform list of synonyms to a dataframe
+    synonyms_df = pd.DataFrame([s for syn in synonyms for s in syn['data']])
+
+    # get semantic class ids of all synonym senses
+    # the last item of the list in the semantic_class_ids columnns
+    synonyms_semanticclass_ids = set([sc[-1] for scs in synonyms_df.semantic_class_ids.to_list() for sc in scs])
+
+    # merge semantic class ids of the query senses with synonym senses
+    semanticclass_ids = synonyms_semanticclass_ids.union(query_semanticclass_ids)
+
+    # get all the descendants of senses
+    descendants = [query_oed(auth,'semanticclass', idx, 
+                                level='descendants',
+                                flags=f"current_in='{start}-{end}'&limit=1000")
+                    for idx in semanticclass_ids]
+
+    descendants_df = pd.DataFrame([s for des in descendants for s in des['data']])
+    # store information
+    #with open(save_to / f'branch_synonym_senses_{lemma_id}.pickle','wb') as out_pickle:
+    #    pickle.dump(responses,out_pickle)
+    merged = pd.concat([])
+
+
+    synonyms_df.to_pickle(save_to / f'synonyms_{lemma_id}.pickle')
     
     return responses
 
