@@ -12,7 +12,7 @@ def query_oed(
           query:str,
           flags:str='',
           level:str='',
-          verbose=True):
+          verbose=False):
     
     """
     Get data from Oxford English Dictionary.
@@ -65,6 +65,9 @@ def query_oed(
     base_url = "https://oed-researcher-api.oxfordlanguages.com/oed/api/v0.2"
     
     url = f"{base_url}/{endpoint}/{query}" # build url
+    
+    if verbose:
+        print(url)
     
     if level: # if a level has been specified add this to the url
         url = f"{url}/{level}/"
