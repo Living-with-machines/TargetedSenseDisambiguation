@@ -64,12 +64,12 @@ def query_oed(
     
     base_url = "https://oed-researcher-api.oxfordlanguages.com/oed/api/v0.2"
     
-    url = f"{base_url}/{endpoint}/{query}" # build url
+    url = f"{base_url}/{endpoint}/{query}" # build url
     
-    if level: # if a level has been specified add this to the url
+    if level: # if a level has been specified add this to the url
         url = f"{url}/{level}/"
     
-    if flags: #  add flag to url with a question mark
+    if flags: #  add flag to url with a question mark
         url = f"{url}?{flags}"
         
     response = requests.get(url, headers=auth) 
@@ -174,7 +174,7 @@ def traverse_thesaurus(auth:dict,
         to an array of senses that are siblings and descendants
     """
 
-    # get all leaves of paths shown in semantic_class_ids
+    # get all leaves of paths shown in semantic_class_ids
     # the last item of the lists in the semantic_class_ids columnns
     semanticclass_ids = set([sc[-1] for scs in query_df.semantic_class_ids.to_list() for sc in scs])
     # use branchsenses of the semanticclass endpoint
@@ -208,7 +208,7 @@ def get_quotations_from_thesaurus(auth:dict,tt:dict):
      
     """
     # get a set of tuples with all the sense idx in the first position
-    # and the semantic class they figure in in the second position
+    # and the semantic class they figure in in the second position
     senses_with_semantic_class = set(
                               (sense.get('id'),sc_idx,) 
                                     for sc_idx in tt.keys() 
@@ -216,16 +216,16 @@ def get_quotations_from_thesaurus(auth:dict,tt:dict):
                                        )
                                     
     
-    # map all sense ids to a the quotations
+    # map all sense ids to a the quotations
     sense_idx2quotations = {
                 sense_idx : query_oed(auth,'sense',sense_idx,level='quotations')
                         for sense_idx,semantic_class_idx in tqdm(senses_with_semantic_class)
                                 }
     
     # create an empty dictionary which will map
-    # semantic class ids to a list in which
+    # semantic class ids to a list in which
     # each element is again a dictionary, but
-    # on that maps sense idx to the actual quotations
+    # on that maps sense idx to the actual quotations
     sem_class_idx2senses = defaultdict(list)
     
 
@@ -306,7 +306,7 @@ def merge_pickled(seed_query, tree_traversal, tree_quotations):
     root_df = reshape_word_export(root)
     root_df["root"] = True # distinguish root senses for extended senses
    
-    # use only columns that appear in both root_df and merged_df
+    # use only columns that appear in both root_df and merged_df
     columns = list(set(merged_df.columns).intersection(set(root_df.columns)))
     
     return pd.concat([root_df[columns],merged_df[columns]])
@@ -332,17 +332,17 @@ if __name__ == "__main__":
     # save the dataframe
     # as pickle
     senses_df.to_pickle(save_path / f"senses_{lemma_id}.pickle")
-    # as csv
+    # as csv
     senses_df.to_csv(save_path / f"senses_{lemma_id}.tsv",sep='\t')
     
-    # get all senses that are siblings and descendants
-    # of the semantic class of senses listed in previously obtained query 
+    # get all senses that are siblings and descendants
+    # of the semantic class of senses listed in previously obtained query 
     responses = traverse_thesaurus(credentials,senses_df)
     
     # get all quoations for the senses in the responses variable
     quotations = get_quotations_from_thesaurus(credentials,responses)
     
-    # merge and save all information stored in the seperate pickle files
+    # merge and save all information stored in the seperate pickle files
     df = merge_pickled(Path(f"./data/senses_{lemma_id}.pickle"),
                    Path("./data/tree_traversal.pickle"),
                    Path("./data/tree_traversal_quotations.pickle"))
