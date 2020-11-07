@@ -160,7 +160,12 @@ def get_provenance_by_semantic_class(row):
 
 
 
-def extend_from_saved_lemma_query(auth,lemma_id,start=1750,end=1950):
+def extend_from_saved_lemma_query(auth: dict, 
+                                  lemma_id: str,
+                                  start:int=1750,
+                                  end:int=1950):
+    
+    
     """Extends senses from a dataframe generate from accessing
     the API via the word endpoint. The script first retrieves all
     senses, then synonyms for these senses, then other senses that 
@@ -171,11 +176,16 @@ def extend_from_saved_lemma_query(auth,lemma_id,start=1750,end=1950):
     select of filter words later on.
     
     Arguments:
-        lemma_id (str)
-        start (int)
-        end (int)
+        auth (dict): a dictionary with authentication inforamtion, needs details for 'app_id' and 'app_key'
+        
+        lemma_id (str): define lemma id, assumes this refers to a saved pickle file in the format ./data/sense_{lemma_id}.pickle
+        
+        start (int): define start year for harvesting senses used for filtering senses using the 'current_in' flag
+        
+        end (int): define end year for harvesting senses used for filtering senses using the 'current_in' flag
     Returns
-        a pandas.DataFrame
+    
+        a pandas.DataFrame with extended number of senses
     """    
     
     # helper function to get last element in a nested list
