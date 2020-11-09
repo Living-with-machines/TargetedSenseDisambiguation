@@ -163,7 +163,7 @@ def get_provenance_by_semantic_class(row: pd.Series) -> list:
  
     return provenance
 
-def extend_from_saved_lemma_query(auth: dict, 
+def extend_from_lemma(auth: dict, 
                                   lemma_id: str,
                                   start:int=1750,
                                   end:int=1950) -> pd.DataFrame:
@@ -177,7 +177,10 @@ def extend_from_saved_lemma_query(auth: dict,
     
     This script also aims to record the "provenance" of words, 
     their relation to the initial query, which can help to 
-    select of filter words later on.
+    select of filter words. 
+    
+    Filtering words based on their provenance is handled by the
+    filter_senses_by_provenance function.
     
     Arguments:
         auth (dict): a dictionary with authentication inforamtion, needs details for 'app_id' and 'app_key'
@@ -328,6 +331,175 @@ def harvest_quotations_by_sense_id(auth: dict,lemma_id: str) -> pd.DataFrame:
     quotation_df.to_pickle(f'./data/quotations_{lemma_id}.pickle')
     return quotation_df
 
+def filter_by_year_range(dr: dict, target_start: int, target_end: int) -> bool:
+    """
+    Helper function that expects a datarange dictionary from the OED
+    Is used for filter senses that are outside the historical scope 
+    of the research. The date range is defined by the target_start and target_end
+    arguments. If the date range of the sense has NO overlap with the
+    target period, then return False, otherwise return True
+    
+    Arguments:
+        dr (dict): daterange dict of OED
+        target_start (int): start year of target period
+        target_end (int): end year of target period
+    
+    Returns:
+        return a boolean, True if there is overlap between
+        the target period and the date range of the sense
+    """
+    # if there is not start date, set to 0
+    if dr.get('start',None) is None:
+        sense_start = 0
+    else:
+        sense_start = dr['start']
+    
+    
+    # if there is no end date, set to 2021
+    if dr.get('end',None) is None:
+        sense_end = 2021
+    else:
+        sense_end = dr['end']
+    
+    # if there is an intersection between the target period and sense period empty
+    # return True
+    if set(range(sense_start,sense_end+1)).intersection(set(range(target_start,target_end+1))):
+        return True
+    
+    # otherwise return False
+    return False
+
+def select_senses_by_provenance(sub_df: pd.DataFrame, 
+                                item_ids: set, 
+                                relations: list) -> tuple:
+    """Helper function that given a subsection of a dataframe filters senses based
+    on a set of target sense ids and relations. This function requires a dataframe created
+    by the extend_from_lemma function.
+    
+    Arguments:
+        sub_df (pd.DataFrame): slice of a pd.DataFrame
+        item_ids (set): include senses related to these items 
+                        these can be sense ids or semantic class ids
+        relations (list): filter based on these relations 
+                          options are: seed, synonyms, sibling, descedant
+        
+    Returns:
+        a tuple that contains a list with position indices and a list with items
+    """
+    
+    indices, items = set(),set()
+    
+    for i, row in sub_df.iterrows():
+        for oed_id, relation, prov_id in row.provenance:
+            # if the provenance and relation match to the arguments
+            # add the items and position to the respective lists
+            if (prov_id in item_ids) and (relation in relations):
+                indices.add(i) ; items.add(oed_id)
+                
+    return list(indices), list(items)
+
+def filter_senses(df, sense_ids:set, 
+                      relations:list, 
+                      start:int, 
+                      end:int,
+                      verbose=True) -> set:
+    """
+    Main function that filter sense by a give date range 
+    and set of seed senses with provenace relations. 
+    The seeds sense are selected from the lemma dataframe
+    used as starting point for harvesting. Builds on dataframe created 
+    by the extend_from_lemma function.
+    
+    Returns selected senses as a set. 
+    
+    Arguments:
+        df (pd.DataFrame): main dataframe created by the extend_from_lemma
+        senses_ids (set): seeds senses from the lemma used for filtering
+        relations (list): filter based on these relations
+        start (int): beginning of target period
+        end (int): end of target period
+        verbose (bool): print outcomes of intermediate steps
+    
+    Returns:
+        set with senses
+    """
+    print("# senses before filtering by date =", df.shape[0])
+    df = df[df.daterange.apply(filter_by_year_range, target_start=start, target_end=end)]
+    print("# senses after filtering by date =", df.shape[0])
+    
+    
+    seeds = df[df['provenance_type'] == "seed"].reset_index(inplace=False)
+    # select words retrieved as synonyms
+    # exclude those that already appear in the seed dataframe
+    # reset index after selection
+    synonyms = df[(df['provenance_type'] == "synonym") & (~df.id.isin(seeds.id))
+                     ].reset_index(inplace=False)
+    
+    # select words retrieved as a branch of the synonym or a seed sense
+    # exclude those that already appear as seed or synonym
+    branches = df[(df['provenance_type'] == "branch") & (~df.id.isin(set(seeds.id).union(set(synonyms.id))))
+                      ].reset_index(inplace=False)
+    
+    print("\n\n# of seed senses", seeds.shape[0],
+          "\n# of synonyms", synonyms.shape[0],
+          "\n# of branch senses", branches.shape[0])
+
+    if "seed" in relations:
+        seeds_selected = set(seeds[seeds.id.isin(sense_ids)].id)
+
+    if "synonym" in relations:
+        syn_sel_indices, synonyms_selected = select_senses_by_provenance(synonyms,sense_ids,relations)
+    
+    # as branches are retrieved by semantic class id, we get the semantic class ids 
+    # of the seed AND synonyms senses
+    select_seed_semantic_class_id = seeds[seeds.id.isin(seeds_selected)].semantic_class_last_id
+    select_seed_semantic_class_id = set().union(*map(set,select_seed_semantic_class_id))
+    
+    select_synonyms_semantic_class_id = synonyms[synonyms.id.isin(synonyms_selected)].semantic_class_last_id
+    select_synonyms_semantic_class_id = set().union(*map(set,select_synonyms_semantic_class_id))
+    
+    selected_semantic_class_id = set(select_seed_semantic_class_id).union(set(select_synonyms_semantic_class_id))
+    
+    branch_sel_indices, branches_selected = select_senses_by_provenance(branches,selected_semantic_class_id,relations)
+    
+    
+    senses = set(branches.iloc[branch_sel_indices].id # for the branches we return the sense ids not the semantic class ids
+               ).union(set(synonyms.iloc[syn_sel_indices].id)
+                        ).union(set(seeds_selected))
+    if verbose:
+        print('\n\n# of seeds selected', len(seeds_selected),
+              '\n# of synonyms selected', len(syn_sel_indices),
+              '\n# of branches selected', len(branches_selected))
+    return senses
+
+def obtain_quotations_for_senses(df_quotations:  pd.DataFrame,
+                                  senses: set) -> pd.DataFrame:
+    """Create a dataframe with quotations and their metadata for 
+    a selected set of senses. This function builds on
+    harvest_quotations_by_sense_id.
+    
+    Arguments:
+        df_quotations: dataframe with quotations, created using harvest_quotations_by_sense_id
+        senses (set): set of senses for which we want to obtain quotations
+        
+    Returns:
+        pd.DataFrame with quotations
+        
+    """
+    df = pd.concat([
+        pd.DataFrame.from_records(df_quotations.text.values),
+        pd.DataFrame.from_records(df_quotations.source.values)
+            ], axis=1)
+    df['year'] = df_quotations['year']
+    df['sense_id'] = df_quotations['sense_id']
+    df_selected = df[df.sense_id.isin(senses)]
+    
+    df_selected.drop_duplicates(inplace=True)
+    
+    return df_selected
+
+
+
 # # an overall dictionary of ids: descriptions to avoid asking multiple times for the same id to the API
 # overall_sem_class_ids_dict = {}
 
@@ -469,56 +641,56 @@ def harvest_quotations_by_sense_id(auth: dict,lemma_id: str) -> pd.DataFrame:
     
 #     return responses
 
-def get_quotations_from_thesaurus(auth:dict,tt:dict):
-    """
-    This functions gets all quotations for senses retrieved using
-    the traverse_thesaurus function. Information retrieved with 
-    this function can be merged later with the tree traversal
-    using __enter_function_name__.
+# def get_quotations_from_thesaurus(auth:dict,tt:dict):
+#     """
+#     This functions gets all quotations for senses retrieved using
+#     the traverse_thesaurus function. Information retrieved with 
+#     this function can be merged later with the tree traversal
+#     using __enter_function_name__.
     
-    Arguments:
-        auth (dict): authenticationn credentials for the OED API
-        tt (dict): a tree traversal dict, generated by the traverse_thesaurus function
-         which uses the branchsensses level of the semanticclass endpoint for find
-         map the lowest semantic class to all the sense ids
+#     Arguments:
+#         auth (dict): authenticationn credentials for the OED API
+#         tt (dict): a tree traversal dict, generated by the traverse_thesaurus function
+#          which uses the branchsensses level of the semanticclass endpoint for find
+#          map the lowest semantic class to all the sense ids
          
-    Returns:
-        a dictionary which maps semantic class ids
-        to the quoations listed in the OED.
+#     Returns:
+#         a dictionary which maps semantic class ids
+#         to the quoations listed in the OED.
      
-    """
-    # get a set of tuples with all the sense idx in the first position
-    # and the semantic class they figure in in the second position
-    senses_with_semantic_class = set(
-                              (sense.get('id'),sc_idx,) 
-                                    for sc_idx in tt.keys() 
-                                        for sense in tt.get(sc_idx,{}).get('data',[])
-                                       )
+#     """
+#     # get a set of tuples with all the sense idx in the first position
+#     # and the semantic class they figure in in the second position
+#     senses_with_semantic_class = set(
+#                               (sense.get('id'),sc_idx,) 
+#                                     for sc_idx in tt.keys() 
+#                                         for sense in tt.get(sc_idx,{}).get('data',[])
+#                                        )
                                     
     
-    # map all sense ids to a the quotations
-    sense_idx2quotations = {
-                sense_idx : query_oed(auth,'sense',sense_idx,level='quotations')
-                        for sense_idx,semantic_class_idx in tqdm(senses_with_semantic_class)
-                                }
+#     # map all sense ids to a the quotations
+#     sense_idx2quotations = {
+#                 sense_idx : query_oed(auth,'sense',sense_idx,level='quotations')
+#                         for sense_idx,semantic_class_idx in tqdm(senses_with_semantic_class)
+#                                 }
     
-    # create an empty dictionary which will map
-    # semantic class ids to a list in which
-    # each element is again a dictionary, but
-    # on that maps sense idx to the actual quotations
-    sem_class_idx2senses = defaultdict(list)
+#     # create an empty dictionary which will map
+#     # semantic class ids to a list in which
+#     # each element is again a dictionary, but
+#     # on that maps sense idx to the actual quotations
+#     sem_class_idx2senses = defaultdict(list)
     
 
-    for sense_idx,sem_class_idx in senses_with_semantic_class:
-        # append {sense_id : quoations} to list under key sem_class_idx
-        sem_class_idx2senses[sem_class_idx].append(
-                         sense_idx2quotations[sense_idx]
-                            )
-    # store output    
-    with open('./data/tree_traversal_quotations.pickle','wb') as out_pickle:
-        pickle.dump(sem_class_idx2senses,out_pickle)
+#     for sense_idx,sem_class_idx in senses_with_semantic_class:
+#         # append {sense_id : quoations} to list under key sem_class_idx
+#         sem_class_idx2senses[sem_class_idx].append(
+#                          sense_idx2quotations[sense_idx]
+#                             )
+#     # store output    
+#     with open('./data/tree_traversal_quotations.pickle','wb') as out_pickle:
+#         pickle.dump(sem_class_idx2senses,out_pickle)
     
-    return sem_class_idx2senses
+#     return sem_class_idx2senses
 
 # def merge_pickled(seed_query, tree_traversal, tree_quotations):
 #     """Function that merges all information from previously
