@@ -118,7 +118,7 @@ def parse_input_commands():
         parser.exit("ERROR: The lemma id is missing, you should query it for instance using -l machine_nn01")
 
         
-def get_provenance_by_semantic_class(row):
+def get_provenance_by_semantic_class(row: pd.Series) -> list:
     """
     decide on the relation between the sense and the target querry
     here we use the lowest semantic class id to decide on the relation
@@ -138,38 +138,42 @@ def get_provenance_by_semantic_class(row):
     
     provenance = []
     
+    # one sense can belong to multiple semantic class ids
     for sc_ids in row.semantic_class_ids:
         relation = ''
         
         # scenario 1
+        # if the last id equals provenance, the relation is sibling
         if sc_ids[-1] == row.provenance_pivot:
             relation = 'sibling'
         
         # scenario 2
+        # if not, then the relation is descendant
         elif (row.provenance_pivot in sc_ids):
             relation = 'descendant'
         
-        # exclude other relation
+        # exclude other relations
         if relation:
             provenance.append([sc_ids[-1], relation, row.provenance_pivot])
     
+    # double check, each sense SHOULD have a provenance
+    # if not this will print a warning message
     if not provenance:
-        print(f'No descendants or siblings found for {row.id}')
+        print(f'Warning: No descendants or siblings found for {row.id}')
  
     return provenance
-
-
 
 def extend_from_saved_lemma_query(auth: dict, 
                                   lemma_id: str,
                                   start:int=1750,
-                                  end:int=1950):
+                                  end:int=1950) -> pd.DataFrame:
     
     
-    """Extends senses from a dataframe generate from accessing
-    the API via the word endpoint. The script first retrieves all
-    senses, then synonyms for these senses, then other senses that 
-    match the semantic classes of the retrieved senses.
+    """Extends senses from a dataframe created from information obtained
+    via the OED API word endpoint. The script first retrieves all
+    senses (either from saved pickle or from the API),
+    then obtains synonyms for these senses, then continues to dowload 
+    other senses that based on their the semantic classes.
     
     This script also aims to record the "provenance" of words, 
     their relation to the initial query, which can help to 
@@ -191,10 +195,21 @@ def extend_from_saved_lemma_query(auth: dict,
     # helper function to get last element in a nested list
     get_last_id = lambda nested_list :[l[-1] for l in nested_list]
     
-    # load seed query dataframe
-    query_df = pd.read_pickle(f"./data/senses_{lemma_id}.pickle")
+    # load seed query dataframe or download from api
+    lemma_path = f"./data/senses_{lemma_id}.pickle"
     
-    # use the sense endpoint to ensure all information 
+    if Path(lemma_path).is_file():
+        print(f'Loading senses for {lemma_id} from pickle.')
+        query_df = pd.read_pickle(lemma_path)
+    else:
+        print(f'Dowloading senses for {lemma_id} from OED API.')
+        sense_json = query_oed(auth,'word',lemma_id,flags='include_senses=true&include_quotations=true')
+        # convert the json in a dataframe
+        senses_df = convert_json_to_dataframe(sense_json)
+        # save the datafram as pickle
+        senses_df.to_pickle(f"./data/senses_{lemma_id}.pickle")
+    
+    # from here on we _only_ use the sense endpoint to ensure all information 
     # can be properly concatenated in one dataframe
     
     # retrieve all sense ids
@@ -295,6 +310,23 @@ def extend_from_saved_lemma_query(auth: dict,
     
     return extended_df
 
+def harvest_quotations_by_sense_id(auth: dict,lemma_id: str) -> pd.DataFrame:
+    """
+    Given a dataframe obtained via the OED sense endpoints
+    retrieve all quotations for these senses and save them
+    as a dataframe, path ./data/quotations_{lemma_id}.pickle
+     
+    Argument:
+        lemma_id (str): lemma of the seed query
+    Returns:
+        saves and returns a pd.DataFrame with quotations
+    """
+    df = pd.read_pickle(f'./data/extended_{lemma_id}.pickle')
+    sense_ids = set(df.id)
+    responses = [query_oed(auth,'sense',sense_id,level='quotations') for sense_id in tqdm(sense_ids)]
+    quotation_df = pd.DataFrame([q for r in responses for q in r['data']])
+    quotation_df.to_pickle(f'./data/quotations_{lemma_id}.pickle')
+    return quotation_df
 
 # # an overall dictionary of ids: descriptions to avoid asking multiple times for the same id to the API
 # overall_sem_class_ids_dict = {}
@@ -563,16 +595,19 @@ def get_quotations_from_thesaurus(auth:dict,tt:dict):
 if __name__ == "__main__":
 
     lemma_id = parse_input_commands()
+    
+    start = 1760
+    end = 1920
 
     with open('../oed_experiments/oed_credentials.json') as f:
-        credentials = json.load(f)
+        auth = json.load(f)
 
         
     save_path = Path("./data")
     save_path.mkdir(exist_ok=True)
     
     #query the API and get the json response
-    sense_json = query_oed(credentials,'word',lemma_id,flags='include_senses=true&include_quotations=true')
+    sense_json = query_oed(auth,'word',lemma_id,flags='include_senses=true&include_quotations=true')
 
     # convert the json in a dataframe
     senses_df = convert_json_to_dataframe(sense_json)
@@ -583,17 +618,18 @@ if __name__ == "__main__":
     # as csv
     senses_df.to_csv(save_path / f"senses_{lemma_id}.tsv",sep='\t')
     
+    extend_from_saved_lemma_query(auth,lemma_id,start,end)
     # get all senses that are siblings and descendants
     # of the semantic class of senses listed in previously obtained query 
-    responses = traverse_thesaurus(credentials,senses_df)
+    # responses = traverse_thesaurus(credentials,senses_df)
     
     # get all quoations for the senses in the responses variable
-    quotations = get_quotations_from_thesaurus(credentials,responses)
+    #quotations = get_quotations_from_thesaurus(credentials,responses)
     
     # merge and save all information stored in the seperate pickle files
-    df = merge_pickled(Path(f"./data/senses_{lemma_id}.pickle"),
-                   Path("./data/tree_traversal.pickle"),
-                   Path("./data/tree_traversal_quotations.pickle"))
+    # df = merge_pickled(Path(f"./data/senses_{lemma_id}.pickle"),
+    #                Path("./data/tree_traversal.pickle"),
+    #                Path("./data/tree_traversal_quotations.pickle"))
     
-    df.to_pickle(f"./data/{lemma_id}_all.pickle")
+    #df.to_pickle(f"./data/{lemma_id}_all.pickle")
    
