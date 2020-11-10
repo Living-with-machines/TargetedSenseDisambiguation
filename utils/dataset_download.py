@@ -164,9 +164,9 @@ def get_provenance_by_semantic_class(row: pd.Series) -> list:
     return provenance
 
 def extend_from_lemma(auth: dict, 
-                                  lemma_id: str,
-                                  start:int=1750,
-                                  end:int=1950) -> pd.DataFrame:
+                      lemma_id: str,
+                      start:int=1750,
+                      end:int=1950) -> pd.DataFrame:
     
     
     """Extends senses from a dataframe created from information obtained
@@ -208,9 +208,9 @@ def extend_from_lemma(auth: dict,
         print(f'Dowloading senses for {lemma_id} from OED API.')
         sense_json = query_oed(auth,'word',lemma_id,flags='include_senses=true&include_quotations=true')
         # convert the json in a dataframe
-        senses_df = convert_json_to_dataframe(sense_json)
+        query_df = convert_json_to_dataframe(sense_json)
         # save the datafram as pickle
-        senses_df.to_pickle(f"./data/senses_{lemma_id}.pickle")
+        query_df.to_pickle(f"./data/senses_{lemma_id}.pickle")
     
     # from here on we _only_ use the sense endpoint to ensure all information 
     # can be properly concatenated in one dataframe
@@ -313,22 +313,33 @@ def extend_from_lemma(auth: dict,
     
     return extended_df
 
-def harvest_quotations_by_sense_id(auth: dict,lemma_id: str) -> pd.DataFrame:
+def harvest_quotations(auth: dict,lemma_id: str, level: str) -> pd.DataFrame:
     """
     Given a dataframe obtained via the OED sense endpoints
-    retrieve all quotations for these senses and save them
+    retrieve all quotations for the included words or senses and save them
     as a dataframe, path ./data/quotations_{lemma_id}.pickle
      
     Argument:
         lemma_id (str): lemma of the seed query
+        level (str): endpoint for harvesting quotatios (sense or word)
+                    when using the sense endpoint we only get quotations relevant to
+                    the initial lemma
     Returns:
         saves and returns a pd.DataFrame with quotations
     """
     df = pd.read_pickle(f'./data/extended_{lemma_id}.pickle')
-    sense_ids = set(df.id)
-    responses = [query_oed(auth,'sense',sense_id,level='quotations') for sense_id in tqdm(sense_ids)]
+    if level == 'sense':
+        ids = set(df.id)
+        suffix = 'related'
+    elif level == 'word':
+        ids = set(df.word_id)
+        suffix = 'all'
+    else:
+        raise Exception("Choose 'word' or 'sense' as values for the 'level' argument")
+
+    responses = [query_oed(auth,level, idx, level='quotations') for idx in tqdm(ids)]
     quotation_df = pd.DataFrame([q for r in responses for q in r['data']])
-    quotation_df.to_pickle(f'./data/quotations_{lemma_id}.pickle')
+    quotation_df.to_pickle(f'./data/quotations_{suffix}_{lemma_id}.pickle')
     return quotation_df
 
 def filter_by_year_range(dr: dict, target_start: int, target_end: int) -> bool:
