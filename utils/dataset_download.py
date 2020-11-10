@@ -483,8 +483,12 @@ def filter_senses(df, sense_ids:set,
               '\n# of branches selected', len(branches_selected))
     return senses
 
-def obtain_quotations_for_senses(df_quotations:  pd.DataFrame,
-                                  senses: set) -> pd.DataFrame:
+def obtain_quotations_for_senses(
+                      df_quotations:  pd.DataFrame,
+                      senses: set,
+                      start:int,
+                      end: int
+                    ) -> pd.DataFrame:
     """Create a dataframe with quotations and their metadata for 
     a selected set of senses. This function builds on
     harvest_quotations_by_sense_id.
@@ -503,11 +507,14 @@ def obtain_quotations_for_senses(df_quotations:  pd.DataFrame,
             ], axis=1)
     df['year'] = df_quotations['year']
     df['sense_id'] = df_quotations['sense_id']
-    df_selected = df[df.sense_id.isin(senses)]
+    df = df[df.sense_id.isin(senses)]
+    df = df[(start <= df.year) & (df.year <= end)]
     
-    df_selected.drop_duplicates(inplace=True)
+    df.drop_duplicates(inplace=True)
     
-    return df_selected
+    return df
+
+
 
 
 
