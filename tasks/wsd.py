@@ -24,7 +24,6 @@ def random_predict(definition_df):
 
 def tok_overlap_ranking(sent,definition_df):
     definition_df["tok_overlap"] = definition_df.apply (lambda row: token_overlap(sent,row["definition"]), axis=1)
-#    results = definition_df.iloc[definition_df['tok_overlap'].idxmax()]["sense_id"]
     results = definition_df.set_index('sense_id').to_dict()["tok_overlap"]
     return results
 
