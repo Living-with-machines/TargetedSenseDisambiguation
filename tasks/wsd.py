@@ -7,7 +7,9 @@ nlp = spacy.load("en_core_web_sm")
 def eval(ranking,gold):
     preds = []
     for line in ranking:
-        sort_ranking = [[k, v] for k, v in sorted(line.items(), key=lambda item: item[1],reverse=True)]
+        #ranking the dictionary by the label, the higher the better
+        sort_ranking = [[sense_id, score] for sense_id, score in sorted(line.items(), key=lambda item: item[1],reverse=True)]
+        # taking the first one as prediction (the list of list might be useful when we compute other metrics)
         p = sort_ranking[0][0]
         preds.append(p)
     p,r,f1 = [round(x,3) for x in precision_recall_fscore_support(gold,preds, average='macro')[:3]]
