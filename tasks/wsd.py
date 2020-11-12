@@ -1,7 +1,5 @@
-import spacy
 from random import shuffle
 from sklearn.metrics import precision_recall_fscore_support
-
 
 ### evaluation metrics
 def eval(ranking,gold):
@@ -15,15 +13,6 @@ def eval(ranking,gold):
     p,r,f1 = [round(x,3) for x in precision_recall_fscore_support(gold,preds, average='macro')[:3]]
     microf1 = round(precision_recall_fscore_support(gold,preds, average='micro')[2],3)
     return p,r,f1,microf1
-
-
-### preprocessing (for the moment only this) we need lg for having embeddings is spacy
-nlp = spacy.load("en_core_web_lg", disable=['parser', 'ner'])
-
-def preprocess(text):
-    processed_text = nlp(text)
-    return processed_text
-
 
 ### random baseline
 def random_predict(definition_df):
@@ -49,4 +38,3 @@ def sent_embedding(sent,definition_df):
     definition_df["sent_embedding"] = definition_df.apply (lambda row: sent.similarity(row["nlp_definition"]), axis=1)
     results = definition_df.set_index('sense_id').to_dict()["sent_embedding"]
     return results
-
