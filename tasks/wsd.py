@@ -17,8 +17,8 @@ def eval(ranking,gold):
     return p,r,f1,microf1
 
 
-### preprocessing (for the moment only this)
-nlp = spacy.load("en_core_web_sm", disable=['parser', 'ner'])
+### preprocessing (for the moment only this) we need lg for having embeddings is spacy
+nlp = spacy.load("en_core_web_lg", disable=['parser', 'ner'])
 
 def preprocess(text):
     processed_text = nlp(text)
@@ -44,5 +44,9 @@ def token_overlap(sent1,sent2):
     score = len(sent1 & sent2)
     return score
 
-
+# sentence embedding similarity
+def sent_embedding(sent,definition_df):
+    definition_df["sent_embedding"] = definition_df.apply (lambda row: sent.similarity(row["nlp_definition"]), axis=1)
+    results = definition_df.set_index('sense_id').to_dict()["sent_embedding"]
+    return results
 
