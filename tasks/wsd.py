@@ -28,8 +28,8 @@ def tok_overlap_ranking(sent,definition_df):
     return results
 
 def token_overlap(sent1,sent2):
-    sent1 = set([tok.text.lower() for tok in sent1])
-    sent2 = set([tok.text.lower() for tok in sent2])
+    sent1 = set([tok.lemma_ for tok in sent1 if not tok.is_punct and not tok.is_stop])
+    sent2 = set([tok.lemma_ for tok in sent2 if not tok.is_punct and not tok.is_stop])
     score = len(sent1 & sent2)
     return score
 
