@@ -130,3 +130,7 @@ dmypy.json
 code/machine_senses.tsv
 oed_experiments/oed_credentials.json
 *.tsv
+
+models/
+data/
+.DS_Store
