@@ -1,5 +1,8 @@
 from random import shuffle
 from sklearn.metrics import precision_recall_fscore_support
+import numpy as np
+import scipy
+from utils import nlp_tools
 
 ### evaluation metrics
 def eval(ranking,gold):
@@ -37,4 +40,23 @@ def token_overlap(sent1,sent2):
 def sent_embedding(sent,definition_df):
     definition_df["sent_embedding"] = definition_df.apply (lambda row: sent.similarity(row["nlp_definition"]), axis=1)
     results = definition_df.set_index('sense_id').to_dict()["sent_embedding"]
+    return results
+
+
+### ---------------------------------------------------
+### Word2Vec Lesk WSD baseline
+    
+def w2v_lesk_wsd(sent1, sent2, wemb_model):
+    sent1 = [tok.lemma_ for tok in sent1 if not tok.is_punct and not tok.is_stop]
+    sent2 = [tok.lemma_ for tok in sent2 if not tok.is_punct and not tok.is_stop]
+    
+    sent1_embedding = nlp_tools.avg_embedding(sent1,wemb_model).reshape(1,-1)
+    sent2_embedding = nlp_tools.avg_embedding(sent2,wemb_model).reshape(1,-1)
+    
+    sim = 1.0 - scipy.spatial.distance.cdist(sent1_embedding, sent2_embedding, "cosine")[0][0]
+    return sim
+
+def w2v_lesk_ranking(sent, definition_df, wemb_model):
+    definition_df["w2v_lesk_ranking"] = definition_df.apply(lambda row: w2v_lesk_wsd(sent, row["nlp_definition"], wemb_model), axis=1)
+    results = definition_df.set_index('sense_id').to_dict()["w2v_lesk_ranking"]
     return results
