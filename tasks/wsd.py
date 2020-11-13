@@ -2,6 +2,7 @@ from random import shuffle
 from sklearn.metrics import precision_recall_fscore_support
 import numpy as np
 import scipy
+from utils import nlp_tools
 
 ### evaluation metrics
 def eval(ranking,gold):
@@ -44,28 +45,13 @@ def sent_embedding(sent,definition_df):
 
 ### ---------------------------------------------------
 ### Word2Vec Lesk WSD baseline
-
-def avg_embedding(text,emb_model):
-    doc_embed = []
-    for word in text:
-            try:
-                embed_word = emb_model[word]
-                doc_embed.append(embed_word)
-            except KeyError:
-                continue   
-    if len(doc_embed)>0:
-        avg = [float(sum(col))/len(col) for col in zip(*doc_embed)]
-        avg = np.array(avg)
-        return avg
-    else:
-        return np.zeros(emb_model.vector_size)
     
 def w2v_lesk_wsd(sent1, sent2, wemb_model):
     sent1 = [tok.lemma_ for tok in sent1 if not tok.is_punct and not tok.is_stop]
     sent2 = [tok.lemma_ for tok in sent2 if not tok.is_punct and not tok.is_stop]
     
-    sent1_embedding = avg_embedding(sent1,wemb_model).reshape(1,-1)
-    sent2_embedding = avg_embedding(sent2,wemb_model).reshape(1,-1)
+    sent1_embedding = nlp_tools.avg_embedding(sent1,wemb_model).reshape(1,-1)
+    sent2_embedding = nlp_tools.avg_embedding(sent2,wemb_model).reshape(1,-1)
     
     sim = 1.0 - scipy.spatial.distance.cdist(sent1_embedding, sent2_embedding, "cosine")[0][0]
     return sim
