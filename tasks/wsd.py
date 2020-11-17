@@ -60,3 +60,20 @@ def w2v_lesk_ranking(sent, definition_df, wemb_model):
     definition_df["w2v_lesk_ranking"] = definition_df.apply(lambda row: w2v_lesk_wsd(sent, row["nlp_definition"], wemb_model), axis=1)
     results = definition_df.set_index('sense_id').to_dict()["w2v_lesk_ranking"]
     return results
+
+
+### ---------------------------------------------------
+### BERT Lesk WSD baseline
+    
+def bert_lesk_wsd(sent1, sent2, bert_sentsim_model):
+    
+    sent1_embedding = bert_sentsim_model.encode([sent1]) # Full sentence
+    sent2_embedding = bert_sentsim_model.encode([sent2]) # Full sentence
+    
+    sim = 1.0 - scipy.spatial.distance.cdist(sent1_embedding, sent2_embedding, "cosine")[0][0]
+    return sim
+
+def bert_lesk_ranking(sent, definition_df, bert_sentsim_model):
+    definition_df["bert_lesk_ranking"] = definition_df.apply(lambda row: bert_lesk_wsd(sent, row["definition"], bert_sentsim_model), axis=1)
+    results = definition_df.set_index('sense_id').to_dict()["bert_lesk_ranking"]
+    return results
