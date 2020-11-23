@@ -12,8 +12,8 @@ from typing import Union
 cosine_similiarity = lambda x, target : 1 - cosine(x,target)
 
 def filter_quotations_by_year(
-                    df_quotations:  pd.DataFrame,
-                    start:int,
+                    df_quotations: pd.DataFrame,
+                    start: int,
                     end: int
                     ) -> pd.DataFrame:
     """Create a dataframe with quotations and their metadata for 
@@ -99,6 +99,7 @@ def get_target_token_vector(row: pd.Series,
             # when using CUDA move to cpu
             vectors.append(token.embedding.cpu().numpy())
             quotation_target_tokens.append(token.text)
+
     if vectors:
         if ' '.join(quotation_target_tokens) != ' '.join(target.split()):
             print('Warning: could not properly match',' '.join(target.split()), ' with ',' '.join(quotation_target_tokens))
@@ -108,14 +109,19 @@ def get_target_token_vector(row: pd.Series,
             # return the vectors as a list
             # TO DO: add other functions for combining the vectors for the target word
             return vectors
-    
-    return None
-def prepare_data(path:PosixPath, 
-                embedding_type: TransformerWordEmbeddings,
-                start_year:int=1760, 
-                end_year:int=1920) -> pd.DataFrame:
+        else:
+            print(f"Method: {combine} for combining vectors is not implemented. Return None.")
+            return None
+    else:
+        print("[WARNING] 'vectors' variable is empty. Return None.")
+        return None
+
+def prepare_data(path: PosixPath, 
+                 embedding_type: TransformerWordEmbeddings,
+                 start_year:int=1760, 
+                 end_year:int=1920) -> pd.DataFrame:
     """prepare data for word sense disambiguation with quotations
-    this function filters quotations for a given data range
+    this function filters quotations for a given date range
     it then checks if all target words have been vectorized (mean
     we have a vector representation for the quotation keyword)
     if not, we add a `vector` column to dataframe and save it.
@@ -136,28 +142,33 @@ def prepare_data(path:PosixPath,
     quotations_path = path.parent / f"{path.stem}_{start_year}_{end_year}.pickle"
     
     if not quotations_path.is_file():
-        print('Quotations not vectorized. Vectorizing the target word...')
-
-        
+        print(f'Quotations file: {quotations_path} could not be found. Vectorizing the target word...')
         quotations = filter_quotations_by_year(data,start=start_year,end=end_year)
-        quotations['vector'] = quotations.apply(get_target_token_vector,
-                                    embedding_type=embedding_type,
-                                    axis=1)
+        try:
+            import swifter
+            print("[INFO] swifter is installed. Parallelize pandas apply method.")
+            quotations['vector'] = quotations.swifter.apply(get_target_token_vector,
+                                                            embedding_type=embedding_type,
+                                                            axis=1)
+        except ImportError:
+            print("[WARNING] could not find swifter...run pandas apply on one process.")
+            quotations['vector'] = quotations.apply(get_target_token_vector,
+                                                    embedding_type=embedding_type,
+                                                    axis=1)
         quotations.to_pickle(quotations_path)
         print("Done. Created dataframe with vectors for target words.")
-        print(f'Saved Dataframe {quotations_path}')
+        print(f'Saved Dataframe: {quotations_path}')
     else:
         quotations = pd.read_pickle(quotations_path)
     
     return quotations
 
 def bert_avg_quot_nn_wsd(query_vector: np.array,
-                        quotation_df:pd.DataFrame) -> dict:
-    """Function that scores the similarity a query vector (of a target word taken from a quotations) 
+                         quotation_df: pd.DataFrame) -> dict:
+    """Function that scores the similarity of a query vector (of a target word taken from a quotations) 
     to the sense embeddings of other sense available in quotation_df. we follow the 
     procedure of (Liu et al. 2019): for each sense we average the vector representation
     and compute the cosine similarity between these sense embeddings and the query vector.
-    the sense embeeding 
     
     Arguments:
         query_vector (np.array): vector representation of the word we want to disambiguate
@@ -168,9 +179,9 @@ def bert_avg_quot_nn_wsd(query_vector: np.array,
     """
     # check if 
     if not hasattr(quotation_df, 'vector'):
-        raise(Exception,"""DataFrame needs a vector column containing the vector of the target word. 
+        raise(ValueError,"""DataFrame needs a vector column containing the vector of the target word. 
             Use utils.prepare_data() to create vector for target words""")
 
     quotation_df_avg_by_lemma = quotation_df.groupby('sense_id')['vector'].apply(np.mean,axis=0)
-    results = quotation_df_avg_by_lemma.apply(cosine_similiarity,target = query_vector).to_dict() 
+    results = quotation_df_avg_by_lemma.apply(cosine_similiarity, target = query_vector).to_dict() 
     return results

@@ -2,16 +2,26 @@ from utils.classificaton_utils import *
 from pathlib import Path
 from flair.embeddings import TransformerWordEmbeddings
 
-if __name__=="__main__":
-    embedding_type = TransformerWordEmbeddings('bert-base-uncased',
-                                        layers='-1,-2,-3,-4', # '-1,-2,-3,-4'
-                                        pooling_operation='mean')
-    
-    path = Path('./data/quotations_all_machine_nn01.pickle')
+def test_bert_001(model_name: str='bert-base-uncased',
+                  layers: str="-1",
+                  pooling_operation: str="mean",
+                  dataframe_file: str="./data/quotations_all_machine_nn01.pickle",
+                  word_id: str="machine_nn01"):
 
-    quotations = prepare_data(path,embedding_type)
-    
-    quotation_machine = quotations[quotations.word_id=="machine_nn01"]
-    print(quotation_machine.shape)
-    query_vector = quotation_machine.iloc[0].vector
-    print(bert_avg_quot_nn_wsd(query_vector, quotation_machine))	
+    print(f"[INFO] Prepare data using {model_name}.")
+    embedding_type = TransformerWordEmbeddings(model_name,
+                                               layers=layers,
+                                               pooling_operation=pooling_operation)
+
+    path = Path(dataframe_file)
+    quotations = prepare_data(path, embedding_type)
+
+    print(f"[INFO] Extract quotations for word_id: {word_id}")    
+    quotation_target = quotations[quotations.word_id==word_id]
+    print(f"Shape: {quotation_target.shape}")
+
+    query_vector = quotation_target.iloc[0].vector
+    print(bert_avg_quot_nn_wsd(query_vector, quotation_target))	
+
+if __name__=="__main__":
+    test_bert_001()
