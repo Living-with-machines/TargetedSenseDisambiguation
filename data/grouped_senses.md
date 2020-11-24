@@ -5,5 +5,5 @@
 5,	compound noun*,	"the word "machine" appears as a part of an expression containing multiple words, e.g. sewing machine, or machine gun. The expression can be hyphenated (e.g. sewing-machine) or not (machine gun)."
 6,	other,	"If none of the previous senses apply."
 
-* Note: compound noun is not currently part of the crowdsourcing task.
-**Grouping of senses created by Daniel Wilson and Kaspar Beelen, based on discussion on 12th November. A first version of this classificaiton can be found in [this](https://docs.google.com/spreadsheets/d/1r_4Ttre5I9-P7yY1d7u1f6_i5RJ76EHzHqiPRTd4uC4/edit?usp=sharing) document.
+* Note I: compound noun is not currently part of the crowdsourcing task.
+* Note II: Grouping of senses created by Daniel Wilson and Kaspar Beelen, based on discussion on 12th November. A first version of this classificaiton can be found in [this](https://docs.google.com/spreadsheets/d/1r_4Ttre5I9-P7yY1d7u1f6_i5RJ76EHzHqiPRTd4uC4/edit?usp=sharing) document.
