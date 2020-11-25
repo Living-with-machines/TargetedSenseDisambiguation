@@ -426,10 +426,12 @@ def filter_senses(df, sense_ids:set,
         df (pd.DataFrame): main dataframe created by the extend_from_lemma
         senses_ids (set): seeds senses from the lemma used for filtering
         level (str): level or depth to which to branch out, from top (seed) to bottom (descendant)
-                    'descendents' equals 'all'
+                    and 'all' to return all senses within the given date range 
+            options: from very specific -> all
                 seed
-                |_ synonyms
-                    |_ descendants
+                |_ synonym
+                    |_ descendant
+                        |_ all
         start (int): beginning of target period
         end (int): end of target period
         verbose (bool): print outcomes of intermediate steps
@@ -453,6 +455,11 @@ def filter_senses(df, sense_ids:set,
     # exclude those that already appear as seed or synonym
     branches = df[(df['provenance_type'] == "branch") & (~df.id.isin(set(seeds.id).union(set(synonyms.id))))
                         ].reset_index(inplace=False)
+
+    if level == 'all':
+        return set(branches.id 
+            ).union(set(synonyms.id)
+                        ).union(set(seeds.id))
     
     print("\n\n# of seed senses", seeds.shape[0],
         "\n# of synonyms", synonyms.shape[0],
