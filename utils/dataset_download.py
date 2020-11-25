@@ -505,6 +505,7 @@ def filter_senses(df, sense_ids:set,
 
 def obtain_quotations_for_senses(
                     df_quotations:  pd.DataFrame,
+                    df_source: pd.DataFrame,
                     senses: set,
                     start:int,
                     end: int
@@ -515,8 +516,10 @@ def obtain_quotations_for_senses(
     
     Arguments:
         df_quotations: dataframe with quotations, created using harvest_quotations_by_sense_id
+        df_source: dataframe with additional information on senses such as provenance and daterange
         senses (set): set of senses for which we want to obtain quotations
-        
+        start (int): start at year
+        end (int): end at year
     Returns:
         pd.DataFrame with quotations
         
@@ -529,8 +532,9 @@ def obtain_quotations_for_senses(
     df['sense_id'] = df_quotations['sense_id']
     df = df[df.sense_id.isin(senses)]
     df = df[(start <= df.year) & (df.year <= end)]
-    
     df.drop_duplicates(inplace=True)
+    df = df.merge(df_source[['id','daterange',"provenance","provenance_type"]],
+                    left_on='sense_id',right_on='id',how='left').drop("id",axis=1)
     
     return df
 
@@ -828,7 +832,7 @@ if __name__ == "__main__":
     # as csv
     senses_df.to_csv(save_path / f"senses_{lemma_id}.tsv",sep='\t')
     
-    extend_from_saved_lemma_query(auth,lemma_id,start,end)
+    extend_from_lemma(auth,lemma_id,start,end)
     # get all senses that are siblings and descendants
     # of the semantic class of senses listed in previously obtained query 
     # responses = traverse_thesaurus(credentials,senses_df)
