@@ -490,7 +490,7 @@ def obtain_quotations_for_senses(
                     ) -> pd.DataFrame:
     """Create a dataframe with quotations and their metadata for 
     a selected set of senses. This function builds on
-    harvest_quotations_by_sense_id.
+    harvest_quotations.
     
     Arguments:
         df_quotations: dataframe with quotations, created using harvest_quotations_by_sense_id
