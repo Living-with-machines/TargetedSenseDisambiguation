@@ -412,6 +412,7 @@ def filter_senses(df, sense_ids:set,
                     level:str, 
                     start:int, 
                     end:int,
+                    skip_synonyms=False,
                     verbose=True) -> set:
     """
     Main function that filter sense by a give date range 
@@ -472,7 +473,7 @@ def filter_senses(df, sense_ids:set,
         seeds_selected = set()
 
 
-    if level in ["synonym","descendant"]:
+    if level in ["synonym","descendant"] and not skip_synonyms:
         syn_sel_indices, synonyms_selected = select_senses_by_provenance(synonyms,sense_ids,"synonym")
     else:
         syn_sel_indices, synonyms_selected = [],[]
