@@ -381,7 +381,7 @@ def filter_by_year_range(dr: dict, target_start: int, target_end: int) -> bool:
 
 def select_senses_by_provenance(sub_df: pd.DataFrame, 
                                 item_ids: set, 
-                                relations: list) -> tuple:
+                                level: str) -> tuple:
     """Helper function that given a subsection of a dataframe filters senses based
     on a set of target sense ids and relations. This function requires a dataframe created
     by the extend_from_lemma function.
@@ -403,13 +403,13 @@ def select_senses_by_provenance(sub_df: pd.DataFrame,
         for oed_id, relation, prov_id in row.provenance:
             # if the provenance and relation match to the arguments
             # add the items and position to the respective lists
-            if (prov_id in item_ids) and (relation in relations):
+            if (prov_id in item_ids) and (relation == level):
                 indices.add(i) ; items.add(oed_id)
                 
     return list(indices), list(items)
 
 def filter_senses(df, sense_ids:set, 
-                    relations:list, 
+                    level:str, 
                     start:int, 
                     end:int,
                     verbose=True) -> set:
@@ -425,7 +425,11 @@ def filter_senses(df, sense_ids:set,
     Arguments:
         df (pd.DataFrame): main dataframe created by the extend_from_lemma
         senses_ids (set): seeds senses from the lemma used for filtering
-        relations (list): filter based on these relations
+        level (str): level or depth to which to branch out, from top (seed) to bottom (descendant)
+                    'descendents' equals 'all'
+                seed
+                |_ synonyms
+                    |_ descendants
         start (int): beginning of target period
         end (int): end of target period
         verbose (bool): print outcomes of intermediate steps
@@ -454,23 +458,32 @@ def filter_senses(df, sense_ids:set,
         "\n# of synonyms", synonyms.shape[0],
         "\n# of branch senses", branches.shape[0])
 
-    if "seed" in relations:
-        seeds_selected = set(seeds[seeds.id.isin(sense_ids)].id)
 
-    if "synonym" in relations:
-        syn_sel_indices, synonyms_selected = select_senses_by_provenance(synonyms,sense_ids,relations)
+    if level in ["seed","synonym", "descendant"]:
+        seeds_selected = set(seeds[seeds.id.isin(sense_ids)].id)
+    else:
+        seeds_selected = set()
+
+
+    if level in ["synonym","descendant"]:
+        syn_sel_indices, synonyms_selected = select_senses_by_provenance(synonyms,sense_ids,"synonym")
+    else:
+        syn_sel_indices, synonyms_selected = [],[]
     
     # as branches are retrieved by semantic class id, we get the semantic class ids 
     # of the seed AND synonyms senses
-    select_seed_semantic_class_id = seeds[seeds.id.isin(seeds_selected)].semantic_class_last_id
-    select_seed_semantic_class_id = set().union(*map(set,select_seed_semantic_class_id))
+    if level == 'descendant':
+        select_seed_semantic_class_id = seeds[seeds.id.isin(seeds_selected)].semantic_class_last_id
+        select_seed_semantic_class_id = set().union(*map(set,select_seed_semantic_class_id))
     
-    select_synonyms_semantic_class_id = synonyms[synonyms.id.isin(synonyms_selected)].semantic_class_last_id
-    select_synonyms_semantic_class_id = set().union(*map(set,select_synonyms_semantic_class_id))
+        select_synonyms_semantic_class_id = synonyms[synonyms.id.isin(synonyms_selected)].semantic_class_last_id
+        select_synonyms_semantic_class_id = set().union(*map(set,select_synonyms_semantic_class_id))
     
-    selected_semantic_class_id = set(select_seed_semantic_class_id).union(set(select_synonyms_semantic_class_id))
+        selected_semantic_class_id = set(select_seed_semantic_class_id).union(set(select_synonyms_semantic_class_id))
     
-    branch_sel_indices, branches_selected = select_senses_by_provenance(branches,selected_semantic_class_id,relations)
+        branch_sel_indices, branches_selected = select_senses_by_provenance(branches,selected_semantic_class_id,"descendant")
+    else:
+        branch_sel_indices, branches_selected = [],[]
     
     
     senses = set(branches.iloc[branch_sel_indices].id # for the branches we return the sense ids not the semantic class ids
