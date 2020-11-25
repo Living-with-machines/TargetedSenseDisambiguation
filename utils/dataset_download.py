@@ -7,12 +7,12 @@ from pathlib import Path, PosixPath
 from argparse import ArgumentParser
 
 def query_oed(
-          auth:dict,
-          endpoint:str,
-          query:str,
-          flags:str='',
-          level:str='',
-          verbose=False):
+        auth:dict,
+        endpoint:str,
+        query:str,
+        flags:str='',
+        level:str='',
+        verbose=False):
     
     """
     Get data from Oxford English Dictionary.
@@ -27,11 +27,11 @@ def query_oed(
         query (str): query for the specific endpoint, most often a specific id, such as 'machine_nn01' or '120172'
         
         flags (str): options appended to query to include, for example, quotations instead of quotation ids
-                     example "include_senses=false&include_quotations=false"
+                    example "include_senses=false&include_quotations=false"
         
         level (str): at which level to query the endpoint, 
-                     e.g. get sense of the query word, get siblings for semantic class etc
-                     standard value is empty string
+                    e.g. get sense of the query word, get siblings for semantic class etc
+                    standard value is empty string
         
         verbose (bool): print the URL used for retrieving information from the API
         
@@ -58,7 +58,7 @@ def query_oed(
             
         query_oed(auth,'semanticclass', '163378', level='branchsenses',flags="current_in='1750-1950'")
             -> get all senses (siblings _and_ descendants) branching out from semantic class with id 163378
-               restrict query to all senses observed between 1750 and 1950.
+            restrict query to all senses observed between 1750 and 1950.
                 
     """
     
@@ -160,13 +160,13 @@ def get_provenance_by_semantic_class(row: pd.Series) -> list:
     # if not this will print a warning message
     if not provenance:
         print(f'Warning: No descendants or siblings found for {row.id}')
- 
+
     return provenance
 
 def extend_from_lemma(auth: dict, 
-                      lemma_id: str,
-                      start:int=1750,
-                      end:int=1950) -> pd.DataFrame:
+                    lemma_id: str,
+                    start:int=1750,
+                    end:int=1950) -> pd.DataFrame:
     
     
     """Extends senses from a dataframe created from information obtained
@@ -195,7 +195,7 @@ def extend_from_lemma(auth: dict,
         a pandas.DataFrame with extended number of senses
     """    
     
-    # helper function to get last element in a nested list
+    # helper function that, given a nested list, creates a new list with the last element of each list in the nested list
     get_last_id = lambda nested_list :[l[-1] for l in nested_list]
     
     # load seed query dataframe or download from api
@@ -222,7 +222,7 @@ def extend_from_lemma(auth: dict,
     print(f"Get all sense for the lemma {lemma_id}")
     seeds = [(s,query_oed(auth,'sense',s,
                     flags=f"current_in='{start}-{end}'&limit=1000", # probably "current_in" not needed here see APi
-                      verbose=False)) # set verbose to True to see the url request
+                    verbose=False)) # set verbose to True to see the url request
                         for s in tqdm(query_sense_ids)]
     
     # convert to dataframe
@@ -234,7 +234,7 @@ def extend_from_lemma(auth: dict,
     # provenance_type will distinguish between different types of extension
     # define provenance, these words are "seed"
     seeds_df['provenance'] = [[[i,'seed',lemma_id]] for i in seeds_df.id] # for the seed sense we use the id of the word machine_nn0
-                                       # we use list here, reason is explained later, see provenance of synonyms
+                                    # we use list here, reason is explained later, see provenance of synonyms
     seeds_df['provenance_type'] = 'seed' # categorize these lemmas as seed
     
     # get all synonyms for the seed senses
@@ -318,7 +318,6 @@ def harvest_quotations(auth: dict,lemma_id: str, level: str) -> pd.DataFrame:
     Given a dataframe obtained via the OED sense endpoints
     retrieve all quotations for the included words or senses and save them
     as a dataframe, path ./data/quotations_{lemma_id}.pickle
-     
     Argument:
         lemma_id (str): lemma of the seed query
         level (str): endpoint for harvesting quotatios (sense or word)
@@ -392,7 +391,7 @@ def select_senses_by_provenance(sub_df: pd.DataFrame,
         item_ids (set): include senses related to these items 
                         these can be sense ids or semantic class ids
         relations (list): filter based on these relations 
-                          options are: seed, synonyms, sibling, descedant
+                        options are: seed, synonyms, sibling, descedant
         
     Returns:
         a tuple that contains a list with position indices and a list with items
@@ -410,10 +409,10 @@ def select_senses_by_provenance(sub_df: pd.DataFrame,
     return list(indices), list(items)
 
 def filter_senses(df, sense_ids:set, 
-                      relations:list, 
-                      start:int, 
-                      end:int,
-                      verbose=True) -> set:
+                    relations:list, 
+                    start:int, 
+                    end:int,
+                    verbose=True) -> set:
     """
     Main function that filter sense by a give date range 
     and set of seed senses with provenace relations. 
@@ -444,16 +443,16 @@ def filter_senses(df, sense_ids:set,
     # exclude those that already appear in the seed dataframe
     # reset index after selection
     synonyms = df[(df['provenance_type'] == "synonym") & (~df.id.isin(seeds.id))
-                     ].reset_index(inplace=False)
+                        ].reset_index(inplace=False)
     
     # select words retrieved as a branch of the synonym or a seed sense
     # exclude those that already appear as seed or synonym
     branches = df[(df['provenance_type'] == "branch") & (~df.id.isin(set(seeds.id).union(set(synonyms.id))))
-                      ].reset_index(inplace=False)
+                        ].reset_index(inplace=False)
     
     print("\n\n# of seed senses", seeds.shape[0],
-          "\n# of synonyms", synonyms.shape[0],
-          "\n# of branch senses", branches.shape[0])
+        "\n# of synonyms", synonyms.shape[0],
+        "\n# of branch senses", branches.shape[0])
 
     if "seed" in relations:
         seeds_selected = set(seeds[seeds.id.isin(sense_ids)].id)
@@ -475,19 +474,19 @@ def filter_senses(df, sense_ids:set,
     
     
     senses = set(branches.iloc[branch_sel_indices].id # for the branches we return the sense ids not the semantic class ids
-               ).union(set(synonyms.iloc[syn_sel_indices].id)
+            ).union(set(synonyms.iloc[syn_sel_indices].id)
                         ).union(set(seeds_selected))
     if verbose:
         print('\n\n# of seeds selected', len(seeds_selected),
-              '\n# of synonyms selected', len(syn_sel_indices),
-              '\n# of branches selected', len(branches_selected))
+            '\n# of synonyms selected', len(syn_sel_indices),
+            '\n# of branches selected', len(branches_selected))
     return senses
 
 def obtain_quotations_for_senses(
-                      df_quotations:  pd.DataFrame,
-                      senses: set,
-                      start:int,
-                      end: int
+                    df_quotations:  pd.DataFrame,
+                    senses: set,
+                    start:int,
+                    end: int
                     ) -> pd.DataFrame:
     """Create a dataframe with quotations and their metadata for 
     a selected set of senses. This function builds on
