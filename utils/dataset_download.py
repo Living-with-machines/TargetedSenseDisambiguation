@@ -517,11 +517,12 @@ def obtain_quotations_for_senses(
     Arguments:
         df_quotations: dataframe with quotations, created using harvest_quotations_by_sense_id
         df_source: dataframe with additional information on senses such as provenance and daterange
+                    this dataframe is created by the extend_from_lemma function
         senses (set): set of senses for which we want to obtain quotations
         start (int): start at year
         end (int): end at year
     Returns:
-        pd.DataFrame with quotations
+        pd.DataFrame with selected quotations
         
     """
     df = pd.concat([
@@ -534,7 +535,10 @@ def obtain_quotations_for_senses(
     df = df[(start <= df.year) & (df.year <= end)]
     df.drop_duplicates(inplace=True)
     df = df.merge(df_source[['id','daterange',"provenance","provenance_type"]],
-                    left_on='sense_id',right_on='id',how='left').drop("id",axis=1)
+                            left_on='sense_id',
+                            right_on='id',
+                            how='left'
+                                ).drop("id",axis=1)
     
     return df
 
