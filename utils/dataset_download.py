@@ -230,7 +230,7 @@ def extend_from_lemma(auth: dict,
     
     # seed_df contains all the senses of the word machine_nn01
     # we distinguish between provenance and provenance_type
-    # provenance will refer to specific word, sense of semantic class ids
+    # provenance will refer to specific word, sense or semantic class ids
     # provenance_type will distinguish between different types of extension
     # define provenance, these words are "seed"
     seeds_df['provenance'] = [[[i,'seed',lemma_id]] for i in seeds_df.id] # for the seed sense we use the id of the word machine_nn0
