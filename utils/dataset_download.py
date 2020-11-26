@@ -5,6 +5,7 @@ from collections import defaultdict
 from tqdm.notebook import tqdm
 from pathlib import Path, PosixPath
 from argparse import ArgumentParser
+from typing import Union
 
 def query_oed(
         auth:dict,
@@ -409,7 +410,7 @@ def select_senses_by_provenance(sub_df: pd.DataFrame,
     return list(indices), list(items)
 
 def filter_senses(df, sense_ids:set, 
-                    level:str, 
+                    relations:Union[list,str], 
                     start:int, 
                     end:int,
                     skip_synonyms=False,
@@ -457,7 +458,7 @@ def filter_senses(df, sense_ids:set,
     branches = df[(df['provenance_type'] == "branch") & (~df.id.isin(set(seeds.id).union(set(synonyms.id))))
                         ].reset_index(inplace=False)
 
-    if level == 'all':
+    if relations == 'all':
         return set(branches.id 
             ).union(set(synonyms.id)
                         ).union(set(seeds.id))
@@ -467,20 +468,22 @@ def filter_senses(df, sense_ids:set,
         "\n# of branch senses", branches.shape[0])
 
 
-    if level in ["seed","synonym", "descendant"]:
+    if 'seed' in relations:
         seeds_selected = set(seeds[seeds.id.isin(sense_ids)].id)
     else:
         seeds_selected = set()
 
 
-    if level in ["synonym","descendant"] and not skip_synonyms:
+    if "synonym" in relations and not skip_synonyms:
         syn_sel_indices, synonyms_selected = select_senses_by_provenance(synonyms,sense_ids,"synonym")
     else:
         syn_sel_indices, synonyms_selected = [],[]
     
     # as branches are retrieved by semantic class id, we get the semantic class ids 
     # of the seed AND synonyms senses
-    if level == 'descendant':
+    branch_types = set(['sibling','descendant']).intersection(relations)
+    branch_sel_indices, branches_selected = [],[]
+    if branch_types: 
         select_seed_semantic_class_id = seeds[seeds.id.isin(seeds_selected)].semantic_class_last_id
         select_seed_semantic_class_id = set().union(*map(set,select_seed_semantic_class_id))
     
@@ -488,10 +491,11 @@ def filter_senses(df, sense_ids:set,
         select_synonyms_semantic_class_id = set().union(*map(set,select_synonyms_semantic_class_id))
     
         selected_semantic_class_id = set(select_seed_semantic_class_id).union(set(select_synonyms_semantic_class_id))
-    
-        branch_sel_indices, branches_selected = select_senses_by_provenance(branches,selected_semantic_class_id,"descendant")
-    else:
-        branch_sel_indices, branches_selected = [],[]
+        for bt in branch_types:
+            bt_branch_sel_indices, bt_branches_selected = select_senses_by_provenance(branches,selected_semantic_class_id,bt)
+            branch_sel_indices.extend(bt_branch_sel_indices)
+            branches_selected.extend(bt_branches_selected)
+        
     
     
     senses = set(branches.iloc[branch_sel_indices].id # for the branches we return the sense ids not the semantic class ids
