@@ -426,12 +426,12 @@ def filter_senses(df, sense_ids:set,
     Arguments:
         df (pd.DataFrame): main dataframe created by the extend_from_lemma
         senses_ids (set): seeds senses from the lemma used for filtering
-        level (str): level or depth to which to branch out, from top (seed) to bottom (descendant)
+        level (str): level or depth to which to branch out, from top (seed) to bottom or branches (descendant | sibling)
                     and 'all' to return all senses within the given date range 
             options: from very specific -> all
                 seed
                 |_ synonym
-                    |_ descendant
+                    |_ descendant | sibling
                         |_ all
         start (int): beginning of target period
         end (int): end of target period
@@ -503,6 +503,50 @@ def filter_senses(df, sense_ids:set,
             '\n# of branches selected', len(branches_selected))
     return senses
 
+def relation_to_core_senses(df):
+    """
+    this function creates a mapping of sense ids to their core
+    i.e. synonym or seed sense id
+    Arguments:
+        df (pandas.DataFrame): a dataframe created by extend_from_lemma
+    
+    Returns:
+        mapping (dict): a mapping between sense ids
+    """
+    scid2senseid = defaultdict(set)
+    for i, row in df[df.provenance_type.isin(['seed','synonym'])].iterrows():
+        for sc_id in row.semantic_class_last_id:
+            # map the last sense id (via which we branched out)
+            # to a sense id
+            scid2senseid[sc_id].add(row.id)
+
+    mapping = defaultdict(set)
+
+    for i,row in df.iterrows(): 
+        for p in row.provenance:
+    
+            if 'seed' in p:
+                # map seed sense id to seed sense id
+                # provenance is in the format of
+                # [seed sense id, relation, lemma id] 
+                mapping[row.id].add(p[0])
+            elif 'synonym' in p:
+                # map synonym id to seed sense id
+                # provenance is in the format of
+                # [synonym sense id, relation, seed sense id]
+                mapping[row.id].add(p[-1])
+            elif ('sibling' in p) or ('descendant' in p):
+                # map via semantic class id
+                # provenance is in the shape of
+                # [sem class sense, relation, sem class provenance]
+                # here we map the sense id to a set 
+                # of senses via scid2senseid
+                # sense ids related to the 
+                # provenance semantic class id
+                # Question: does this make sense?
+                mapping[row.id].update(scid2senseid[p[-1]])
+    return mapping
+
 def obtain_quotations_for_senses(
                     df_quotations:  pd.DataFrame,
                     df_source: pd.DataFrame,
@@ -512,7 +556,16 @@ def obtain_quotations_for_senses(
                     ) -> pd.DataFrame:
     """Create a dataframe with quotations and their metadata for 
     a selected set of senses. This function builds on
-    harvest_quotations.
+    harvest_quotations. It also add more provenace and context 
+    information of the sense via which we derive the quotations
+    more precisely we add these columns:
+        - "daterange": date range of sense as stated in OED
+        - "provenance": sense provenance in the shape of [source, relation, target]
+        - "provenance_type": sense provenance type (seed | synonym | descendant | sibling)
+        - "relation_to_core_senses": via which core sense(s) (seed | synonym)
+                                did we derive the quotation
+        - "relation_to_seed_senses": via which seed sences did we derive the quotations
+                                empty set of the quotation we derived via synonym only
     
     Arguments:
         df_quotations: dataframe with quotations, created using harvest_quotations_by_sense_id
@@ -525,6 +578,14 @@ def obtain_quotations_for_senses(
         pd.DataFrame with selected quotations
         
     """
+    mapping = relation_to_core_senses(df_source)
+
+    intersects_with = lambda x,target_set:  x.intersection(target_set)
+    seed_ids = set(df_source[df_source.provenance_type == 'seed'].id)
+
+    df_source['relation_to_core_senses'] = df_source.id.apply(mapping.get)
+    df_source['relation_to_seed_senses'] = df_source.relation_to_core_senses.apply(intersects_with,target_set=seed_ids) 
+    
     df = pd.concat([
         pd.DataFrame.from_records(df_quotations.text.values),
         pd.DataFrame.from_records(df_quotations.source.values)
@@ -534,14 +595,15 @@ def obtain_quotations_for_senses(
     df = df[df.sense_id.isin(senses)]
     df = df[(start <= df.year) & (df.year <= end)]
     df.drop_duplicates(inplace=True)
-    df = df.merge(df_source[['id','daterange',"provenance","provenance_type"]],
+    df = df.merge(df_source[['id','daterange',
+                            "provenance","provenance_type",
+                            "relation_to_core_senses","relation_to_seed_senses"]],
                             left_on='sense_id',
                             right_on='id',
                             how='left'
                                 ).drop("id",axis=1)
     
     return df
-
 
 
 
