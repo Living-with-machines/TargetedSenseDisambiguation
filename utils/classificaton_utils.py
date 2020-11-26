@@ -102,7 +102,9 @@ def get_target_token_vector(row: pd.Series,
 
     if vectors:
         if ' '.join(quotation_target_tokens) != ' '.join(target.split()):
-            print('Warning: could not properly match',' '.join(target.split()), ' with ',' '.join(quotation_target_tokens))
+            print('[WARNING] Could not properly match',' '.join(target.split()), ' with ',' '.join(quotation_target_tokens))
+            print('[WARNING] Return None')
+            return None
         if combine == 'average':
             return np.mean(vectors, axis=0)
         if combine is None:
@@ -117,9 +119,9 @@ def get_target_token_vector(row: pd.Series,
         return None
 
 def prepare_data(path: PosixPath, 
-                 embedding_type: TransformerWordEmbeddings,
-                 start_year:int=1760, 
-                 end_year:int=1920) -> pd.DataFrame:
+                embedding_type: TransformerWordEmbeddings,
+                start_year:int=1760, 
+                end_year:int=1920) -> pd.DataFrame:
     """prepare data for word sense disambiguation with quotations
     this function filters quotations for a given date range
     it then checks if all target words have been vectorized (mean
@@ -164,7 +166,7 @@ def prepare_data(path: PosixPath,
     return quotations
 
 def bert_avg_quot_nn_wsd(query_vector: np.array,
-                         quotation_df: pd.DataFrame) -> dict:
+                        quotation_df: pd.DataFrame) -> dict:
     """Function that scores the similarity of a query vector (of a target word taken from a quotations) 
     to the sense embeddings of other sense available in quotation_df. we follow the 
     procedure of (Liu et al. 2019): for each sense we average the vector representation
