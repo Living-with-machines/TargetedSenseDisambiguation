@@ -495,8 +495,6 @@ def filter_senses(df, sense_ids:set,
             bt_branch_sel_indices, bt_branches_selected = select_senses_by_provenance(branches,selected_semantic_class_id,bt)
             branch_sel_indices.extend(bt_branch_sel_indices)
             branches_selected.extend(bt_branches_selected)
-        
-    
     
     senses = set(branches.iloc[branch_sel_indices].id # for the branches we return the sense ids not the semantic class ids
             ).union(set(synonyms.iloc[syn_sel_indices].id)
