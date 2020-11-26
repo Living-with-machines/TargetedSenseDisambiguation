@@ -102,8 +102,7 @@ def get_target_token_vector(row: pd.Series,
 
     if vectors:
         if ' '.join(quotation_target_tokens) != ' '.join(target.split()):
-            print('[WARNING] Could not properly match',' '.join(target.split()), ' with ',' '.join(quotation_target_tokens))
-            print('[WARNING] Return None')
+            print('[WARNING] Could not properly match',' '.join(target.split()), ' with ',' '.join(quotation_target_tokens), " Return None.")
             return None
         if combine == 'average':
             return np.mean(vectors, axis=0)
