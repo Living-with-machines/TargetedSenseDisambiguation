@@ -519,6 +519,11 @@ def relation_to_core_senses(df):
             # map the last sense id (via which we branched out)
             # to a sense id
             scid2senseid[sc_id].add(row.id)
+            # for synonyms map this sc_id also 
+            # to the provenance of the synonym
+            for p in row.provenance:
+                if 'synonym' in p:
+                    scid2senseid[sc_id].add(p[-1])
 
     mapping = defaultdict(set)
 
@@ -534,6 +539,7 @@ def relation_to_core_senses(df):
                 # map synonym id to seed sense id
                 # provenance is in the format of
                 # [synonym sense id, relation, seed sense id]
+                # print(p)
                 mapping[row.id].add(p[-1])
             elif ('sibling' in p) or ('descendant' in p):
                 # map via semantic class id
