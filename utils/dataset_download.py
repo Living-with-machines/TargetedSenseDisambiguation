@@ -413,7 +413,8 @@ def filter_senses(df, sense_ids:set,
                     relations:Union[list,str], 
                     start:int, 
                     end:int,
-                    skip_synonyms=False,
+                    expand_seeds:bool=True,
+                    expand_synonyms:bool=True,
                     verbose=True) -> set:
     """
     Main function that filter sense by a give date range 
@@ -434,6 +435,8 @@ def filter_senses(df, sense_ids:set,
                 |_ synonym
                     |_ descendant | sibling
                         |_ all
+        expand_seeds (bool): expand using semantic class ids of seed senses
+        expand_synonyms (bool): expand using semantic class ids of the synonyms 
         start (int): beginning of target period
         end (int): end of target period
         verbose (bool): print outcomes of intermediate steps
@@ -474,7 +477,7 @@ def filter_senses(df, sense_ids:set,
         seeds_selected = set()
 
 
-    if "synonym" in relations and not skip_synonyms:
+    if "synonym" in relations:
         syn_sel_indices, synonyms_selected = select_senses_by_provenance(synonyms,sense_ids,"synonym")
     else:
         syn_sel_indices, synonyms_selected = [],[]
@@ -484,11 +487,15 @@ def filter_senses(df, sense_ids:set,
     branch_types = set(['sibling','descendant']).intersection(relations)
     branch_sel_indices, branches_selected = [],[]
     if branch_types: 
-        select_seed_semantic_class_id = seeds[seeds.id.isin(seeds_selected)].semantic_class_last_id
-        select_seed_semantic_class_id = set().union(*map(set,select_seed_semantic_class_id))
-    
-        select_synonyms_semantic_class_id = synonyms[synonyms.id.isin(synonyms_selected)].semantic_class_last_id
-        select_synonyms_semantic_class_id = set().union(*map(set,select_synonyms_semantic_class_id))
+        select_seed_semantic_class_id = set()
+        if expand_seeds:
+            select_seed_semantic_class_id = seeds[seeds.id.isin(seeds_selected)].semantic_class_last_id
+            select_seed_semantic_class_id = set().union(*map(set,select_seed_semantic_class_id))
+        
+        select_synonyms_semantic_class_id = set()
+        if expand_synonyms:
+            select_synonyms_semantic_class_id = synonyms[synonyms.id.isin(synonyms_selected)].semantic_class_last_id
+            select_synonyms_semantic_class_id = set().union(*map(set,select_synonyms_semantic_class_id))
     
         selected_semantic_class_id = set(select_seed_semantic_class_id).union(set(select_synonyms_semantic_class_id))
         for bt in branch_types:
