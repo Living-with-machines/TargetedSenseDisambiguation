@@ -131,6 +131,14 @@ code/machine_senses.tsv
 oed_experiments/oed_credentials.json
 *.tsv
 
+# Model/data files
+*.pickle
 models/
 data/
+
+# VS code
+./vscode
+./vscode/*
+
+# others
 .DS_Store
