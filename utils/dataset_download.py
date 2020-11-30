@@ -659,5 +659,4 @@ if __name__ == "__main__":
     #                Path("./data/tree_traversal.pickle"),
     #                Path("./data/tree_traversal_quotations.pickle"))
     
-    #df.to_pickle(f"./data/{lemma_id}_all.pickle")
-   
+    #df.to_pickle(f"./data/{lemma_id}_all.pickle")   
