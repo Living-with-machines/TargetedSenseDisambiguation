@@ -130,7 +130,15 @@ dmypy.json
 code/machine_senses.tsv
 oed_experiments/oed_credentials.json
 *.tsv
-*.pickle
 
+# Model/data files
+*.pickle
+models/
+data/
+
+# VS code
 ./vscode
 ./vscode/*
+
+# others
+.DS_Store
