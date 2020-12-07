@@ -104,9 +104,7 @@ def convert_json_to_dataframe(senses):
     return senses_overview
 
 def parse_input_commands():
-    """
-    read inputs from the command line
-    return the lemma_id
+    """read inputs from the command line
     """    
 
     parser = ArgumentParser()
@@ -117,6 +115,9 @@ def parse_input_commands():
     args = parser.parse_args()
     lemma_id = args.lemmaid
     start = int(args.start_year); end = int(args.end_year)
+
+    if end < start:
+        parser.exit("ERROR: 'end' should be greater than 'start'")
     
     download_all = args.download_all
     if download_all == 'f':
