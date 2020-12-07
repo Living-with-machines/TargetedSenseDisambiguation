@@ -2,7 +2,7 @@ import json,pickle
 import requests
 import pandas as pd
 from collections import defaultdict
-from tqdm.notebook import tqdm
+from tqdm import tqdm
 from pathlib import Path, PosixPath
 from argparse import ArgumentParser
 from typing import Union
@@ -111,10 +111,23 @@ def parse_input_commands():
 
     parser = ArgumentParser()
     parser.add_argument("-l", "--lemmaid", help="The lemma id to be used for creating the dataframe",)
+    parser.add_argument("-s", "--start_year", help="The start year of the data frame",default='1760')
+    parser.add_argument("-e", "--end_year", help="The end year of the data frame",default='1920')
+    parser.add_argument("-d", "--download_all", help="use 't' to download all quotations, 'f' to demo the pipeline",default='t')
     args = parser.parse_args()
     lemma_id = args.lemmaid
+    start = int(args.start_year); end = int(args.end_year)
+    
+    download_all = args.download_all
+    if download_all == 'f':
+        download_all = False
+    elif download_all == 't':
+        download_all = True
+    else:
+        parser.exit("ERROR: the download_all argument has be t (True) or f (False)")
+    
     if lemma_id:
-        return lemma_id
+        return lemma_id, start, end, download_all
     else:
         parser.exit("ERROR: The lemma id is missing, you should query it for instance using -l machine_nn01")
 
@@ -311,10 +324,10 @@ def extend_from_lemma(auth: dict,
     #extended_df.shape[0] == core_df.shape[0] + branches_df.shape[0]
     # save dataframe as pickle
     extended_df.to_pickle(f"./data/extended_{lemma_id}.pickle") 
-    
+    print(f'Created dataframe with {extended_df.shape[0]} rows')
     return extended_df
 
-def harvest_quotations(auth: dict,lemma_id: str, level: str) -> pd.DataFrame:
+def harvest_quotations(auth: dict,lemma_id: str, level: str, download_all:bool=False) -> pd.DataFrame:
     """
     Given a dataframe obtained via the OED sense endpoints
     retrieve all quotations for the included words or senses and save them
@@ -324,6 +337,8 @@ def harvest_quotations(auth: dict,lemma_id: str, level: str) -> pd.DataFrame:
         level (str): endpoint for harvesting quotatios (sense or word)
                     when using the sense endpoint we only get quotations relevant to
                     the initial lemma
+        demo (bool): boolean flag to test pipeline without downloading all quotations
+                    if True, then we harvest only the first ten quotations
     Returns:
         saves and returns a pd.DataFrame with quotations
     """
@@ -336,10 +351,16 @@ def harvest_quotations(auth: dict,lemma_id: str, level: str) -> pd.DataFrame:
         suffix = 'all'
     else:
         raise Exception("Choose 'word' or 'sense' as values for the 'level' argument")
+    
+    if not download_all:
+        ids = set(list(ids)[:10])
+        suffix+='_demo'
+        print(f'Only testing the pipeline. Using {suffix} as suffix')
 
     responses = [query_oed(auth,level, idx, level='quotations') for idx in tqdm(ids)]
     quotation_df = pd.DataFrame([q for r in responses for q in r['data']])
     quotation_df.to_pickle(f'./data/quotations_{suffix}_{lemma_id}.pickle')
+    print(f'Created dataframe with {quotation_df.shape[0]} rows')
     return quotation_df
 
 def filter_by_year_range(dr: dict, target_start: int, target_end: int) -> bool:
