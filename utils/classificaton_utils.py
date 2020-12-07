@@ -8,6 +8,7 @@ from flair.embeddings import TransformerWordEmbeddings
 from scipy.spatial.distance import cosine
 from pathlib import Path, PosixPath
 from typing import Union
+from utils.dataset_download import *
 
 cosine_similiarity = lambda x, target : 1 - cosine(x,target)
 
@@ -186,3 +187,48 @@ def bert_avg_quot_nn_wsd(query_vector: np.array,
     quotation_df_avg_by_lemma = quotation_df.groupby('sense_id')['vector'].apply(np.mean,axis=0)
     results = quotation_df_avg_by_lemma.apply(cosine_similiarity, target = query_vector).to_dict() 
     return results
+
+def binarize(lemma_id:str,
+            senses:set,
+            relations:list,
+            expand_seeds:bool=True,
+            expand_synonyms:bool=False,
+            start:int=1760, 
+            end:int=1920,
+            filter_type='loose'):
+    """binarize labels of the quotations dataframe
+    Arguments:
+        lemma_id (str):
+        senses (set):
+        relations (list):
+        filter_type (strict,loose): retain or discard items don't match the parameters
+    """
+    df_source = pd.read_pickle(f'./data/extended_{lemma_id}.pickle')
+    df_quotations = pd.read_pickle(f'./data/quotations_all_{lemma_id}.pickle')
+
+    senses = filter_senses(df_source,
+                    senses,
+                    relations = relations, # 'all',
+                    expand_seeds=expand_seeds,
+                    expand_synonyms=expand_synonyms,
+                    start=start, 
+                    end=end
+                    )
+    
+    df_quotations_selected = obtain_quotations_for_senses(df_quotations,
+                                df_source,                  
+                                senses,
+                                start=start,end=end)
+
+    df_quotations['label'] = 0
+    df_quotations.loc[df_quotations.id.isin(df_quotations_selected.quotation_id),'label'] = 1
+    #if filter_type == 'loose':
+        #print(df_quotations[df_quotations.id.isin(df_quotations_selected.quotation_id)].shape)
+        
+    if filter_type=='strict':
+        df_quotations = df_quotations[(df_quotations.word_id.isin(df_quotations_selected.word_id)) & \
+                                    (df_quotations.year >= start) & \
+                                    (df_quotations.year <= end) ]
+    return df_quotations
+
+    
