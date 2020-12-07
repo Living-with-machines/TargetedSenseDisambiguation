@@ -299,7 +299,7 @@ def merge_pickled(seed_query, tree_traversal, tree_quotations):
                                  for sense in quotations[key]
                             ]).reset_index(drop=True, inplace=False)
 
-    merged_df = tree_df.merge(quotations_df[['sense_id','id','source','text']],
+    merged_df = tree_df.merge(quotations_df[['sense_id','id','source','text', 'year']],
                            left_on='id', right_on='sense_id',suffixes=('','_quotation'))
     merged_df['root'] = False # distinguish root senses for extended senses
     
