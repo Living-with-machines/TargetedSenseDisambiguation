@@ -195,37 +195,56 @@ def binarize(lemma_id:str,
             expand_synonyms:bool=False,
             start:int=1760, 
             end:int=1920,
-            filter_type='loose'):
-    """binarize labels of the quotations dataframe
+            strict_filter:bool=True) -> pd.DataFrame:
+    """binarize labels and select quotations
+    given a set of senses, provenance rules, and expansion flags,
+    this function selects all relevant, related senses, and obtains quotations 
+    that fall within the specified target period. 
+
+    This function requires dataframe created by
+        - extend_from_lemma
+        - harvest_quotations
+        (Use pipeline.py to create these dataframes for a specific lemma id)
+
+    The strict_filter arguments will discard any quotation that is
+    outside the time period and has a different word id (compared to
+    the senses retrieved via the filter_sensen function)
+
     Arguments:
         lemma_id (str):
         senses (set):
         relations (list):
         filter_type (strict,loose): retain or discard items don't match the parameters
     """
+    # load core dataset for a given lemma_id
     df_source = pd.read_pickle(f'./data/extended_{lemma_id}.pickle')
     df_quotations = pd.read_pickle(f'./data/quotations_all_{lemma_id}.pickle')
 
+    # filter senses
     senses = filter_senses(df_source,
                     senses,
-                    relations = relations, # 'all',
+                    relations = relations,  
                     expand_seeds=expand_seeds,
                     expand_synonyms=expand_synonyms,
                     start=start, 
                     end=end
                     )
     
+    # get the quotations for the filtered senses
     df_quotations_selected = obtain_quotations_for_senses(df_quotations,
                                 df_source,                  
                                 senses,
                                 start=start,end=end)
 
+    # add label column, set all labels to zero 
     df_quotations['label'] = 0
+    # set label to one for selected quotations
     df_quotations.loc[df_quotations.id.isin(df_quotations_selected.quotation_id),'label'] = 1
-    #if filter_type == 'loose':
-        #print(df_quotations[df_quotations.id.isin(df_quotations_selected.quotation_id)].shape)
-        
-    if filter_type=='strict':
+    
+    # strict filter is True we discard all functions outside
+    # of the experiment parameters, which are defined by the
+    # time period and the word types of the target senses
+    if strict_filter:
         df_quotations = df_quotations[(df_quotations.word_id.isin(df_quotations_selected.word_id)) & \
                                     (df_quotations.year >= start) & \
                                     (df_quotations.year <= end) ]
