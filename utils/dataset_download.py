@@ -113,7 +113,7 @@ def parse_input_commands():
     parser.add_argument("-l", "--lemmaid", help="The lemma id to be used for creating the dataframe",)
     parser.add_argument("-s", "--start_year", help="The start year of the data frame",default='1760')
     parser.add_argument("-e", "--end_year", help="The end year of the data frame",default='1920')
-    parser.add_argument("-d", "--download_all", help="use 't' to download all quotations, 'f' to demo the pipeline",default='t')
+    parser.add_argument("-d", "--download_all", help="use 't' to download all quotations, 'f' to demo the pipeline",default='f')
     args = parser.parse_args()
     lemma_id = args.lemmaid
     start = int(args.start_year); end = int(args.end_year)
