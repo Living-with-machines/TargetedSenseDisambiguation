@@ -2,7 +2,7 @@ import json,pickle
 import requests
 import pandas as pd
 from collections import defaultdict
-from tqdm.notebook import tqdm
+from tqdm import tqdm
 from pathlib import Path, PosixPath
 from argparse import ArgumentParser
 from typing import Union
@@ -104,17 +104,31 @@ def convert_json_to_dataframe(senses):
     return senses_overview
 
 def parse_input_commands():
-    """
-    read inputs from the command line
-    return the lemma_id
+    """read inputs from the command line
     """    
 
     parser = ArgumentParser()
     parser.add_argument("-l", "--lemmaid", help="The lemma id to be used for creating the dataframe",)
+    parser.add_argument("-s", "--start_year", help="The start year of the data frame",default='1760')
+    parser.add_argument("-e", "--end_year", help="The end year of the data frame",default='1920')
+    parser.add_argument("-d", "--download", help="use 'all' to download all quotations, 'sample' to demo the pipeline",default='sample')
     args = parser.parse_args()
     lemma_id = args.lemmaid
+    start = int(args.start_year); end = int(args.end_year)
+
+    if end < start:
+        parser.exit("ERROR: 'end' should be greater than 'start'")
+    
+    download = args.download
+    if download == 'sample':
+        download_all = False
+    elif download == 'all':
+        download_all = True
+    else:
+        parser.exit("ERROR: the download argument has to be 'all' or 'sample'")
+    
     if lemma_id:
-        return lemma_id
+        return lemma_id, start, end, download_all
     else:
         parser.exit("ERROR: The lemma id is missing, you should query it for instance using -l machine_nn01")
 
@@ -311,10 +325,10 @@ def extend_from_lemma(auth: dict,
     #extended_df.shape[0] == core_df.shape[0] + branches_df.shape[0]
     # save dataframe as pickle
     extended_df.to_pickle(f"./data/extended_{lemma_id}.pickle") 
-    
+    print(f'Created dataframe with {extended_df.shape[0]} rows')
     return extended_df
 
-def harvest_quotations(auth: dict,lemma_id: str, level: str) -> pd.DataFrame:
+def harvest_quotations(auth: dict,lemma_id: str, level: str, download_all:bool=False) -> pd.DataFrame:
     """
     Given a dataframe obtained via the OED sense endpoints
     retrieve all quotations for the included words or senses and save them
@@ -324,6 +338,8 @@ def harvest_quotations(auth: dict,lemma_id: str, level: str) -> pd.DataFrame:
         level (str): endpoint for harvesting quotatios (sense or word)
                     when using the sense endpoint we only get quotations relevant to
                     the initial lemma
+        demo (bool): boolean flag to test pipeline without downloading all quotations
+                    if True, then we harvest only the first ten quotations
     Returns:
         saves and returns a pd.DataFrame with quotations
     """
@@ -336,10 +352,16 @@ def harvest_quotations(auth: dict,lemma_id: str, level: str) -> pd.DataFrame:
         suffix = 'all'
     else:
         raise Exception("Choose 'word' or 'sense' as values for the 'level' argument")
+    
+    if not download_all:
+        ids = set(list(ids)[:10])
+        suffix+='_demo'
+        print(f'Only testing the pipeline. Using {suffix} as suffix')
 
     responses = [query_oed(auth,level, idx, level='quotations') for idx in tqdm(ids)]
     quotation_df = pd.DataFrame([q for r in responses for q in r['data']])
     quotation_df.to_pickle(f'./data/quotations_{suffix}_{lemma_id}.pickle')
+    print(f'Created dataframe with {quotation_df.shape[0]} rows')
     return quotation_df
 
 def filter_by_year_range(dr: dict, target_start: int, target_end: int) -> bool:
@@ -619,44 +641,3 @@ def obtain_quotations_for_senses(
                                 ).drop("id",axis=1)
     
     return df
-
-if __name__ == "__main__":
-
-    lemma_id = parse_input_commands()
-    
-    start = 1760
-    end = 1920
-
-    with open('../oed_experiments/oed_credentials.json') as f:
-        auth = json.load(f)
-
-        
-    save_path = Path("./data")
-    save_path.mkdir(exist_ok=True)
-    
-    #query the API and get the json response
-    sense_json = query_oed(auth,'word',lemma_id,flags='include_senses=true&include_quotations=true')
-
-    # convert the json in a dataframe
-    senses_df = convert_json_to_dataframe(sense_json)
-
-    # save the dataframe
-    # as pickle
-    senses_df.to_pickle(save_path / f"senses_{lemma_id}.pickle")
-    # as csv
-    senses_df.to_csv(save_path / f"senses_{lemma_id}.tsv",sep='\t')
-    
-    extend_from_lemma(auth,lemma_id,start,end)
-    # get all senses that are siblings and descendants
-    # of the semantic class of senses listed in previously obtained query 
-    # responses = traverse_thesaurus(credentials,senses_df)
-    
-    # get all quoations for the senses in the responses variable
-    #quotations = get_quotations_from_thesaurus(credentials,responses)
-    
-    # merge and save all information stored in the seperate pickle files
-    # df = merge_pickled(Path(f"./data/senses_{lemma_id}.pickle"),
-    #                Path("./data/tree_traversal.pickle"),
-    #                Path("./data/tree_traversal_quotations.pickle"))
-    
-    #df.to_pickle(f"./data/{lemma_id}_all.pickle")
