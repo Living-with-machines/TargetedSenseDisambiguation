@@ -111,7 +111,7 @@ def parse_input_commands():
     parser.add_argument("-l", "--lemmaid", help="The lemma id to be used for creating the dataframe",)
     parser.add_argument("-s", "--start_year", help="The start year of the data frame",default='1760')
     parser.add_argument("-e", "--end_year", help="The end year of the data frame",default='1920')
-    parser.add_argument("-d", "--download_all", help="use 't' to download all quotations, 'f' to demo the pipeline",default='f')
+    parser.add_argument("-d", "--download", help="use 'all' to download all quotations, 'sample' to demo the pipeline",default='sample')
     args = parser.parse_args()
     lemma_id = args.lemmaid
     start = int(args.start_year); end = int(args.end_year)
@@ -119,13 +119,13 @@ def parse_input_commands():
     if end < start:
         parser.exit("ERROR: 'end' should be greater than 'start'")
     
-    download_all = args.download_all
-    if download_all == 'f':
+    download = args.download
+    if download == 'sample':
         download_all = False
-    elif download_all == 't':
+    elif download == 'all':
         download_all = True
     else:
-        parser.exit("ERROR: the download_all argument has be t (True) or f (False)")
+        parser.exit("ERROR: the download argument has to be 'all' or 'sample'")
     
     if lemma_id:
         return lemma_id, start, end, download_all
