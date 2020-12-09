@@ -629,6 +629,8 @@ def obtain_quotations_for_senses(
             ], axis=1)
     df['year'] = df_quotations['year']
     df['sense_id'] = df_quotations['sense_id']
+    df['word_id'] = df_quotations['word_id']
+    df['quotation_id'] = df_quotations['id']
     df = df[df.sense_id.isin(senses)]
     df = df[(start <= df.year) & (df.year <= end)]
     df.drop_duplicates(inplace=True)
