@@ -250,4 +250,27 @@ def binarize(lemma_id:str,
                                     (df_quotations.year <= end) ]
     return df_quotations
 
+def retrieve_labelled_definitions(lemma_id,df_quotations):
+    '''given a lemma_id and a dataframe of annotated quotations this function 
+    returns a dataframe of lemmas, ids, definitions and labels'''
+
+    df_source = pd.read_pickle(f'./data/extended_{lemma_id}.pickle')
+
+    all_labels = df_quotations[['sense_id','label']]
+    all_labels = all_labels.rename(columns={'sense_id': 'id'})
+    all_labels.drop_duplicates(inplace = True)
+    all_labels = all_labels.reset_index(drop=True)
+
+    all_selected_senses = set(all_labels["id"])
+
+    df_selected_senses = df_source[df_source.id.isin(all_selected_senses)]
+    df_selected_senses = df_selected_senses[['lemma','id','definition']]
+    df_selected_senses.drop_duplicates(inplace = True)
+    df_selected_senses = df_selected_senses[df_selected_senses['definition'].notna()]
+    df_selected_senses = df_selected_senses.reset_index(drop=True)
+
+    df_selected_senses = pd.merge(all_labels, df_selected_senses, on='id')
+
+    return df_selected_senses
+
     

@@ -60,7 +60,7 @@ def w2v_lesk_wsd(sent1, sent2, wemb_model):
 
 def w2v_lesk_ranking(sent, definition_df, wemb_model):
     definition_df["w2v_lesk_ranking"] = definition_df.apply(lambda row: w2v_lesk_wsd(sent, row["nlp_definition"], wemb_model), axis=1)
-    results = definition_df.set_index('sense_id').to_dict()["w2v_lesk_ranking"]
+    results = definition_df[['label','w2v_lesk_ranking']].values.tolist()
     return results
 
 
@@ -77,5 +77,5 @@ def bert_lesk_wsd(sent1, sent2, bert_sentsim_model):
 
 def bert_lesk_ranking(sent, definition_df, bert_sentsim_model):
     definition_df["bert_lesk_ranking"] = definition_df.apply(lambda row: bert_lesk_wsd(sent, row["definition"], bert_sentsim_model), axis=1)
-    results = definition_df.set_index('sense_id').to_dict()["bert_lesk_ranking"]
+    results = definition_df[['label','bert_lesk_ranking']].values.tolist()
     return results
