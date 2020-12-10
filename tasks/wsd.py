@@ -1,33 +1,35 @@
-from random import shuffle
+import random
 from sklearn.metrics import precision_recall_fscore_support
 import numpy as np
 import scipy
 from utils import nlp_tools
 
 ### evaluation metrics
-def eval(ranking,gold):
+def eval(approach,df_quotations):
+    ranking = df_quotations[approach]
+    gold = df_quotations["label"]
     preds = []
     for line in ranking:
-        #ranking the dictionary by the label, the higher the better
-        sort_ranking = [[sense_id, score] for sense_id, score in sorted(line.items(), key=lambda item: item[1],reverse=True)]
+        #ranking the list of list by the prediction, the higher the better
+        line.sort(key=lambda x: x[1],reverse=True)
         # taking the first one as prediction (the list of list might be useful when we compute other metrics)
-        p = sort_ranking[0][0]
+        p = line[0][0]
         preds.append(p)
-    p,r,f1 = [round(x,3) for x in precision_recall_fscore_support(gold,preds, average='macro')[:3]]
+    # we need do decide how to handle macro f1: https://stackoverflow.com/questions/23914472/strange-f1-score-result-using-scikit-learn
+    p,r,f1 = [round(x,3) for x in precision_recall_fscore_support(gold,preds, average='binary',pos_label=1)[:3]]
     microf1 = round(precision_recall_fscore_support(gold,preds, average='micro')[2],3)
     return p,r,f1,microf1
 
 ### random baseline
 def random_predict(definition_df):
-    sense_ids = definition_df["sense_id"].tolist()
-    shuffle(sense_ids)
-    results = {sense_ids[x]:len(sense_ids)-x for x in range(len(sense_ids))}
+    definition_df["random"] = definition_df.apply (lambda row: random.randint(0, 1), axis=1)
+    results = definition_df[['label','random']].values.tolist()
     return results
 
 ### token overlap baseline
 def tok_overlap_ranking(sent,definition_df):
     definition_df["tok_overlap"] = definition_df.apply (lambda row: token_overlap(sent,row["nlp_definition"]), axis=1)
-    results = definition_df.set_index('sense_id').to_dict()["tok_overlap"]
+    results = definition_df[['label','tok_overlap']].values.tolist()
     return results
 
 def token_overlap(sent1,sent2):
@@ -39,7 +41,7 @@ def token_overlap(sent1,sent2):
 # sentence embedding similarity
 def sent_embedding(sent,definition_df):
     definition_df["sent_embedding"] = definition_df.apply (lambda row: sent.similarity(row["nlp_definition"]), axis=1)
-    results = definition_df.set_index('sense_id').to_dict()["sent_embedding"]
+    results = definition_df[['label','sent_embedding']].values.tolist()
     return results
 
 
