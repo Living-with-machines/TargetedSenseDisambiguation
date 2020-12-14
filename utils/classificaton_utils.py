@@ -237,9 +237,9 @@ def binarize(lemma_id:str,
                                 start=start,end=end)
     #print(df_quotations_selected.columns)
     # add label column, set all labels to zero 
-    df_quotations['label'] = 0
+    df_quotations['label'] = "0"
     # set label to one for selected quotations
-    df_quotations.loc[df_quotations.id.isin(df_quotations_selected.quotation_id),'label'] = 1
+    df_quotations.loc[df_quotations.id.isin(df_quotations_selected.quotation_id),'label'] = "1"
     
     # strict filter is True we discard all functions outside
     # of the experiment parameters, which are defined by the
@@ -257,28 +257,4 @@ def binarize(lemma_id:str,
                             how='left'
                                 )#.drop("id",axis=1)
     return df_quotations
-
-def retrieve_labelled_definitions(lemma_id,df_quotations):
-    '''given a lemma_id and a dataframe of annotated quotations this function 
-    returns a dataframe of lemmas, ids, definitions and labels'''
-
-    df_source = pd.read_pickle(f'./data/extended_{lemma_id}.pickle')
-
-    all_labels = df_quotations[['sense_id','label']]
-    all_labels = all_labels.rename(columns={'sense_id': 'id'})
-    all_labels.drop_duplicates(inplace = True)
-    all_labels = all_labels.reset_index(drop=True)
-
-    all_selected_senses = set(all_labels["id"])
-
-    df_selected_senses = df_source[df_source.id.isin(all_selected_senses)]
-    df_selected_senses = df_selected_senses[['lemma','id','definition']]
-    df_selected_senses.drop_duplicates(inplace = True)
-    df_selected_senses = df_selected_senses[df_selected_senses['definition'].notna()]
-    df_selected_senses = df_selected_senses.reset_index(drop=True)
-
-    df_selected_senses = pd.merge(all_labels, df_selected_senses, on='id')
-
-    return df_selected_senses
-
     
