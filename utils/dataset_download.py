@@ -634,12 +634,12 @@ def obtain_quotations_for_senses(
     df = df[df.sense_id.isin(senses)]
     df = df[(start <= df.year) & (df.year <= end)]
     df.drop_duplicates(inplace=True)
-    df = df.merge(df_source[['id','daterange',
-                            "provenance","provenance_type",
-                            "relation_to_core_senses","relation_to_seed_senses"]],
-                            left_on='sense_id',
-                            right_on='id',
-                            how='left'
-                                ).drop("id",axis=1)
+    #df = df.merge(df_source[['id','daterange','definition',
+    #                        "provenance","provenance_type",
+    #                        "relation_to_core_senses","relation_to_seed_senses"]],
+    #                        left_on='sense_id',
+    #                        right_on='id',
+    #                        how='left'
+    #                            ).drop("id",axis=1)
     
     return df

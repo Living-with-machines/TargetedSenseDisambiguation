@@ -28,7 +28,7 @@ def random_predict(definition_df):
 
 ### token overlap baseline
 def tok_overlap_ranking(sent,definition_df):
-    definition_df["tok_overlap"] = definition_df.apply (lambda row: token_overlap(sent,row["nlp_definition"]), axis=1)
+    definition_df["tok_overlap"] = definition_df.apply(lambda row: token_overlap(sent,row["nlp_definition"]), axis=1)
     results = definition_df[['label','tok_overlap']].values.tolist()
     return results
 
