@@ -235,11 +235,11 @@ def binarize(lemma_id:str,
                                 df_source,                  
                                 senses,
                                 start=start,end=end)
-
+    #print(df_quotations_selected.columns)
     # add label column, set all labels to zero 
-    df_quotations['label'] = 0
+    df_quotations['label'] = "0"
     # set label to one for selected quotations
-    df_quotations.loc[df_quotations.id.isin(df_quotations_selected.quotation_id),'label'] = 1
+    df_quotations.loc[df_quotations.id.isin(df_quotations_selected.quotation_id),'label'] = "1"
     
     # strict filter is True we discard all functions outside
     # of the experiment parameters, which are defined by the
@@ -248,6 +248,13 @@ def binarize(lemma_id:str,
         df_quotations = df_quotations[(df_quotations.word_id.isin(df_quotations_selected.word_id)) & \
                                     (df_quotations.year >= start) & \
                                     (df_quotations.year <= end) ]
+                                    
+    df_quotations = df_quotations.merge(df_source[['id','daterange','definition',
+                            "provenance","provenance_type",
+                            "relation_to_core_senses","relation_to_seed_senses"]],
+                            left_on='sense_id',
+                            right_on='id',
+                            how='left'
+                                )#.drop("id",axis=1)
     return df_quotations
-
     
