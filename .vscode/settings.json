@@ -1,8 +1,0 @@
-{
-    "python.analysis.extraPaths": [
-        "/data/anaconda/envs/py37torch/bin/python"
-    ],
-    "python.condaPath": "/data/anaconda/envs/py37torch/bin/python",
-    "python.pythonPath": "/data/anaconda/envs/py37torch/bin/python",
-    "jupyter.jupyterServerType": "local"
-}
