@@ -20,12 +20,14 @@ def eval(approach,df_quotations):
     microf1 = round(precision_recall_fscore_support(gold,preds, average='micro')[2],3)
     return p,r,f1,microf1
 
+### ---------------------------------------------------
 ### random baseline
 def random_predict(definition_df):
-    definition_df["random"] = definition_df.apply (lambda row: str(random.randint(0, 1)), axis=1)
+    definition_df["random"] = definition_df.apply (lambda row: random.randint(0, 1), axis=1)
     results = definition_df[['label','random']].values.tolist()
     return results
 
+### ---------------------------------------------------
 ### token overlap baseline
 def tok_overlap_ranking(sent,definition_df):
     definition_df["tok_overlap"] = definition_df.apply(lambda row: token_overlap(sent,row["nlp_definition"]), axis=1)
@@ -38,6 +40,7 @@ def token_overlap(sent1,sent2):
     score = len(sent1 & sent2)
     return score
 
+### ---------------------------------------------------
 # sentence embedding similarity
 def sent_embedding(sent,definition_df):
     definition_df["sent_embedding"] = definition_df.apply (lambda row: sent.similarity(row["nlp_definition"]), axis=1)
@@ -79,3 +82,4 @@ def bert_lesk_ranking(sent, definition_df, bert_sentsim_model):
     definition_df["bert_lesk_ranking"] = definition_df.apply(lambda row: bert_lesk_wsd(sent, row["definition"], bert_sentsim_model), axis=1)
     results = definition_df[['label','bert_lesk_ranking']].values.tolist()
     return results
+
