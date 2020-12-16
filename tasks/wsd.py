@@ -1,8 +1,9 @@
-import random
-from sklearn.metrics import precision_recall_fscore_support
-import numpy as np
 import scipy
+import random
+import numpy as np
+from sklearn import svm
 from utils import nlp_tools
+from sklearn.metrics import precision_recall_fscore_support
 
 ### evaluation metrics
 def eval(approach,df_quotations):
@@ -52,9 +53,7 @@ def sent_embedding(sent,definition_df):
 ### Word2Vec Lesk WSD baseline
     
 def w2v_lesk_wsd(sent1, sent2, wemb_model):
-    sent1 = [tok.lemma_ for tok in sent1 if not tok.is_punct and not tok.is_stop]
-    sent2 = [tok.lemma_ for tok in sent2 if not tok.is_punct and not tok.is_stop]
-    
+
     sent1_embedding = nlp_tools.avg_embedding(sent1,wemb_model).reshape(1,-1)
     sent2_embedding = nlp_tools.avg_embedding(sent2,wemb_model).reshape(1,-1)
     
@@ -83,3 +82,23 @@ def bert_lesk_ranking(sent, definition_df, bert_sentsim_model):
     results = definition_df[['label','bert_lesk_ranking']].values.tolist()
     return results
 
+### ---------------------------------------------------
+# SVM word embedding baseline
+SVM = svm.SVC(kernel = "linear", C=1, probability=True)
+
+def svm_wemb_baseline(df_train,df_test,wemb_model):
+
+    df_train["sent_emb"] = df_train.apply(lambda row: nlp_tools.avg_embedding(row["nlp_full_text"],wemb_model).reshape(1,-1)[0], axis=1)
+    df_test["sent_emb"] = df_test.apply(lambda row: nlp_tools.avg_embedding(row["nlp_full_text"],wemb_model).reshape(1,-1)[0], axis=1)
+
+    X_train = np.array(df_train["sent_emb"].tolist())
+    y_train = np.array(df_train["label"].tolist())
+
+    X_test = np.array(df_train["sent_emb"].tolist())
+    y_test = np.array(df_train["label"].tolist())
+
+    classifier = SVM.fit(X_train,y_train)
+    y_pred = classifier.predict(X_test)
+    results = [[y_test[x],y_pred[x]] for x in range(len(y_test))]
+
+    return results
