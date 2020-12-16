@@ -196,7 +196,8 @@ def binarize(lemma_id:str,
             expand_synonyms:bool=False,
             start:int=1760, 
             end:int=1920,
-            strict_filter:bool=True) -> pd.DataFrame:
+            strict_filter:bool=True,
+            eval_mode="lemma") -> pd.DataFrame:
     """binarize labels and select quotations
     given a set of senses, provenance rules, and expansion flags,
     this function selects all relevant, related senses, and obtains quotations 
@@ -216,6 +217,7 @@ def binarize(lemma_id:str,
         senses (set):
         relations (list):
         filter_type (strict,loose): retain or discard items don't match the parameters
+        eval_mode (lemma,lemma_etal): for the moment we only support lemma
     """
     # load core dataset for a given lemma_id
     df_source = pd.read_pickle(f'./data/extended_{lemma_id}.pickle')
@@ -264,6 +266,15 @@ def binarize(lemma_id:str,
 
     train, test = train_test_split(df_quotations, test_size=0.2, random_state=42,shuffle=True, stratify=df_quotations[['label']])
     train, val = train_test_split(train, test_size=0.2, random_state=42,shuffle=True, stratify=train[['label']])
+
+    if eval_mode == "lemma":
+        train = train[train['word_id'] == lemma_id]
+        train = train.reset_index(drop=True)
+        return train,val,test
+
+    if eval_mode == "lemma_etal":
+        print("We are not offering this functionality yet.")
+        # we need all definitions of all senses in the quotation dataframe 
     
     return train,val,test
 
