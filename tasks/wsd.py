@@ -8,6 +8,7 @@ from sklearn.metrics import precision_recall_fscore_support
 ### evaluation metrics
 def eval(approach,df_quotations):
     gold = df_quotations["label"]
+    preds = df_quotations[approach]
     # we report p,r,f1 for both labels
     p_1,r_1,f1_1 = [round(x,3) for x in precision_recall_fscore_support(gold,preds, average='binary',pos_label="1")[:3]]
     p_0,r_0,f1_0 = [round(x,3) for x in precision_recall_fscore_support(gold,preds, average='binary',pos_label="0")[:3]]
