@@ -270,12 +270,7 @@ def binarize(lemma_id:str,
     if eval_mode == "lemma":
         train = train[train['word_id'] == lemma_id]
         train = train.reset_index(drop=True)
-        return train,val,test
-
-    if eval_mode == "lemma_etal":
-        print("We are not offering this functionality yet.")
-        # we need all definitions of all senses in the quotation dataframe 
-    
+        
     return train,val,test
 
 def generate_definition_df(df_train,lemma_id,eval_mode="lemma"):
@@ -290,7 +285,10 @@ def generate_definition_df(df_train,lemma_id,eval_mode="lemma"):
         return df_selected_senses
 
     if eval_mode == "lemma_etal":
-        return "We are not offering this functionality yet."
+        print ("We are not offering this functionality yet, defaulting to 'lemma' !!")
         # we need all definitions of all senses in the quotation dataframe
+        df_selected_senses = df_selected_senses[df_selected_senses['lemma_id'] == lemma_id]
+        df_selected_senses = df_selected_senses.reset_index(drop=True)
+        return df_selected_senses
 
     
