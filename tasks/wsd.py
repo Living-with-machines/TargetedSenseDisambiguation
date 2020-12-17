@@ -87,17 +87,17 @@ def bert_lesk_ranking(sent, definition_df, bert_sentsim_model):
 # SVM word embedding baseline
 SVM = svm.SVC(kernel = "linear", C=1, probability=True)
 
-def svm_wemb_baseline(df_train,X_test,wemb_model):
+def svm_wemb_baseline(df_train,df_test,wemb_model):
 
     df_train["sent_emb"] = df_train.apply(lambda row: nlp_tools.avg_embedding(row["nlp_full_text"],wemb_model).reshape(1,-1)[0], axis=1)
-    X_test = nlp_tools.avg_embedding(X_test,wemb_model).reshape(1,-1)[0]
+    df_test["sent_emb"] = df_test.apply(lambda row: nlp_tools.avg_embedding(row["nlp_full_text"],wemb_model).reshape(1,-1)[0], axis=1)
 
     X_train = np.array(df_train["sent_emb"].tolist())
     y_train = np.array(df_train["label"].tolist())
 
-    X_test = np.array([X_test])
+    X_test = np.array(df_test["sent_emb"].tolist())
 
     classifier = SVM.fit(X_train,y_train)
-    y_pred = classifier.predict(X_test)[0]
+    y_pred = classifier.predict(X_test)
 
     return y_pred
