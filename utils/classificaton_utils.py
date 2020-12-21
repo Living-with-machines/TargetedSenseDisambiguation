@@ -217,7 +217,10 @@ def binarize(lemma_id:str,
         senses (set):
         relations (list):
         filter_type (strict,loose): retain or discard items don't match the parameters
-        eval_mode (lemma,lemma_etal): for the moment we only support lemma
+        eval_mode (lemma,lemma_etal): determines the scope of the training set. if set 
+                                    to lemma, use only sense that are directly part of
+                                    the original lemma, if set to lemma_etal use lemma
+                                    and the expanded set of senses. 
     """
     # load core dataset for a given lemma_id
     df_source = pd.read_pickle(f'./data/extended_{lemma_id}.pickle')
