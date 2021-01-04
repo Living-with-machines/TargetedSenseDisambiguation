@@ -364,6 +364,112 @@ def harvest_quotations(auth: dict,lemma_id: str, level: str, download_all:bool=F
     print(f'Created dataframe with {quotation_df.shape[0]} rows')
     return quotation_df
 
+def harvest_data(
+        auth: dict,
+        lemma_id: str,
+        start_date: int=1760,
+        end_date: int=1920,
+        core_senses: bool = True, 
+        download_all: bool = False) -> pd.DataFrame:
+    """this function get definitions and quotations for all senses
+    related to a surface forms that appear in the extended set of 
+    senses harvested with `extend_from_lemma`. 
+    
+    For example if `nation_nn01-XYZ` appears in the extended set of senses, 
+    this function will obtain all definitions and quotations related to the
+    surface form (`nation`, NN) which includes other lemma ids
+    (i.e. nation_nn01 and nation_nn01). 
+    
+    Note: this implies that our experiments applied to the OED are 
+    optimistic estimates for out-of-sample performance,
+    since we assume that lemmatized and part of speech tagging are 
+    flawless when applying the the eventual models to other corpora.
+
+    The fucntion return as dataframe with definitions and quotations
+    (and some contextual information used for later filtering)
+
+    In the process, it saves two dataframes:
+        - a dataframe organized by sense
+        - a dataframe organized by quotation
+        the file names are prefixed with `sfrel_` (surface form related)
+        to indicate that the data is retrieved via the surfaceforms endpoint
+ 
+    Arguments:
+
+        auth (dict): OED API creditial
+
+        lemma_id (str): lemma_id used for harvesting extended set of senses
+
+        start_date (int): start date for the `current_in` flag of the 
+                        `surfaceforms` endpoint
+
+        end_date (int): end date for the `current_in` flag of the 
+                        `surfaceforms` endpoint
+
+        core_senses (bool): focus only on `seed` and `synonym` senses. 
+                            as extended the number of senses explodes when
+                            branching out, it makes sens to only focus on
+                            the core sense (senses related to the original lemma
+                            and their synonyms)
+
+        download_all (bool): use function in demo mode when False
+                            for demo purpose download only the first ten lemmas
+    Returns:
+        a pandas.DataFrame with a unique quotation on each row
+    """
+    df_source = pd.read_pickle(f"./data/extended_{lemma_id}.pickle") 
+
+    if core_senses:
+        df_source = df_source[df_source.provenance_type.isin(['seed','synonym'])]
+    
+    # queries are tuples of (lemma surface form, part-of-speech)
+    queries = list(set(zip(df_source.lemma,df_source.part_of_speech)))
+    print(f'Number of queries = {len(queries)}')
+    # demo or not, demo is standard
+    if not download_all:
+        queries = queries[:10]
+        print(f'Number of queries = {len(queries)}')
+        
+    # container for collecting all word ids
+    # related to the surface form queries
+    word_ids = set()
+    
+    # this loop uses the OED surfaceforms endpoints
+    # to retrieva all words ids associated with a surface form
+    for lemma, pos in queries:
+        url = f"https://oed-researcher-api.oxfordlanguages.com/oed/api/v0.2/surfaceforms/?form={lemma}&part_of_speech={pos}&current_in={start_date}-{end_date}&limit=1000"
+        response = requests.get(url, headers=auth) 
+        word_ids.update(set([d.get('word_id','') for d in response.json()['data']]))
+    
+    print(f'Number of word ids = {len(word_ids)}')
+    # for each word ids, retrieve all senses and their quotations
+    data = [query_oed(auth, 'word', word_id, flags="include_senses=true&include_quotations=true") for word_id in word_ids]
+    
+    # create a sense level dataframe
+    senses_df = pd.DataFrame([s for d in data for s in d['data']['senses']])
+    senses_df.to_pickle(f'./data/sfrel_senses_{lemma_id}.pickle')
+    print(f'Shape of senses dataframe = {senses_df.shape}')
+
+    # create a quotation level dataframe
+    quotations = senses_df.explode('quotations')
+    quotations.rename({'id':'sense_id'},inplace=True, axis=1)
+
+    # make a new dataframe based on the dictionary format of the quotation column
+    # the will create a dataframe in which each key of the dictionary becomes a 
+    # column in the new dataframe, this dataframe will only comprise the core content
+    # of each quotation
+    quotations_content = quotations.quotations.apply(pd.Series)
+    quotations_content.drop({'lemma', 'oed_reference', 'oed_url', 'word_id'}, axis=1, inplace=True)
+    print(f'Shape of quotations dataframe = {quotations_content.shape}')
+    # create a new dataframe with only unique definitions
+    definitions = quotations[['sense_id','definition','word_id','lemma']].drop_duplicates()
+    final_df = definitions.merge(quotations_content[['sense_id','text','year']],on='sense_id')
+    final_df.to_pickle(f'./data/sfrel_quotations_{lemma_id}.pickle')
+    print(f'Shape of final dataframe = {final_df.shape}')
+
+    return final_df
+
+
 def filter_by_year_range(dr: dict, target_start: int, target_end: int) -> bool:
     """
     Helper function that expects a datarange dictionary from the OED
@@ -584,6 +690,8 @@ def relation_to_core_senses(df):
                 mapping[row.id].update(scid2senseid[p[-1]])
     return mapping
 
+
+    
 def obtain_quotations_for_senses(
                     df_quotations:  pd.DataFrame,
                     df_source: pd.DataFrame,
