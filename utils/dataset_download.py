@@ -364,7 +364,7 @@ def harvest_quotations(auth: dict,lemma_id: str, level: str, download_all:bool=F
     print(f'Created dataframe with {quotation_df.shape[0]} rows')
     return quotation_df
 
-def harvest_data(
+def harvest_data_from_extended_senses(
         auth: dict,
         lemma_id: str,
         start_date: int=1760,
@@ -429,7 +429,7 @@ def harvest_data(
     if not download_all:
         queries = queries[:10]
         print(f'Number of queries = {len(queries)}')
-        
+
     # container for collecting all word ids
     # related to the surface form queries
     word_ids = set()
