@@ -108,12 +108,13 @@ def parse_input_commands():
     """    
 
     parser = ArgumentParser()
-    parser.add_argument("-l", "--lemma", help="The lemma_pos id to be used for creating the dataframe")
-    parser.add_argument("-s", "--start_year", help="The start year of the data frame",default='1760')
-    parser.add_argument("-e", "--end_year", help="The end year of the data frame",default='1920')
+    parser.add_argument("-l", "--lemma", help="The lemma to be used for creating the dataframe")
+    parser.add_argument("-p", "--pos", help="The part of speech to be used for creating the dataframe")
+    #parser.add_argument("-s", "--start_year", help="The start year of the data frame",default='1760')
+    #parser.add_argument("-e", "--end_year", help="The end year of the data frame",default='1920')
     parser.add_argument("-d", "--download", help="use 'all' to download all quotations, 'sample' to demo the pipeline",default='sample')
     args = parser.parse_args()
-    lemma_id = args.lemmaid
+    lemma = args.lemma; pos = args.pos
     start = int(args.start_year); end = int(args.end_year)
 
     if end < start:
@@ -127,8 +128,8 @@ def parse_input_commands():
     else:
         parser.exit("ERROR: the download argument has to be 'all' or 'sample'")
     
-    if lemma_id:
-        return lemma_id, start, end, download_all
+    if lemma:
+        return lemma, pos, download_all
     else:
         parser.exit("ERROR: The lemma id is missing, you should query it for instance using -l machine_nn01")
 
