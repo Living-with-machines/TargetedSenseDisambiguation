@@ -404,6 +404,7 @@ def harvest_data_from_extended_senses(
     Returns:
         a pandas.DataFrame with a unique quotation on each row
     """
+    demo_suffix = ''
     df_source = pd.read_pickle(f"./data/extended_senses_{lemma_pos}.pickle") 
 
     if not Path(f'./data/sfrel_senses_{lemma_pos}.pickle').is_file():
@@ -416,6 +417,7 @@ def harvest_data_from_extended_senses(
         print(f'[LOG] Number of lemma, pos queries = {len(queries)}')
         # demo or not, demo is standard
         if not download_all:
+            demo_suffix = '_demo'
             queries = queries[:10]
             print(f'[LOG] Number of lemma, pos queries = {len(queries)}')
 
@@ -436,9 +438,10 @@ def harvest_data_from_extended_senses(
     
         # create a sense level dataframe
         senses_df = pd.DataFrame([s for d in data for s in d['data']['senses']])
-        senses_df.to_pickle(f'./data/sfrel_senses_{lemma_pos}.pickle')
+        senses_df.to_pickle(f'./data/sfrel_senses_{lemma_pos}{demo_suffix}.pickle')
     else:
         print('[LOG] Loading data from pickled file')
+        # assume that we only want to continue from a full dataset, not a demo one
         senses_df = pd.read_pickle(f'./data/sfrel_senses_{lemma_pos}.pickle')
     
     print(f'[LOG] Shape of senses dataframe = {senses_df.shape}')
@@ -458,7 +461,7 @@ def harvest_data_from_extended_senses(
     definitions = quotations[['sense_id','definition','word_id','lemma']].drop_duplicates()
     final_df = definitions.merge(quotations_content[['id','source','sense_id','text','year']],on='sense_id')
     final_df.rename({'id':'quotation_id'},inplace=True, axis=1)
-    final_df.to_pickle(f'./data/sfrel_quotations_{lemma_pos}.pickle')
+    final_df.to_pickle(f'./data/sfrel_quotations_{lemma_pos}{demo_suffix}.pickle')
     print(f'[LOG] Shape of final dataframe = {final_df.shape}')
 
     return final_df
