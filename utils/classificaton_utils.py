@@ -263,6 +263,10 @@ def binarize(lemma_id:str,
                             how='left'
                                 )#.drop("id",axis=1)
     
+    if len(df_quotations)==0:
+        print ("\nThere are not quotations available, given this sense-id and time-frame.")
+        return None,None,None
+
     df_quotations["full_text"] = df_quotations.apply (lambda row: row["text"]["full_text"], axis=1)
     df_quotations.drop_duplicates(subset = ["year", "lemma", "word_id", "sense_id", "definition", "full_text"], inplace = True)
     df_quotations = df_quotations.reset_index(drop=True)
