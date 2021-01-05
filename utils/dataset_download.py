@@ -362,7 +362,7 @@ def harvest_quotations(auth: dict,lemma_id: str, level: str, download_all:bool=F
     quotation_df = pd.DataFrame([q for r in responses for q in r['data']])
     quotation_df.to_pickle(f'./data/quotations_{suffix}_{lemma_id}.pickle')
     print(f'Created dataframe with {quotation_df.shape[0]} rows')
-    return quotation_df
+    return quotation_df 
 
 def filter_by_year_range(dr: dict, target_start: int, target_end: int) -> bool:
     """
