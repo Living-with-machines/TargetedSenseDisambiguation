@@ -2,9 +2,8 @@ from pathlib import Path,PosixPath
 import pandas as pd
 from utils.dataset_download import *
 
-def create_dataframe(lemma_id:str,
-                    start:int,
-                    end:int,
+def create_dataframe(lemma:str,
+                    pos:str,
                     download_all:bool=False,
                     save_path:PosixPath=Path('./data')):
     """function that creates the required quotations dataframe
@@ -33,15 +32,15 @@ def create_dataframe(lemma_id:str,
     save_path.mkdir(exist_ok=True)
     
     # obtain all related senses
-    extend_from_lemma(auth,lemma_id,start,end)
+    extend_from_lemma(auth,lemma, pos)
     
     # get all quotations for words observed when
     # retrieve the lemmas, this is an incluse harvesting
     # to obtain also senses that shave the same surface form and POS
     # but are not related to machines
-    harvest_quotations(auth,lemma_id,level='word', download_all=download_all)
+    harvest_data_from_extended_senses(auth,f"{lemma}_{pos}", download_all=download_all)
 
 if __name__=="__main__":
-    lemma_id,start,end,download_all = parse_input_commands()
-    print(lemma_id,start,end, download_all)
-    create_dataframe(lemma_id,start,end,download_all)
+    lemma, pos,download_all = parse_input_commands()
+    print(lemma,pos, download_all)
+    create_dataframe(lemma, pos,download_all)
