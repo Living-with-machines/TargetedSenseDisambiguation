@@ -8,11 +8,11 @@ def create_dataframe(lemma:str,
                     save_path:PosixPath=Path('./data')):
     """function that creates the required quotations dataframe
     it first harvet all senses related to given lemma id, than 
-    obtains all quotations. Please note that the specified time 
-    period only affects the retrieval the senses (i.e., we only 
-    get senses who have an _overlap_ with the period bounded by start
-    and end). Filtering of quotations is handled later by the
+    obtains all quotations. Filtering of quotations is handled later by the
     obtain_quotations_for_senses function.
+
+    Example usage
+        python pipeline.py --lemma='democracy' --pos='NN'
 
     Arguments:
         lemma (str): target lemma from which we expand 
