@@ -188,11 +188,11 @@ def bert_avg_quot_nn_wsd(query_vector: np.array,
     results = quotation_df_avg_by_lemma.apply(cosine_similiarity, target = query_vector).to_dict() 
     return results
 
-def binarize(lemma_id:str,
+def binarize(lemma_pos:str,
             senses:set,
             relations:list,
             expand_seeds:bool=True,
-            expand_synonyms:bool=False,
+            expand_synonyms:bool=True,
             start:int=1760, 
             end:int=1920,
             strict_filter:bool=True) -> pd.DataFrame:
@@ -217,8 +217,8 @@ def binarize(lemma_id:str,
         filter_type (strict,loose): retain or discard items don't match the parameters
     """
     # load core dataset for a given lemma_id
-    df_source = pd.read_pickle(f'./data/extended_{lemma_id}.pickle')
-    df_quotations = pd.read_pickle(f'./data/quotations_all_{lemma_id}.pickle')
+    df_source = pd.read_pickle(f'./data/extended_senses_{lemma_pos}.pickle')
+    df_quotations = pd.read_pickle(f'./data/sfrel_quotations_{lemma_pos}.pickle')
 
     # filter senses
     senses = filter_senses(df_source,
@@ -239,7 +239,7 @@ def binarize(lemma_id:str,
     # add label column, set all labels to zero 
     df_quotations['label'] = "0"
     # set label to one for selected quotations
-    df_quotations.loc[df_quotations.id.isin(df_quotations_selected.quotation_id),'label'] = "1"
+    df_quotations.loc[df_quotations.quotation_id.isin(df_quotations_selected.quotation_id),'label'] = "1"
     
     # strict filter is True we discard all functions outside
     # of the experiment parameters, which are defined by the
