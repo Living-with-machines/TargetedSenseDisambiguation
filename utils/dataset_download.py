@@ -181,8 +181,8 @@ def get_provenance_by_semantic_class(row: pd.Series) -> list:
 def extend_from_lemma(auth: dict, 
                     lemma: str,
                     pos: str,
-                    start:int=1750,
-                    end:int=1950) -> pd.DataFrame:
+                    start:int=1700,
+                    end:int=2021) -> pd.DataFrame:
     
     
     """Extends senses from a dataframe created from information obtained
@@ -353,8 +353,8 @@ def extend_from_lemma(auth: dict,
 def harvest_data_from_extended_senses(
         auth: dict,
         lemma_pos: str,
-        start_date: int=1760,
-        end_date: int=1920,
+        start_date: int=1700,
+        end_date: int=2021,
         core_senses: bool = True, 
         download_all: bool = True) -> pd.DataFrame:
     """this function get definitions and quotations for all senses
@@ -405,35 +405,41 @@ def harvest_data_from_extended_senses(
     """
     df_source = pd.read_pickle(f"./data/extended_senses_{lemma_pos}.pickle") 
 
-    if core_senses:
-        df_source = df_source[df_source.provenance_type.isin(['seed','synonym'])]
+    if not Path(f'./data/sfrel_senses_{lemma_pos}.pickle').is_file():
+        print('[LOG] Downloading data via API.')
+        if core_senses:
+            df_source = df_source[df_source.provenance_type.isin(['seed','synonym'])]
     
-    # queries are tuples of (lemma surface form, part-of-speech)
-    queries = list(set(zip(df_source.lemma,df_source.part_of_speech)))
-    print(f'[LOG] Number of lemma, pos queries = {len(queries)}')
-    # demo or not, demo is standard
-    if not download_all:
-        queries = queries[:10]
+        # queries are tuples of (lemma surface form, part-of-speech)
+        queries = list(set(zip(df_source.lemma,df_source.part_of_speech)))
         print(f'[LOG] Number of lemma, pos queries = {len(queries)}')
+        # demo or not, demo is standard
+        if not download_all:
+            queries = queries[:10]
+            print(f'[LOG] Number of lemma, pos queries = {len(queries)}')
 
-    # container for collecting all word ids
-    # related to the surface form queries
-    word_ids = set()
+        # container for collecting all word ids
+        # related to the surface form queries
+        word_ids = set()
     
-    # this loop uses the OED surfaceforms endpoints
-    # to retrieva all words ids associated with a surface form
-    for lemma, pos in queries:
-        url = f"https://oed-researcher-api.oxfordlanguages.com/oed/api/v0.2/surfaceforms/?form={lemma}&part_of_speech={pos}&current_in={start_date}-{end_date}&limit=1000"
-        response = requests.get(url, headers=auth) 
-        word_ids.update(set([d.get('word_id','') for d in response.json()['data']]))
+        # this loop uses the OED surfaceforms endpoints
+        # to retrieva all words ids associated with a surface form
+        for lemma, pos in queries:
+            url = f"https://oed-researcher-api.oxfordlanguages.com/oed/api/v0.2/surfaceforms/?form={lemma}&part_of_speech={pos}&current_in={start_date}-{end_date}&limit=1000"
+            response = requests.get(url, headers=auth) 
+            word_ids.update(set([d.get('word_id','') for d in response.json()['data']]))
     
-    print(f'[LOG] Number of retrieved word ids = {len(word_ids)}')
-    # for each word ids, retrieve all senses and their quotations
-    data = [query_oed(auth, 'word', word_id, flags="include_senses=true&include_quotations=true") for word_id in word_ids]
+        print(f'[LOG] Number of retrieved word ids = {len(word_ids)}')
+        # for each word ids, retrieve all senses and their quotations
+        data = [query_oed(auth, 'word', word_id, flags="include_senses=true&include_quotations=true") for word_id in word_ids]
     
-    # create a sense level dataframe
-    senses_df = pd.DataFrame([s for d in data for s in d['data']['senses']])
-    senses_df.to_pickle(f'./data/sfrel_senses_{lemma_pos}.pickle')
+        # create a sense level dataframe
+        senses_df = pd.DataFrame([s for d in data for s in d['data']['senses']])
+        senses_df.to_pickle(f'./data/sfrel_senses_{lemma_pos}.pickle')
+    else:
+        print('[LOG] Loading data from pickled file')
+        senses_df = pd.read_pickle(f'./data/sfrel_senses_{lemma_pos}.pickle')
+    
     print(f'[LOG] Shape of senses dataframe = {senses_df.shape}')
 
     # create a quotation level dataframe
@@ -449,7 +455,8 @@ def harvest_data_from_extended_senses(
     print(f'[LOG] Shape of quotations dataframe = {quotations_content.shape}')
     # create a new dataframe with only unique definitions
     definitions = quotations[['sense_id','definition','word_id','lemma']].drop_duplicates()
-    final_df = definitions.merge(quotations_content[['sense_id','text','year']],on='sense_id')
+    final_df = definitions.merge(quotations_content[['id','source','sense_id','text','year']],on='sense_id')
+    final_df.rename({'id':'quotation_id'},inplace=True, axis=1)
     final_df.to_pickle(f'./data/sfrel_quotations_{lemma_pos}.pickle')
     print(f'[LOG] Shape of final dataframe = {final_df.shape}')
 
@@ -717,12 +724,12 @@ def obtain_quotations_for_senses(
     
     df = pd.concat([
         pd.DataFrame.from_records(df_quotations.text.values),
-        #pd.DataFrame.from_records(df_quotations.source.values)
+        pd.DataFrame.from_records(df_quotations.source.values)
             ], axis=1)
     df['year'] = df_quotations['year']
     df['sense_id'] = df_quotations['sense_id']
     df['word_id'] = df_quotations['word_id']
-    #df['quotation_id'] = df_quotations['quotation_id']
+    df['quotation_id'] = df_quotations['quotation_id']
     df = df[df.sense_id.isin(senses)]
     df = df[(start <= df.year) & (df.year <= end)]
     df.drop_duplicates(inplace=True)
