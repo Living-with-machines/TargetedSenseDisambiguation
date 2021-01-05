@@ -115,10 +115,10 @@ def parse_input_commands():
     parser.add_argument("-d", "--download", help="use 'all' to download all quotations, 'sample' to demo the pipeline",default='sample')
     args = parser.parse_args()
     lemma = args.lemma; pos = args.pos
-    start = int(args.start_year); end = int(args.end_year)
+    #start = int(args.start_year); end = int(args.end_year)
 
-    if end < start:
-        parser.exit("ERROR: 'end' should be greater than 'start'")
+    #if end < start:
+    #    parser.exit("ERROR: 'end' should be greater than 'start'")
     
     download = args.download
     if download == 'sample':

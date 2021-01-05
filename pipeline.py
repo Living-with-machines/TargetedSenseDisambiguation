@@ -15,9 +15,8 @@ def create_dataframe(lemma:str,
     obtain_quotations_for_senses function.
 
     Arguments:
-        lemma_id (str): target lemma from which we expand 
-        start (int): senses should also occur after this year
-        end (int): senses should also occur before this year
+        lemma (str): target lemma from which we expand 
+        pos (str): restrict lemma to a specific part of speech
         download_ll (bool): flag used for testing the pipeline
                         if set to False, we only obtain the first
                         ten quotations (avoids overusing the OED API)
