@@ -219,7 +219,7 @@ def binarize(lemma_pos:str,
     # load core dataset for a given lemma_id
     df_source = pd.read_pickle(f'./data/extended_senses_{lemma_pos}.pickle')
     df_quotations = pd.read_pickle(f'./data/sfrel_quotations_{lemma_pos}.pickle')
-
+    print(df_quotations.columns)
     # filter senses
     senses = filter_senses(df_source,
                     senses,
@@ -249,7 +249,7 @@ def binarize(lemma_pos:str,
                                     (df_quotations.year >= start) & \
                                     (df_quotations.year <= end) ]
                                     
-    df_quotations = df_quotations.merge(df_source[['id','daterange','definition',
+    df_quotations = df_quotations.merge(df_source[['id','daterange',
                             "provenance","provenance_type",
                             "relation_to_core_senses","relation_to_seed_senses"]],
                             left_on='sense_id',

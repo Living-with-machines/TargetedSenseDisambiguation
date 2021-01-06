@@ -461,6 +461,7 @@ def harvest_data_from_extended_senses(
     definitions = quotations[['sense_id','definition','word_id','lemma']].drop_duplicates()
     final_df = definitions.merge(quotations_content[['id','source','sense_id','text','year']],on='sense_id')
     final_df.rename({'id':'quotation_id'},inplace=True, axis=1)
+    print(f'[LOG] Saving pickle file to "./data/sfrel_quotations_{lemma_pos}{demo_suffix}.pickle"')
     final_df.to_pickle(f'./data/sfrel_quotations_{lemma_pos}{demo_suffix}.pickle')
     print(f'[LOG] Shape of final dataframe = {final_df.shape}')
 
@@ -730,10 +731,11 @@ def obtain_quotations_for_senses(
         pd.DataFrame.from_records(df_quotations.text.values),
         pd.DataFrame.from_records(df_quotations.source.values)
             ], axis=1)
-    df['year'] = df_quotations['year']
-    df['sense_id'] = df_quotations['sense_id']
-    df['word_id'] = df_quotations['word_id']
-    df['quotation_id'] = df_quotations['quotation_id']
+    #df['year'] = df_quotations['year']
+    #df['sense_id'] = df_quotations['sense_id']
+    #df['word_id'] = df_quotations['word_id']
+    #df['quotation_id'] = df_quotations['quotation_id']
+    df[['year','sense_id','word_id','quotation_id','definition']] = df_quotations[['year','sense_id','word_id','quotation_id','definition']]
     df = df[df.sense_id.isin(senses)]
     df = df[(start <= df.year) & (df.year <= end)]
     df.drop_duplicates(inplace=True)
