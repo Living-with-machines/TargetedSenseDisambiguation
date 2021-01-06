@@ -119,6 +119,17 @@ def parse_input_commands():
 
     #if end < start:
     #    parser.exit("ERROR: 'end' should be greater than 'start'")
+
+
+    penn_tags = ["CC", "CD",  "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS",
+                "MD", "NN", "NNS", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$", "RB", "RBR",
+                "RBS", "RP", "SYM", "TO", "UH", "VB", "VBD", "VBG", "VBN", "VBP", "VBZ",
+                "WDT", "WP", "WP$", "WRB"]
+    penn_tags.extend([p.lower() for p in penn_tags])
+
+    if pos not in penn_tags:
+        parser.exit("""[ERROR] the part of speech tag {pos} is not in the
+                    in the Pennn Treebank P.O.S. Tagset""")
     
     download = args.download
     if download == 'sample':
@@ -126,12 +137,12 @@ def parse_input_commands():
     elif download == 'all':
         download_all = True
     else:
-        parser.exit("ERROR: the download argument has to be 'all' or 'sample'")
+        parser.exit("[ERROR] the download argument has to be 'all' or 'sample'")
     
     if lemma:
         return lemma, pos, download_all
     else:
-        parser.exit("ERROR: The lemma id is missing, you should query it for instance using -l machine_nn01")
+        parser.exit("[ERROR] The lemma is missing, you should query it for instance using -l machine_nn01")
 
         
 def get_provenance_by_semantic_class(row: pd.Series) -> list:
