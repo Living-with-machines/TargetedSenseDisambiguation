@@ -245,7 +245,7 @@ def binarize(lemma_pos:str,
     # of the experiment parameters, which are defined by the
     # time period and the word types of the target senses
     if strict_filter:
-        df_quotations = df_quotations[(df_quotations.word_id.isin(df_quotations_selected.word_id)) & \
+        df_quotations = df_quotations[(df_quotations.lemma.isin(df_quotations_selected.lemma)) & \
                                     (df_quotations.year >= start) & \
                                     (df_quotations.year <= end) ]
                                     
