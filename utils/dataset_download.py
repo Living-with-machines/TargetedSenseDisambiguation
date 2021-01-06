@@ -181,9 +181,7 @@ def get_provenance_by_semantic_class(row: pd.Series) -> list:
 
 def extend_from_lemma(auth: dict, 
                     lemma: str,
-                    pos: str,
-                    start:int=1700,
-                    end:int=2021) -> pd.DataFrame:
+                    pos: str) -> pd.DataFrame:
     
     
     """Extends senses from a dataframe created from information obtained
@@ -223,7 +221,7 @@ def extend_from_lemma(auth: dict,
         query_df = pd.read_pickle(lemma_path)
     else:
         print(f'[LOG] Dowloading senses for {lemma}_{pos} from OED API.')
-        url = f"https://oed-researcher-api.oxfordlanguages.com/oed/api/v0.2/surfaceforms/?form={lemma}&part_of_speech={pos}&current_in={start}-{end}&limit=1000"
+        url = f"https://oed-researcher-api.oxfordlanguages.com/oed/api/v0.2/surfaceforms/?form={lemma}&part_of_speech={pos}&limit=1000"
         response = requests.get(url, headers=auth)
         # get words with similar surface structure
         lemma_ids = set([d.get('word_id','') for d in response.json()['data']])
@@ -254,7 +252,7 @@ def extend_from_lemma(auth: dict,
     # get all senses by sense id
     print(f"[LOG] Get all {len(query_sense_ids)} senses for the lemma {lemma}_{pos}")
     seeds = [(s,query_oed(auth,'sense',s,
-                    flags=f"current_in='{start}-{end}'&limit=1000", # probably "current_in" not needed here see APi
+                    flags=f"limit=1000", # probably "current_in" not needed here see APi
                     verbose=False)) # set verbose to True to see the url request
                         for s in query_sense_ids]
     
@@ -275,7 +273,7 @@ def extend_from_lemma(auth: dict,
     print(f"[LOG] Get all synonyms of the {len(query_sense_ids)} senses listed in {lemma}_{pos}")
     synonyms = [(s,query_oed(auth,'sense',s,
                 level='synonyms',
-                flags=f"current_in='{start}-{end}'&limit=1000"))
+                flags=f"limit=1000"))
                         for s in query_sense_ids]
     
     # transform list of synonyms to a dataframe
