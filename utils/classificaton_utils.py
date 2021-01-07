@@ -271,32 +271,45 @@ def binarize(lemma:str,
     df_quotations["full_text"] = df_quotations.apply (lambda row: row["text"]["full_text"], axis=1)
     df_quotations.drop_duplicates(subset = ["year", "lemma", "word_id", "sense_id", "definition", "full_text"], inplace = True)
     df_quotations = df_quotations.reset_index(drop=True)
-    #print(df_quotations.shape)
+    
     train, test = train_test_split(df_quotations, test_size=0.2, random_state=42,shuffle=True, stratify=df_quotations[['label']])
     train, val = train_test_split(train, test_size=0.2, random_state=42,shuffle=True, stratify=train[['label']])
-
+    train = train[~train.definition.isnull()].reset_index(drop=True)
+    
     if eval_mode == "lemma":
         train = train[train['lemma'] == lemma] # changed this
         train = train.reset_index(drop=True)
-        
+
+    
     return train,val,test
 
 def generate_definition_df(df_train,lemma,eval_mode="lemma"):
-    df_selected_senses = df_train[['sense_id','lemma','word_id','definition','label']]
+    def merge_definitions(row):
+        definition = ''
+        if row.lemma_definition:
+            definition += row.lemma_definition
+        if row.definition:
+            definition += ' & '
+            definition += row.definition
+        return definition
+
+    df_selected_senses = df_train[['sense_id','lemma','word_id','lemma_definition','definition','label']]
+    df_selected_senses['definition'] = df_selected_senses.apply(merge_definitions, axis=1)
+
+
     df_selected_senses = df_selected_senses.rename(columns={'sense_id': 'id','word_id':'lemma_id'})
+    df_selected_senses = df_selected_senses[~df_selected_senses.definition.isnull()]
     df_selected_senses.drop_duplicates(inplace = True)
     df_selected_senses = df_selected_senses.reset_index(drop=True)
 
     if eval_mode == "lemma":
+        print(f'Using {eval_mode} as evaluation mode.')
         df_selected_senses = df_selected_senses[df_selected_senses['lemma'] == lemma]
         df_selected_senses = df_selected_senses.reset_index(drop=True)
         return df_selected_senses
 
     if eval_mode == "lemma_etal":
-        print ("We are not offering this functionality yet, defaulting to 'lemma' !!")
-        # we need all definitions of all senses in the quotation dataframe
-        df_selected_senses = df_selected_senses[df_selected_senses['lemma'] == lemma]
-        df_selected_senses = df_selected_senses.reset_index(drop=True)
+        print(f'Using {eval_mode} as evaluation mode.')    
         return df_selected_senses
 
     

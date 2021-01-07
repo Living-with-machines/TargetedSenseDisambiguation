@@ -444,9 +444,13 @@ def harvest_data_from_extended_senses(
         print(f'[LOG] Number of retrieved word ids = {len(word_ids)}')
         # for each word ids, retrieve all senses and their quotations
         data = [query_oed(auth, 'word', word_id, flags="include_senses=true&include_quotations=true") for word_id in word_ids]
-    
+        with open(f'./data/raw_output_{lemma_pos}{demo_suffix}.pickle','wb') as out_pickle:
+            pickle.dump(data, out_pickle)
+        
         # create a sense level dataframe
         senses_df = pd.DataFrame([s for d in data for s in d['data']['senses']])
+        lemma_definition = [d['data']['definition'] for d in data for s in d['data']['senses']]
+        senses_df['lemma_definition'] = lemma_definition
         senses_df.to_pickle(f'./data/sfrel_senses_{lemma_pos}{demo_suffix}.pickle')
     else:
         print('[LOG] Loading data from pickled file')
@@ -467,7 +471,7 @@ def harvest_data_from_extended_senses(
     quotations_content.drop({'lemma', 'oed_reference', 'oed_url', 'word_id'}, axis=1, inplace=True)
     print(f'[LOG] Shape of quotations dataframe = {quotations_content.shape}')
     # create a new dataframe with only unique definitions
-    definitions = quotations[['sense_id','definition','word_id','lemma']].drop_duplicates()
+    definitions = quotations[['sense_id','lemma_definition','definition','word_id','lemma']].drop_duplicates()
     final_df = definitions.merge(quotations_content[['id','source','sense_id','text','year']],on='sense_id')
     final_df.rename({'id':'quotation_id'},inplace=True, axis=1)
     print(f'[LOG] Saving pickle file to "./data/sfrel_quotations_{lemma_pos}{demo_suffix}.pickle"')
