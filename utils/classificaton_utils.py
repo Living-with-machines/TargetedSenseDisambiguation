@@ -189,7 +189,8 @@ def bert_avg_quot_nn_wsd(query_vector: np.array,
     results = quotation_df_avg_by_lemma.apply(cosine_similiarity, target = query_vector).to_dict() 
     return results
 
-def binarize(lemma_pos:str,
+def binarize(lemma:str,
+            pos: str,
             senses:set,
             relations:list,
             expand_seeds:bool=True,
@@ -223,8 +224,8 @@ def binarize(lemma_pos:str,
                                     and the expanded set of senses. 
     """
     # load core dataset for a given lemma_id
-    df_source = pd.read_pickle(f'./data/extended_senses_{lemma_pos}.pickle')
-    df_quotations = pd.read_pickle(f'./data/sfrel_quotations_{lemma_pos}.pickle')
+    df_source = pd.read_pickle(f'./data/extended_senses_{lemma}_{pos}.pickle')
+    df_quotations = pd.read_pickle(f'./data/sfrel_quotations_{lemma}_{pos}.pickle')
     print(df_quotations.columns)
     # filter senses
     senses = filter_senses(df_source,
@@ -270,12 +271,12 @@ def binarize(lemma_pos:str,
     df_quotations["full_text"] = df_quotations.apply (lambda row: row["text"]["full_text"], axis=1)
     df_quotations.drop_duplicates(subset = ["year", "lemma", "word_id", "sense_id", "definition", "full_text"], inplace = True)
     df_quotations = df_quotations.reset_index(drop=True)
-
+    print(df_quotations.shape)
     train, test = train_test_split(df_quotations, test_size=0.2, random_state=42,shuffle=True, stratify=df_quotations[['label']])
     train, val = train_test_split(train, test_size=0.2, random_state=42,shuffle=True, stratify=train[['label']])
 
     if eval_mode == "lemma":
-        train = train[train['word_id'] == lemma_id]
+        train = train[train['lemma'] == lemma] # changed this
         train = train.reset_index(drop=True)
         
     return train,val,test
