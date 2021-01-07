@@ -119,10 +119,12 @@ def get_target_token_vector(row: pd.Series,
         print("[WARNING] 'vectors' variable is empty. Return None.")
         return None
 
-def prepare_data(path: PosixPath, 
+def vectorize_target_expression(quotations: pd.DataFrame, 
                 embedding_type: TransformerWordEmbeddings,
-                start_year:int=1760, 
-                end_year:int=1920) -> pd.DataFrame:
+                #start_year:int=1760, 
+                #end_year:int=1920,
+                #**kwargs
+                ) -> pd.DataFrame:
     """prepare data for word sense disambiguation with quotations
     this function filters quotations for a given date range
     it then checks if all target words have been vectorized (mean
@@ -140,29 +142,29 @@ def prepare_data(path: PosixPath,
         and which are processed for sense disambiguation using the vector
         representation of the target word (or keyword)
     """
-    data = pd.read_pickle(path)
+    #data = pd.read_pickle(path)
     
-    quotations_path = path.parent / f"{path.stem}_{start_year}_{end_year}.pickle"
+    #quotations_path = path.parent / f"{path.stem}_{start_year}_{end_year}.pickle"
     
-    if not quotations_path.is_file():
-        print(f'Quotations file: {quotations_path} could not be found. Vectorizing the target word...')
-        quotations = filter_quotations_by_year(data,start=start_year,end=end_year)
-        try:
-            import swifter
-            print("[INFO] swifter is installed. Parallelize pandas apply method.")
-            quotations['vector'] = quotations.swifter.apply(get_target_token_vector,
-                                                            embedding_type=embedding_type,
-                                                            axis=1)
-        except ImportError:
-            print("[WARNING] could not find swifter...run pandas apply on one process.")
-            quotations['vector'] = quotations.apply(get_target_token_vector,
+    #if not quotations_path.is_file():
+    #    print(f'Quotations file: {quotations_path} could not be found. Vectorizing the target word...')
+    #quotations = filter_quotations_by_year(data,start=start_year,end=end_year)
+    try:
+        import swifter
+        print("[INFO] swifter is installed. Parallelize pandas apply method.")
+        quotations['vector'] = quotations.swifter.apply(get_target_token_vector,
+                                                        embedding_type=embedding_type,
+                                                        axis=1)
+    except ImportError:
+        print("[WARNING] could not find swifter...run pandas apply on one process.")
+        quotations['vector'] = quotations.apply(get_target_token_vector,
                                                     embedding_type=embedding_type,
                                                     axis=1)
-        quotations.to_pickle(quotations_path)
-        print("Done. Created dataframe with vectors for target words.")
-        print(f'Saved Dataframe: {quotations_path}')
-    else:
-        quotations = pd.read_pickle(quotations_path)
+    #quotations.to_pickle(quotations_path)
+    #print("Done. Created dataframe with vectors for target words.")
+    #print(f'Saved Dataframe: {quotations_path}')
+    #else:
+    #    quotations = pd.read_pickle(quotations_path)
     
     return quotations
 
@@ -269,6 +271,10 @@ def binarize(lemma:str,
         return None,None,None
 
     df_quotations["full_text"] = df_quotations.apply (lambda row: row["text"]["full_text"], axis=1)
+    df_quotations["keyword"] = df_quotations.apply (lambda row: row["text"]["keyword"], axis=1)
+    df_quotations["keyword_offset"] = df_quotations.apply (lambda row: row["text"]["keyword_offset"], axis=1)
+
+    
     df_quotations.drop_duplicates(subset = ["year", "lemma", "word_id", "sense_id", "definition", "full_text"], inplace = True)
     df_quotations = df_quotations.reset_index(drop=True)
     
