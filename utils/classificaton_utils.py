@@ -284,7 +284,19 @@ def binarize(lemma:str,
     return train,val,test
 
 def generate_definition_df(df_train,lemma,eval_mode="lemma"):
-    df_selected_senses = df_train[['sense_id','lemma','word_id','definition','label']]
+    def merge_definitions(row):
+        definition = ''
+        if row.lemma_definition:
+            definition += row.lemma_definition
+        if row.definition:
+            definition += ' & '
+            definition += row.definition
+        return definition
+
+    df_selected_senses = df_train[['sense_id','lemma','word_id','lemma_definition','definition','label']]
+    df_selected_senses['definition'] = df_selected_senses.apply(merge_definitions, axis=1)
+
+
     df_selected_senses = df_selected_senses.rename(columns={'sense_id': 'id','word_id':'lemma_id'})
     df_selected_senses = df_selected_senses[~df_selected_senses.definition.isnull()]
     df_selected_senses.drop_duplicates(inplace = True)
