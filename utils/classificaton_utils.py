@@ -274,19 +274,19 @@ def binarize(lemma:str,
     #print(df_quotations.shape)
     train, test = train_test_split(df_quotations, test_size=0.2, random_state=42,shuffle=True, stratify=df_quotations[['label']])
     train, val = train_test_split(train, test_size=0.2, random_state=42,shuffle=True, stratify=train[['label']])
+    train = train[~train.definition.isnull()].reset_index(drop=True)
     print(train.shape)
     if eval_mode == "lemma":
         train = train[train['lemma'] == lemma] # changed this
         train = train.reset_index(drop=True)
-    else:
-        train = train[~train.definition.isnull()]
-        train = train.reset_index(drop=True)
+
     print(train.shape)
     return train,val,test
 
 def generate_definition_df(df_train,lemma,eval_mode="lemma"):
     df_selected_senses = df_train[['sense_id','lemma','word_id','definition','label']]
     df_selected_senses = df_selected_senses.rename(columns={'sense_id': 'id','word_id':'lemma_id'})
+    df_selected_senses = df_selected_senses[~df_selected_senses.definition.isnull()]
     df_selected_senses.drop_duplicates(inplace = True)
     df_selected_senses = df_selected_senses.reset_index(drop=True)
 
@@ -302,8 +302,7 @@ def generate_definition_df(df_train,lemma,eval_mode="lemma"):
         # we need all definitions of all senses in the quotation dataframe
         #df_selected_senses = df_selected_senses[df_selected_senses['lemma'] == lemma]
         #df_selected_senses = df_selected_senses.reset_index(drop=True)
-        df_selected_senses = df_selected_senses[~df_selected_senses.definition.isnull()]
-        df_selected_senses = df_selected_senses.reset_index(drop=True)
+        
         return df_selected_senses
 
     
