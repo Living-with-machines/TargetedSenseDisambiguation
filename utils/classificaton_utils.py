@@ -293,10 +293,10 @@ def generate_definition_df(df_train,lemma,eval_mode="lemma"):
         return df_selected_senses
 
     if eval_mode == "lemma_etal":
-        print ("We are not offering this functionality yet, defaulting to 'lemma' !!")
+        #print ("We are not offering this functionality yet, defaulting to 'lemma' !!")
         # we need all definitions of all senses in the quotation dataframe
-        df_selected_senses = df_selected_senses[df_selected_senses['lemma'] == lemma]
-        df_selected_senses = df_selected_senses.reset_index(drop=True)
+        #df_selected_senses = df_selected_senses[df_selected_senses['lemma'] == lemma]
+        #df_selected_senses = df_selected_senses.reset_index(drop=True)
         return df_selected_senses
 
     
