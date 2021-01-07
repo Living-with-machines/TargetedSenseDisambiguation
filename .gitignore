@@ -143,3 +143,5 @@ data/
 # others
 .DS_Store
 .vscode/settings.json
+results/*
+

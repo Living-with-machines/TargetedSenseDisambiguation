@@ -9,6 +9,7 @@ from scipy.spatial.distance import cosine
 from pathlib import Path, PosixPath
 from typing import Union
 from utils.dataset_download import *
+from sklearn.model_selection import train_test_split
 
 cosine_similiarity = lambda x, target : 1 - cosine(x,target)
 
@@ -188,14 +189,16 @@ def bert_avg_quot_nn_wsd(query_vector: np.array,
     results = quotation_df_avg_by_lemma.apply(cosine_similiarity, target = query_vector).to_dict() 
     return results
 
-def binarize(lemma_pos:str,
+def binarize(lemma:str,
+            pos: str,
             senses:set,
             relations:list,
             expand_seeds:bool=True,
             expand_synonyms:bool=True,
             start:int=1760, 
             end:int=1920,
-            strict_filter:bool=True) -> pd.DataFrame:
+            strict_filter:bool=True,
+            eval_mode="lemma") -> pd.DataFrame:
     """binarize labels and select quotations
     given a set of senses, provenance rules, and expansion flags,
     this function selects all relevant, related senses, and obtains quotations 
@@ -215,10 +218,14 @@ def binarize(lemma_pos:str,
         senses (set):
         relations (list):
         filter_type (strict,loose): retain or discard items don't match the parameters
+        eval_mode (lemma,lemma_etal): determines the scope of the training set. if set 
+                                    to lemma, use only sense that are directly part of
+                                    the original lemma, if set to lemma_etal use lemma
+                                    and the expanded set of senses. 
     """
     # load core dataset for a given lemma_id
-    df_source = pd.read_pickle(f'./data/extended_senses_{lemma_pos}.pickle')
-    df_quotations = pd.read_pickle(f'./data/sfrel_quotations_{lemma_pos}.pickle')
+    df_source = pd.read_pickle(f'./data/extended_senses_{lemma}_{pos}.pickle')
+    df_quotations = pd.read_pickle(f'./data/sfrel_quotations_{lemma}_{pos}.pickle')
     print(df_quotations.columns)
     # filter senses
     senses = filter_senses(df_source,
@@ -256,5 +263,40 @@ def binarize(lemma_pos:str,
                             right_on='id',
                             how='left'
                                 )#.drop("id",axis=1)
-    return df_quotations
+    
+    if len(df_quotations)==0:
+        print ("\nThere are not quotations available, given this sense-id and time-frame.")
+        return None,None,None
+
+    df_quotations["full_text"] = df_quotations.apply (lambda row: row["text"]["full_text"], axis=1)
+    df_quotations.drop_duplicates(subset = ["year", "lemma", "word_id", "sense_id", "definition", "full_text"], inplace = True)
+    df_quotations = df_quotations.reset_index(drop=True)
+    #print(df_quotations.shape)
+    train, test = train_test_split(df_quotations, test_size=0.2, random_state=42,shuffle=True, stratify=df_quotations[['label']])
+    train, val = train_test_split(train, test_size=0.2, random_state=42,shuffle=True, stratify=train[['label']])
+
+    if eval_mode == "lemma":
+        train = train[train['lemma'] == lemma] # changed this
+        train = train.reset_index(drop=True)
+        
+    return train,val,test
+
+def generate_definition_df(df_train,lemma,eval_mode="lemma"):
+    df_selected_senses = df_train[['sense_id','lemma','word_id','definition','label']]
+    df_selected_senses = df_selected_senses.rename(columns={'sense_id': 'id','word_id':'lemma_id'})
+    df_selected_senses.drop_duplicates(inplace = True)
+    df_selected_senses = df_selected_senses.reset_index(drop=True)
+
+    if eval_mode == "lemma":
+        df_selected_senses = df_selected_senses[df_selected_senses['lemma'] == lemma]
+        df_selected_senses = df_selected_senses.reset_index(drop=True)
+        return df_selected_senses
+
+    if eval_mode == "lemma_etal":
+        print ("We are not offering this functionality yet, defaulting to 'lemma' !!")
+        # we need all definitions of all senses in the quotation dataframe
+        df_selected_senses = df_selected_senses[df_selected_senses['lemma'] == lemma]
+        df_selected_senses = df_selected_senses.reset_index(drop=True)
+        return df_selected_senses
+
     

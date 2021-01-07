@@ -9,6 +9,8 @@ def preprocess(text):
     return processed_text
 
 def avg_embedding(text,emb_model):
+    text = [tok.lemma_ for tok in text if not tok.is_punct and not tok.is_stop]
+
     doc_embed = []
     for word in text:
             try:
