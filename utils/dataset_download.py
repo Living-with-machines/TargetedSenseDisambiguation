@@ -466,7 +466,7 @@ def harvest_data_from_extended_senses(
     # make a new dataframe based on the dictionary format of the quotation column
     # the will create a dataframe in which each key of the dictionary becomes a 
     # column in the new dataframe, this dataframe will only comprise the core content
-    # of each quotation
+    # of each quotation 
     quotations_content = quotations.quotations.apply(pd.Series)
     quotations_content.drop({'lemma', 'oed_reference', 'oed_url', 'word_id'}, axis=1, inplace=True)
     print(f'[LOG] Shape of quotations dataframe = {quotations_content.shape}')
