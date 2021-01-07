@@ -274,11 +274,14 @@ def binarize(lemma:str,
     #print(df_quotations.shape)
     train, test = train_test_split(df_quotations, test_size=0.2, random_state=42,shuffle=True, stratify=df_quotations[['label']])
     train, val = train_test_split(train, test_size=0.2, random_state=42,shuffle=True, stratify=train[['label']])
-
+    print(train.shape)
     if eval_mode == "lemma":
         train = train[train['lemma'] == lemma] # changed this
         train = train.reset_index(drop=True)
-        
+    else:
+        train = train[~train.definition.isnull()]
+        train = train.reset_index(drop=True)
+    print(train.shape)
     return train,val,test
 
 def generate_definition_df(df_train,lemma,eval_mode="lemma"):
@@ -288,15 +291,19 @@ def generate_definition_df(df_train,lemma,eval_mode="lemma"):
     df_selected_senses = df_selected_senses.reset_index(drop=True)
 
     if eval_mode == "lemma":
+        print(f'Using {eval_mode} as evaluation mode.')
         df_selected_senses = df_selected_senses[df_selected_senses['lemma'] == lemma]
         df_selected_senses = df_selected_senses.reset_index(drop=True)
         return df_selected_senses
 
     if eval_mode == "lemma_etal":
+        print(f'Using {eval_mode} as evaluation mode.')
         #print ("We are not offering this functionality yet, defaulting to 'lemma' !!")
         # we need all definitions of all senses in the quotation dataframe
         #df_selected_senses = df_selected_senses[df_selected_senses['lemma'] == lemma]
         #df_selected_senses = df_selected_senses.reset_index(drop=True)
+        df_selected_senses = df_selected_senses[~df_selected_senses.definition.isnull()]
+        df_selected_senses = df_selected_senses.reset_index(drop=True)
         return df_selected_senses
 
     
