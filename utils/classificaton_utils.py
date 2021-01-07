@@ -189,11 +189,11 @@ def bert_avg_quot_nn_wsd(query_vector: np.array,
     results = quotation_df_avg_by_lemma.apply(cosine_similiarity, target = query_vector).to_dict() 
     return results
 
-def binarize(lemma_id:str,
+def binarize(lemma_pos:str,
             senses:set,
             relations:list,
             expand_seeds:bool=True,
-            expand_synonyms:bool=False,
+            expand_synonyms:bool=True,
             start:int=1760, 
             end:int=1920,
             strict_filter:bool=True,
@@ -223,9 +223,9 @@ def binarize(lemma_id:str,
                                     and the expanded set of senses. 
     """
     # load core dataset for a given lemma_id
-    df_source = pd.read_pickle(f'./data/extended_{lemma_id}.pickle')
-    df_quotations = pd.read_pickle(f'./data/quotations_all_{lemma_id}.pickle')
-
+    df_source = pd.read_pickle(f'./data/extended_senses_{lemma_pos}.pickle')
+    df_quotations = pd.read_pickle(f'./data/sfrel_quotations_{lemma_pos}.pickle')
+    print(df_quotations.columns)
     # filter senses
     senses = filter_senses(df_source,
                     senses,
@@ -245,17 +245,17 @@ def binarize(lemma_id:str,
     # add label column, set all labels to zero 
     df_quotations['label'] = "0"
     # set label to one for selected quotations
-    df_quotations.loc[df_quotations.id.isin(df_quotations_selected.quotation_id),'label'] = "1"
+    df_quotations.loc[df_quotations.quotation_id.isin(df_quotations_selected.quotation_id),'label'] = "1"
     
     # strict filter is True we discard all functions outside
     # of the experiment parameters, which are defined by the
     # time period and the word types of the target senses
     if strict_filter:
-        df_quotations = df_quotations[(df_quotations.word_id.isin(df_quotations_selected.word_id)) & \
+        df_quotations = df_quotations[(df_quotations.lemma.isin(df_quotations_selected.lemma)) & \
                                     (df_quotations.year >= start) & \
                                     (df_quotations.year <= end) ]
                                     
-    df_quotations = df_quotations.merge(df_source[['id','daterange','definition',
+    df_quotations = df_quotations.merge(df_source[['id','daterange',
                             "provenance","provenance_type",
                             "relation_to_core_senses","relation_to_seed_senses"]],
                             left_on='sense_id',
