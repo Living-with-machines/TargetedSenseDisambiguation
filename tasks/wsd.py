@@ -106,12 +106,13 @@ def svm_wemb_baseline(df_train,df_test,wemb_model):
     return y_pred
 
 ### ---------------------------------------------------
-# bert disambiguation with polar vectors
+# bert disambiguation with centroids
 
-def bert_nn_polar_vector(vector:np.array,polar_vectors:pd.Series) -> str:
-    """bert wsd disambiguation method using a polar vectors
-    representing the positive and negative class. the class 
-    is the nearest of the two polar vectors.
+def bert_nn_centroid_vector(vector:np.array,polar_vectors:pd.Series) -> str:
+    """bert wsd disambiguation method using a centroid vectors
+    representing the positive and the negative class. the class 
+    is the nearest centroid. centroids are computed by averaging
+    the 
 
     Arguments:
         vector (np.array): vector representation of keyword to be disambiguated
@@ -146,3 +147,29 @@ def bert_contrast_vector(vector:np.array,sem_axis:np.array, threshold:float=.5, 
     if similary > threshold:
         return "1"
     return "0"
+
+def bert_nn_ts_polar_vector(row,
+                            df_train:pd.DataFrame,
+                            vector_col='vector_bert_base_-1,-2,-3,-4_mean') -> str:
+    """time-sensitive wsd disambiguation method using a polar vectors
+    representing the positive and negative class. the class 
+    is the nearest of the two polar vectors. the contr
+
+    ...
+
+    Arguments:
+        vector (np.array): vector representation of keyword to be disambiguated
+        ...
+        
+    Returns:
+        class as "0" or "1" string
+    """
+
+    vector, year = row[vector_col],row.year
+    
+    df_train['temp_dist'] = (1 / (abs(year - df_train.year) + 1))
+    df_train['temp_dist'] = df_train['temp_dist'] / sum(df_train['temp_dist'])
+    df_train['tw_vector'] = df_train[vector_col] * df_train['temp_dist']
+    polar_vectors =   df_train.groupby('label')['tw_vector'].apply(np.mean,axis=0)
+
+    return str(np.argmax(polar_vectors.apply(cosine_similiarity, target = vector)))

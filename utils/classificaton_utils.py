@@ -177,29 +177,6 @@ def vectorize_target_expressions(
     quotations.to_pickle(quotations_path)
     return quotations
 
-def bert_avg_quot_nn_wsd(query_vector: np.array,
-                        quotation_df: pd.DataFrame) -> dict:
-    """Function that scores the similarity of a query vector (of a target word taken from a quotations) 
-    to the sense embeddings of other sense available in quotation_df. we follow the 
-    procedure of (Liu et al. 2019): for each sense we average the vector representation
-    and compute the cosine similarity between these sense embeddings and the query vector.
-    
-    Arguments:
-        query_vector (np.array): vector representation of the word we want to disambiguate
-        quotation_df (pd.DataFrame): dataframe with vector column.
-    
-    Returns:
-        dictionary that maps sense_id to the cosine similarity score
-    """
-    # check if 
-    if not hasattr(quotation_df, 'vector'):
-        raise(ValueError,"""DataFrame needs a vector column containing the vector of the target word. 
-            Use utils.prepare_data() to create vector for target words""")
-
-    quotation_df_avg_by_lemma = quotation_df.groupby('sense_id')['vector'].apply(np.mean,axis=0)
-    results = quotation_df_avg_by_lemma.apply(cosine_similiarity, target = query_vector).to_dict() 
-    return results
-
 def binarize(lemma:str,
             pos: str,
             senses:set,
@@ -322,5 +299,28 @@ def generate_definition_df(df_train,lemma,eval_mode="lemma"):
     if eval_mode == "lemma_etal":
         print(f'Using {eval_mode} as evaluation mode.')    
         return df_selected_senses
+### --------------------------------
+# Depreciated code
 
+def bert_avg_quot_nn_wsd(query_vector: np.array,
+                        quotation_df: pd.DataFrame) -> dict:
+    """Function that scores the similarity of a query vector (of a target word taken from a quotations) 
+    to the sense embeddings of other sense available in quotation_df. we follow the 
+    procedure of (Liu et al. 2019): for each sense we average the vector representation
+    and compute the cosine similarity between these sense embeddings and the query vector.
     
+    Arguments:
+        query_vector (np.array): vector representation of the word we want to disambiguate
+        quotation_df (pd.DataFrame): dataframe with vector column.
+    
+    Returns:
+        dictionary that maps sense_id to the cosine similarity score
+    """
+    # check if 
+    if not hasattr(quotation_df, 'vector'):
+        raise(ValueError,"""DataFrame needs a vector column containing the vector of the target word. 
+            Use utils.prepare_data() to create vector for target words""")
+
+    quotation_df_avg_by_lemma = quotation_df.groupby('sense_id')['vector'].apply(np.mean,axis=0)
+    results = quotation_df_avg_by_lemma.apply(cosine_similiarity, target = query_vector).to_dict() 
+    return results
