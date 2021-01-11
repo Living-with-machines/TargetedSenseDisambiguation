@@ -138,8 +138,10 @@ def bert_nn_sense_centroid_vector(row,
         class as "0" or "1" string
     """
     
+    # what if the lemma only has one sense, include exception here
     df_train_lemma = df_train[df_train.lemma==row.lemma]
     sense_centroid_vectors = df_train_lemma.groupby('sense_id')[vector_col].apply(np.mean,axis=0)
+    # there was a KeyError here, avoided it with `.get()` but check later what happened
     return senseid2label.get(sorted(sense_centroid_vectors.apply(cosine_similiarity, target = row[vector_col]).to_dict().items(),
                                                 key=lambda x: x[1], reverse=True)[0][0],"0")
 
@@ -194,6 +196,33 @@ def bert_nn_ts_centroid_vector(row:pd.Series,
     centroid_vectors = df_train.groupby('label')['tw_vector'].apply(np.mean,axis=0)
 
     return str(np.argmax(centroid_vectors.apply(cosine_similiarity, target = vector)))
+
+def bert_nn_ts_sense_centroid_vector(row,
+                                df_train,
+                                senseid2label,
+                                vector_col='vector_bert_base_-1,-2,-3,-4_mean') -> str:
+
+    """bert wsd disambiguation method using a centroid vectors
+    at the sense level ...
+
+    Arguments:
+        vector (np.array): vector representation of keyword to be disambiguated
+        ...
+    Returns:
+        class as "0" or "1" string
+    """
+    
+    # what if the lemma only has one sense, include exception here
+    df_train_lemma = df_train[df_train.lemma==row.lemma]
+    
+    df_train_lemma['temp_dist'] = (1 / (abs(row.year - df_train_lemma.year) + 1))
+    df_train_lemma['temp_dist'] = df_train_lemma['temp_dist'] / sum(df_train_lemma['temp_dist'])
+    df_train_lemma['tw_vector'] = df_train_lemma[vector_col] * df_train_lemma['temp_dist']
+
+    sense_centroid_vectors = df_train_lemma.groupby('sense_id')['tw_vector'].apply(np.mean,axis=0)
+    # there was a KeyError here, avoided it with `.get()` but check later what happened
+    return senseid2label.get(sorted(sense_centroid_vectors.apply(cosine_similiarity, target = row[vector_col]).to_dict().items(),
+                                                key=lambda x: x[1], reverse=True)[0][0],"0")
 
 def bert_ts_semaxis_vector(row:pd.Series,
                         df_train:pd.DataFrame,
