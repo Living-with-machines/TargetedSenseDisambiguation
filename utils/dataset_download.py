@@ -473,6 +473,11 @@ def harvest_data_from_extended_senses(
     # create a new dataframe with only unique definitions
     definitions = quotations[['sense_id','lemma_definition','definition','word_id','lemma']].drop_duplicates()
     final_df = definitions.merge(quotations_content[['id','source','sense_id','text','year']],on='sense_id')
+
+    final_df["full_text"] = final_df.apply (lambda row: row["text"]["full_text"], axis=1)
+    final_df["keyword"] = final_df.apply (lambda row: row["text"]["keyword"], axis=1)
+    final_df["keyword_offset"] = final_df.apply (lambda row: row["text"]["keyword_offset"], axis=1)
+    
     final_df.rename({'id':'quotation_id'},inplace=True, axis=1)
     print(f'[LOG] Saving pickle file to "./data/sfrel_quotations_{lemma_pos}{demo_suffix}.pickle"')
     final_df.to_pickle(f'./data/sfrel_quotations_{lemma_pos}{demo_suffix}.pickle')

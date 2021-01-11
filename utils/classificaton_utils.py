@@ -10,6 +10,7 @@ from pathlib import Path, PosixPath
 from typing import Union
 from utils.dataset_download import *
 from sklearn.model_selection import train_test_split
+import swifter
 
 cosine_similiarity = lambda x, target : 1 - cosine(x,target)
 
@@ -119,53 +120,61 @@ def get_target_token_vector(row: pd.Series,
         print("[WARNING] 'vectors' variable is empty. Return None.")
         return None
 
-def vectorize_target_expression(quotations: pd.DataFrame, 
-                embedding_type: TransformerWordEmbeddings,
-                #start_year:int=1760, 
-                #end_year:int=1920,
-                #**kwargs
+def vectorize_target_expressions(
+                quotations_path: PosixPath, 
+                embedding_method: dict,
                 ) -> pd.DataFrame:
     """prepare data for word sense disambiguation with quotations
-    this function filters quotations for a given date range
-    it then checks if all target words have been vectorized (mean
+    this function vectorizes target words in a quotation (meaning
     we have a vector representation for the quotation keyword)
-    if not, we add a `vector` column to dataframe and save it.
+    the vector representations are saved in the dataframe in the
+    `vector_{bert_name}_{settings}` column. 
+    
+    `embedding_method` is a dictionary that contains the name of 
+    the BERT model and the specific settings
+    for extracting contextual vector representation (i.e. the number of
+    layers and the pooling_operation)
+
     Arguments:
         path (PoxixPath): path to dataframe with all sense ids and quotations
-        embedding_type (TransformerWordEmbeddings): Transformer used for generating
-            the vector representation used for disambiguation
-        start_year (int): start filter at year
-        end_year (int): end filter at year
+        embedding_method (dict): dictionary with { column_name : 
+                                                    { path: path_to_bert_model, 
+                                                        layers=-1, 
+                                                        pooling_operation='mean'
+                                                        }}
 
     Returns:
         a pandas.DataFrame with quotations that or filtered by time
         and which are processed for sense disambiguation using the vector
         representation of the target word (or keyword)
     """
-    #data = pd.read_pickle(path)
     
-    #quotations_path = path.parent / f"{path.stem}_{start_year}_{end_year}.pickle"
-    
-    #if not quotations_path.is_file():
-    #    print(f'Quotations file: {quotations_path} could not be found. Vectorizing the target word...')
-    #quotations = filter_quotations_by_year(data,start=start_year,end=end_year)
-    try:
-        import swifter
-        print("[INFO] swifter is installed. Parallelize pandas apply method.")
-        quotations['vector'] = quotations.swifter.apply(get_target_token_vector,
+    quotations = pd.read_pickle(quotations_path)
+
+    for bert_name, bert_settings in embedding_method.items():
+        layers = layers=bert_settings['layers']
+        pooling_operation = bert_settings['pooling_operation']
+        col_name = f'vector_{bert_name}_{layers}_{pooling_operation}'
+        
+        # if dataframe already contains column, skip
+        if hasattr(quotations, col_name):
+            print(f'Dataframe alread contains vectors from {bert_name} settings')
+            print(bert_settings)
+
+            continue
+        
+        # load embedding model
+        embedding_type = TransformerWordEmbeddings(
+                                bert_settings['path'],
+                                layers=layers,
+                                pooling_operation=pooling_operation)
+
+        # embded
+        quotations[col_name] = quotations.progress_apply(get_target_token_vector,
                                                         embedding_type=embedding_type,
                                                         axis=1)
-    except ImportError:
-        print("[WARNING] could not find swifter...run pandas apply on one process.")
-        quotations['vector'] = quotations.apply(get_target_token_vector,
-                                                    embedding_type=embedding_type,
-                                                    axis=1)
-    #quotations.to_pickle(quotations_path)
-    #print("Done. Created dataframe with vectors for target words.")
-    #print(f'Saved Dataframe: {quotations_path}')
-    #else:
-    #    quotations = pd.read_pickle(quotations_path)
-    
+
+    quotations.to_pickle(quotations_path)
     return quotations
 
 def bert_avg_quot_nn_wsd(query_vector: np.array,
@@ -228,6 +237,7 @@ def binarize(lemma:str,
     # load core dataset for a given lemma_id
     df_source = pd.read_pickle(f'./data/extended_senses_{lemma}_{pos}.pickle')
     df_quotations = pd.read_pickle(f'./data/sfrel_quotations_{lemma}_{pos}.pickle')
+
     print(df_quotations.columns)
     # filter senses
     senses = filter_senses(df_source,
@@ -270,11 +280,6 @@ def binarize(lemma:str,
         print ("\nThere are not quotations available, given this sense-id and time-frame.")
         return None,None,None
 
-    df_quotations["full_text"] = df_quotations.apply (lambda row: row["text"]["full_text"], axis=1)
-    df_quotations["keyword"] = df_quotations.apply (lambda row: row["text"]["keyword"], axis=1)
-    df_quotations["keyword_offset"] = df_quotations.apply (lambda row: row["text"]["keyword_offset"], axis=1)
-
-    
     df_quotations.drop_duplicates(subset = ["year", "lemma", "word_id", "sense_id", "definition", "full_text"], inplace = True)
     df_quotations = df_quotations.reset_index(drop=True)
     

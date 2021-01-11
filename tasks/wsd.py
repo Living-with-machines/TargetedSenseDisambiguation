@@ -1,9 +1,11 @@
 import scipy
 import random
 import numpy as np
+import pandas as pd
 from sklearn import svm
 from utils import nlp_tools
 from sklearn.metrics import precision_recall_fscore_support
+from utils.classificaton_utils import cosine_similiarity
 
 ### evaluation metrics
 def eval(approach,df_quotations):
@@ -101,3 +103,20 @@ def svm_wemb_baseline(df_train,df_test,wemb_model):
     y_pred = classifier.predict(X_test)
 
     return y_pred
+
+### ---------------------------------------------------
+# bert disambiguation with polar vectors
+
+def bert_nn_polar_vector(vector:np.array,polar_vectors:pd.Series) -> str:
+    """bert wsd disambiguation method using a polar vectors
+    representing the positive and negative class. the class 
+    is the nearest of the two polar vectors.
+
+    Arguments:
+        vector (np.array): vector representation of keyword to be disambiguated
+        polar_vectors (np.Series): series with two vectors, 1 representing the 
+                    positive class, 0 representing the negative class
+    Returns:
+        class as "0" or "1" string
+    """
+    return str(np.argmax(polar_vectors.apply(cosine_similiarity, target = vector)))
