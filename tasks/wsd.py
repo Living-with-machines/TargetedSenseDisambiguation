@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 from sklearn import svm
 from utils import nlp_tools
+from typing import Union
 from sklearn.metrics import precision_recall_fscore_support
 from utils.classificaton_utils import cosine_similiarity
 
@@ -120,3 +121,28 @@ def bert_nn_polar_vector(vector:np.array,polar_vectors:pd.Series) -> str:
         class as "0" or "1" string
     """
     return str(np.argmax(polar_vectors.apply(cosine_similiarity, target = vector)))
+
+# bert disambiguation with contrastive semantic axis
+def bert_contrast_vector(vector:np.array,sem_axis:np.array, threshold:float=.5, return_label=True) -> Union[str,float]:
+    """bert wsd disambiguation method using the intuition
+    behind the semaxis paper. we project the vector
+    on the semantic axi
+
+    Arguments:
+        vector (np.array): vector representation of keyword to be disambiguated
+        sem_axis (np.Series): semantic axis obtain by substracting the aggregated
+                            vector for the positive class with the aggregated 
+                            vector of the negative class
+        return_label (bool): flag that is set to False will return the similarity
+                        score and not the label, this is used to get a threshold
+                        value based on the development set
+    Returns:
+        class as "0" or "1" string or similarity score as float
+    """
+    similary = cosine_similiarity(vector,sem_axis)
+
+    if not return_label: return similary
+    
+    if similary > threshold:
+        return "1"
+    return "0"
