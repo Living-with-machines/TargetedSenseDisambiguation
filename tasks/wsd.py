@@ -204,6 +204,7 @@ def bert_nn_ts_sense_centroid_vector(row,
 
     """bert wsd disambiguation method using a centroid vectors
     at the sense level ...
+    only use quotation closest in time
 
     Arguments:
         vector (np.array): vector representation of keyword to be disambiguated
@@ -215,14 +216,19 @@ def bert_nn_ts_sense_centroid_vector(row,
     # what if the lemma only has one sense, include exception here
     df_train_lemma = df_train[df_train.lemma==row.lemma]
     
-    df_train_lemma['temp_dist'] = (1 / (abs(row.year - df_train_lemma.year) + 1))
-    df_train_lemma['temp_dist'] = df_train_lemma['temp_dist'] / sum(df_train_lemma['temp_dist'])
-    df_train_lemma['tw_vector'] = df_train_lemma[vector_col] * df_train_lemma['temp_dist']
-
-    sense_centroid_vectors = df_train_lemma.groupby('sense_id')['tw_vector'].apply(np.mean,axis=0)
+    #df_train_lemma['temp_dist'] = (1 / (abs(row.year - df_train_lemma.year) + 1))
+    #df_train_lemma['temp_dist'] = df_train_lemma['temp_dist'] / sum(df_train_lemma['temp_dist'])
+    #df_train_lemma['tw_vector'] = df_train_lemma[vector_col] * df_train_lemma['temp_dist']
+    sense_centroid_vectors = df_train_lemma.loc[df_train_lemma.groupby('sense_id')['temp_dist'].idxmin().values][['sense_id',vector_col]]
+    #sense_centroid_vectors = df_train_lemma.groupby('sense_id')['tw_vector'].apply(np.mean,axis=0)
     # there was a KeyError here, avoided it with `.get()` but check later what happened
-    return senseid2label.get(sorted(sense_centroid_vectors.apply(cosine_similiarity, target = row[vector_col]).to_dict().items(),
-                                                key=lambda x: x[1], reverse=True)[0][0],"0")
+
+    sense_centroid_vectors.set_index('sense_id', inplace=True)
+    return senseid2label.get(sorted(
+            sense_centroid_vectors[vector_col].apply(
+                cosine_similiarity, target = row[vector_col]
+                        ).to_dict().items(),
+                        key=lambda x: x[1], reverse=True)[0][0],'0')
 
 def bert_ts_semaxis_vector(row:pd.Series,
                         df_train:pd.DataFrame,
