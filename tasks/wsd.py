@@ -108,7 +108,7 @@ def svm_wemb_baseline(df_train,df_test,wemb_model):
 ### ---------------------------------------------------
 # bert disambiguation with centroids
 
-def bert_nn_centroid_vector(vector:np.array,polar_vectors:pd.Series) -> str:
+def bert_nn_centroid_vector(vector:np.array,centroid_vectors:pd.Series) -> str:
     """bert wsd disambiguation method using a centroid vectors
     representing the positive and the negative class. the class 
     is the nearest centroid. centroids are computed by averaging
@@ -121,10 +121,10 @@ def bert_nn_centroid_vector(vector:np.array,polar_vectors:pd.Series) -> str:
     Returns:
         class as "0" or "1" string
     """
-    return str(np.argmax(polar_vectors.apply(cosine_similiarity, target = vector)))
+    return str(np.argmax(centroid_vectors.apply(cosine_similiarity, target = vector)))
 
 # bert disambiguation with contrastive semantic axis
-def bert_contrast_vector(vector:np.array,sem_axis:np.array, threshold:float=.5, return_label=True) -> Union[str,float]:
+def bert_semaxis_vector(vector:np.array,sem_axis:np.array, threshold:float=.5, return_label=True) -> Union[str,float]:
     """bert wsd disambiguation method using the intuition
     behind the semaxis paper. we project the vector
     on the semantic axi
@@ -148,9 +148,9 @@ def bert_contrast_vector(vector:np.array,sem_axis:np.array, threshold:float=.5, 
         return "1"
     return "0"
 
-def bert_nn_ts_polar_vector(row,
+def bert_nn_ts_centroid_vector(row:pd.Series,
                             df_train:pd.DataFrame,
-                            vector_col='vector_bert_base_-1,-2,-3,-4_mean') -> str:
+                            vector_col:str='vector_bert_base_-1,-2,-3,-4_mean') -> str:
     """time-sensitive wsd disambiguation method using a polar vectors
     representing the positive and negative class. the class 
     is the nearest of the two polar vectors. the contr
@@ -158,11 +158,12 @@ def bert_nn_ts_polar_vector(row,
     ...
 
     Arguments:
-        vector (np.array): vector representation of keyword to be disambiguated
-        ...
+        row (pd.Series): row to which method is applied
+        df_train (pd.DataFrame): training data used for creating centroids
+        vector_col (str): columns used for computing centroids
         
     Returns:
-        class as "0" or "1" string
+        class as "0" or "1" as string
     """
 
     vector, year = row[vector_col],row.year
@@ -170,6 +171,41 @@ def bert_nn_ts_polar_vector(row,
     df_train['temp_dist'] = (1 / (abs(year - df_train.year) + 1))
     df_train['temp_dist'] = df_train['temp_dist'] / sum(df_train['temp_dist'])
     df_train['tw_vector'] = df_train[vector_col] * df_train['temp_dist']
-    polar_vectors =   df_train.groupby('label')['tw_vector'].apply(np.mean,axis=0)
+    centroid_vectors = df_train.groupby('label')['tw_vector'].apply(np.mean,axis=0)
 
-    return str(np.argmax(polar_vectors.apply(cosine_similiarity, target = vector)))
+    return str(np.argmax(centroid_vectors.apply(cosine_similiarity, target = vector)))
+
+def bert_ts_semaxis_vector(row:pd.Series,
+                            df_train:pd.DataFrame,
+                            vector_col:str='vector_bert_base_-1,-2,-3,-4_mean',
+                            threshold=.0,
+                            return_label=True
+                            ) -> str:
+    """time-sensitive wsd disambiguation method using a semaxis vector.
+    ...
+
+    Arguments:
+        row (pd.Series): row to which method is applied
+        df_train (pd.DataFrame): training data used for creating centroids
+        vector_col (str): columns used for computing centroids
+        ...
+
+
+    Returns:
+        class as "0" or "1" as string
+    """
+
+    vector, year = row[vector_col],row.year
+    
+    df_train['temp_dist'] = (1 / (abs(year - df_train.year) + 1))
+    df_train['temp_dist'] = df_train['temp_dist'] / sum(df_train['temp_dist'])
+    df_train['tw_vector'] = df_train[vector_col] * df_train['temp_dist']
+    centroid_vectors = df_train.groupby('label')['tw_vector'].apply(np.mean,axis=0)
+    semaxis_vector = centroid_vectors[1] - centroid_vectors[0]
+    similary = cosine_similiarity(vector,semaxis_vector)
+
+    if not return_label: return similary
+    
+    if similary > threshold:
+        return "1"
+    return "0"
