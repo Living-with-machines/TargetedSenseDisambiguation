@@ -123,6 +123,26 @@ def bert_nn_centroid_vector(vector:np.array,centroid_vectors:pd.Series) -> str:
     """
     return str(np.argmax(centroid_vectors.apply(cosine_similiarity, target = vector)))
 
+def bert_nn_sense_centroid_vector(row,
+                                df_train,
+                                senseid2label,
+                                vector_col='vector_bert_base_-1,-2,-3,-4_mean') -> str:
+
+    """bert wsd disambiguation method using a centroid vectors
+    at the sense level ...
+
+    Arguments:
+        vector (np.array): vector representation of keyword to be disambiguated
+        ...
+    Returns:
+        class as "0" or "1" string
+    """
+    
+    df_train_lemma = df_train[df_train.lemma==row.lemma]
+    sense_centroid_vectors = df_train_lemma.groupby('sense_id')[vector_col].apply(np.mean,axis=0)
+    return senseid2label.get(sorted(sense_centroid_vectors.apply(cosine_similiarity, target = row[vector_col]).to_dict().items(),
+                                                key=lambda x: x[1], reverse=True)[0][0],"0")
+
 # bert disambiguation with contrastive semantic axis
 def bert_semaxis_vector(vector:np.array,sem_axis:np.array, threshold:float=.5, return_label=True) -> Union[str,float]:
     """bert wsd disambiguation method using the intuition
