@@ -176,10 +176,10 @@ def bert_nn_ts_centroid_vector(row:pd.Series,
     return str(np.argmax(centroid_vectors.apply(cosine_similiarity, target = vector)))
 
 def bert_ts_semaxis_vector(row:pd.Series,
-                            df_train:pd.DataFrame,
-                            vector_col:str='vector_bert_base_-1,-2,-3,-4_mean',
-                            threshold=.0,
-                            return_label=True
+                        df_train:pd.DataFrame,
+                        vector_col:str='vector_bert_base_-1,-2,-3,-4_mean',
+                        threshold=.0,
+                        return_label=True
                             ) -> str:
     """time-sensitive wsd disambiguation method using a semaxis vector.
     ...
