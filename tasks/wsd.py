@@ -140,8 +140,12 @@ def bert_nn_sense_centroid_vector(row,
     
     # what if the lemma only has one sense, include exception here
     df_train_lemma = df_train[df_train.lemma==row.lemma]
+    # if lemma doesn't appear in train return '0'
+    if not df_train_lemma.shape[0]: return '0'
+    
     sense_centroid_vectors = df_train_lemma.groupby('sense_id')[vector_col].apply(np.mean,axis=0)
     # there was a KeyError here, avoided it with `.get()` but check later what happened
+    
     return senseid2label.get(sorted(sense_centroid_vectors.apply(cosine_similiarity, target = row[vector_col]).to_dict().items(),
                                                 key=lambda x: x[1], reverse=True)[0][0],"0")
 

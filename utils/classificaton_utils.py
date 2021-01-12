@@ -2,7 +2,7 @@ from numpy.core.numeric import outer
 from numpy.lib.financial import ppmt
 import pandas as pd
 import numpy as np
-import flair
+from gensim.models import Word2Vec
 from flair.data import Sentence
 from flair.embeddings import TransformerWordEmbeddings
 from scipy.spatial.distance import cosine
@@ -10,7 +10,9 @@ from pathlib import Path, PosixPath
 from typing import Union
 from utils.dataset_download import *
 from sklearn.model_selection import train_test_split
-import swifter
+from tasks import wsd
+from utils import nlp_tools
+#import swifter
 
 cosine_similiarity = lambda x, target : 1 - cosine(x,target)
 
@@ -215,7 +217,7 @@ def binarize(lemma:str,
     df_source = pd.read_pickle(f'./data/extended_senses_{lemma}_{pos}.pickle')
     df_quotations = pd.read_pickle(f'./data/sfrel_quotations_{lemma}_{pos}.pickle')
 
-    print(df_quotations.columns)
+    #print(df_quotations.columns)
     # filter senses
     senses = filter_senses(df_source,
                     senses,
@@ -254,12 +256,16 @@ def binarize(lemma:str,
                                 )#.drop("id",axis=1)
     
     if len(df_quotations)==0:
-        print ("\nThere are not quotations available, given this sense-id and time-frame.")
+        print ("\nThere are no quotations available, given this sense-id and time-frame.")
         return None,None,None
 
     df_quotations.drop_duplicates(subset = ["year", "lemma", "word_id", "sense_id", "definition", "full_text"], inplace = True)
+    # drop rows with vector in vector_bert_base_-1,-2,-3,-4_mean
+    print('[LOG] #rows before removing None vector',df_quotations.shape)
+    df_quotations = df_quotations[~df_quotations['vector_bert_base_-1,-2,-3,-4_mean'].isnull()]
+    print('[LOG] #rows after removing None vector',df_quotations.shape)
     df_quotations = df_quotations.reset_index(drop=True)
-    
+
     train, test = train_test_split(df_quotations, test_size=0.2, random_state=42,shuffle=True, stratify=df_quotations[['label']])
     train, val = train_test_split(train, test_size=0.2, random_state=42,shuffle=True, stratify=train[['label']])
     train = train[~train.definition.isnull()].reset_index(drop=True)
@@ -299,6 +305,105 @@ def generate_definition_df(df_train,lemma,eval_mode="lemma"):
     if eval_mode == "lemma_etal":
         print(f'Using {eval_mode} as evaluation mode.')    
         return df_selected_senses
+
+def eval_lemma(lemma,
+                pos,
+                idx,
+                embedding_methods,
+                start=1760,
+                end=1920,
+                vector_type='vector_bert_base_-1,-2,-3,-4_mean',
+                train_on_dev=True):
+
+    quotations_path = f"./data/sfrel_quotations_{lemma}_{pos}.pickle"
+    quotations = vectorize_target_expressions(quotations_path,embedding_methods)
+
+    lemma_senses = pd.read_pickle(f'./data/lemma_senses_{lemma}_{pos}.pickle')
+    senses = set(lemma_senses[lemma_senses.word_id==f'{lemma}_{pos.lower()}{idx}'].id)
+
+    relations = ['seed','synonym'] # ,'descendant','sibling'
+    eval_mode = "lemma_etal" # lemma or lemma_etal
+
+    wemb_model = Word2Vec.load("/deezy_datadrive/kaspar-playground/dictionary_expansion/HistoricalDictionaryExpansion/models/w2v_004/w2v_words.model")
+    y_true,y_pred_bin_centr, y_pred_ts_bin_centr,y_pred_sense_centr,y_pred_semaxis, rand, token_overlap,w2v_lesk = [], [],[],[], [], [],[], []
+
+    for sense in senses:
+        
+            print(sense)
+            df_train, df_val, df_test = binarize(lemma,
+                        pos,
+                        {sense}, 
+                        relations,
+                        strict_filter=True,
+                        start=start,
+                        end=end,
+                        eval_mode=eval_mode)
+            # no quotations for sense and timeframe
+            if df_train is None: continue
+
+
+
+            y_true.extend(df_test.label.to_list())
+
+
+            if train_on_dev:
+                df_train = pd.concat([df_train, df_val], axis=0)
+
+            df_train["nlp_full_text"] = df_train.apply (lambda row: nlp_tools.preprocess(row["full_text"]), axis=1)
+
+            df_val["nlp_full_text"] = df_val.apply (lambda row: nlp_tools.preprocess(row["full_text"]), axis=1)
+
+            df_test["nlp_full_text"] = df_test.apply (lambda row: nlp_tools.preprocess(row["full_text"]), axis=1)
+
+            # random 
+            df_test["random"] = df_test.progress_apply (lambda row: wsd.random_predict(), axis=1)
+            rand.extend(df_test["random"].to_list())
+            
+            # token overlap
+            df_selected_senses = generate_definition_df(df_train,lemma,eval_mode=eval_mode)
+            df_selected_senses["nlp_definition"] = df_selected_senses.apply (lambda row: nlp_tools.preprocess(row["definition"]), axis=1)
+            df_test["def_tok_overlap_ranking"] = df_test.progress_apply (lambda row: wsd.tok_overlap_ranking(row["nlp_full_text"], df_selected_senses), axis=1)
+            token_overlap.extend(df_test["def_tok_overlap_ranking"].to_list())
+
+            #w2v lesk
+            # Warning: I use a Word2vec model trained on all 19thC BL corpus that is locally stored.
+            df_test["w2v_lesk_ranking"] = df_test.progress_apply (lambda row: wsd.w2v_lesk_ranking(row["nlp_full_text"], df_selected_senses, wemb_model), axis=1)
+            w2v_lesk.extend(df_test['w2v_lesk_ranking'].to_list())
+
+            # binary centroid
+            centroid_vectors = df_train.groupby('label')[vector_type].apply(np.mean,axis=0)
+            df_test[f"bert_centroid_binary_{vector_type}"] = df_test[vector_type].progress_apply(wsd.bert_nn_centroid_vector,
+                                                                                            centroid_vectors = centroid_vectors,
+                                                                                            )
+            y_pred_bin_centr.extend(df_test[f"bert_centroid_binary_{vector_type}"].to_list())
+            #results[f"bert_centroid_binary_{vector_type}_{sense}"] = (wsd.eval(f"bert_centroid_binary_{vector_type}",df_test),len(df_test))
+            
+            # binary centroid time sensitive
+            df_test[f"bert_ts_centroid_binary_{vector_type}"] = df_test.progress_apply(wsd.bert_nn_ts_centroid_vector, df_train=df_train, axis=1)
+            y_pred_ts_bin_centr.extend(df_test[f"bert_ts_centroid_binary_{vector_type}"].to_list())
+            
+            #results[f"bert_ts_centroid_binary_{vector_type}_{sense}"] = (wsd.eval(f"bert_ts_centroid_binary_{vector_type}",df_test),len(df_test))
+            
+            # sense level centroid
+            senseid2label = dict(df_test[['sense_id','label']].values)
+            df_test[f"bert_centroid_sense_{vector_type}"] = df_test.progress_apply(wsd.bert_nn_sense_centroid_vector,  
+                            senseid2label= senseid2label,
+                            vector_col=vector_type,
+                            df_train = df_train, axis=1)
+            
+            y_pred_sense_centr.extend(df_test[f"bert_centroid_sense_{vector_type}"].to_list())
+            #results[f"bert_centroid_sense_{vector_type}_{sense}"] = (wsd.eval(f"bert_centroid_sense_{vector_type}",df_test),len(df_test))
+            # semaxis
+            centroid_vectors = df_train.groupby('label')[vector_type].apply(np.mean,axis=0)
+            sem_axis = centroid_vectors[1] - centroid_vectors[0] 
+            df_test[f"bert_semaxis_{vector_type}"] = df_test[vector_type].progress_apply(wsd.bert_semaxis_vector, sem_axis=sem_axis, return_label=True, threshold=.0)
+            y_pred_semaxis.extend(df_test[f"bert_semaxis_{vector_type}"].to_list())
+            #results[f"bert_semaxis_{vector_type}_{sense}"]  = (wsd.eval(f"bert_semaxis_{vector_type}",df_test),len(df_test))
+    
+            #df_test.to_pickle(f'./data/results/{lemma}_{pos}_{sense}.results')
+    
+    return y_true, y_pred_bin_centr,y_pred_ts_bin_centr,y_pred_sense_centr,y_pred_semaxis, rand, token_overlap, w2v_lesk
+
 ### --------------------------------
 # Depreciated code
 
