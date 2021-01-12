@@ -173,14 +173,12 @@ def bert_semaxis_vector(vector:np.array,sem_axis:np.array, threshold:float=.5, r
 def bert_nn_ts_centroid_vector(row:pd.Series,
                             df_train:pd.DataFrame,
                             vector_col:str='vector_bert_base_-1,-2,-3,-4_mean') -> str:
-    """time-sensitive wsd disambiguation method using a polar vectors
-    representing the positive and negative class. the class 
-    is the nearest of the two polar vectors. the contr
-
-    ...
+    """time-sensitive wsd disambiguation method using a centroid vectors
+    for the positive and negative class. the nearest of the centroid vectors
+    determines the class.
 
     Arguments:
-        row (pd.Series): row to which method is applied
+        row (pd.Series): row of df_test to which method is applied
         df_train (pd.DataFrame): training data used for creating centroids
         vector_col (str): columns used for computing centroids
         
@@ -193,42 +191,48 @@ def bert_nn_ts_centroid_vector(row:pd.Series,
     df_train['temp_dist'] = (1 / (abs(year - df_train.year) + 1))
     df_train['temp_dist'] = df_train['temp_dist'] / sum(df_train['temp_dist'])
     df_train['tw_vector'] = df_train[vector_col] * df_train['temp_dist']
-    centroid_vectors = df_train.groupby('label')['tw_vector'].apply(np.mean,axis=0)
+    centroid_vectors = df_train.groupby('label')['tw_vector'].apply(np.sum,axis=0)
 
     return str(np.argmax(centroid_vectors.apply(cosine_similiarity, target = vector)))
 
-def bert_nn_ts_sense_centroid_vector(row,
-                                df_train,
-                                senseid2label,
-                                vector_col='vector_bert_base_-1,-2,-3,-4_mean') -> str:
+def bert_nn_ts_sense_centroid_vector(row:pd.Series,
+                                df_train:pd.DataFrame,
+                                senseid2label:dict,
+                                vector_col:str='vector_bert_base_-1,-2,-3,-4_mean') -> str:
 
     """bert wsd disambiguation method using a centroid vectors
-    at the sense level ...
-    only use quotation closest in time
+    at the sense level. this methods obtains the quotation 
+    closest in time for each sense of a lemma. the time-sensitive
+    sense embedding is vector of the keyword of the quotation
+    nearest in time.
 
     Arguments:
-        vector (np.array): vector representation of keyword to be disambiguated
-        ...
+        row (pd.Series): row of df_test dataframe
+        df_train (pd.DataFrame): dataframe with training data
+        senseid2label (dict): mapping of sense idx to binary label
+        vector_col (str): name of vector column 
+
     Returns:
         class as "0" or "1" string
     """
     
     # what if the lemma only has one sense, include exception here
     df_train_lemma = df_train[df_train.lemma==row.lemma]
+    # get idx of quotations nearest in time for each sense
+    quots_nn_time_idx = df_train_lemma.groupby('sense_id')['temp_dist'].idxmin().values
+    # get the quotations and the sense idx
+    sense_centroid_vectors = df_train_lemma.loc[quots_nn_time_idx][['sense_id',vector_col]]
     
-    #df_train_lemma['temp_dist'] = (1 / (abs(row.year - df_train_lemma.year) + 1))
-    #df_train_lemma['temp_dist'] = df_train_lemma['temp_dist'] / sum(df_train_lemma['temp_dist'])
-    #df_train_lemma['tw_vector'] = df_train_lemma[vector_col] * df_train_lemma['temp_dist']
-    sense_centroid_vectors = df_train_lemma.loc[df_train_lemma.groupby('sense_id')['temp_dist'].idxmin().values][['sense_id',vector_col]]
-    #sense_centroid_vectors = df_train_lemma.groupby('sense_id')['tw_vector'].apply(np.mean,axis=0)
-    # there was a KeyError here, avoided it with `.get()` but check later what happened
-
     sense_centroid_vectors.set_index('sense_id', inplace=True)
-    return senseid2label.get(sorted(
-            sense_centroid_vectors[vector_col].apply(
-                cosine_similiarity, target = row[vector_col]
+    # there was a KeyError here, avoided it with `.get()` but check later what happened
+    # return label as '0' or '1'
+    return senseid2label.get(
+            sorted(
+                sense_centroid_vectors[vector_col].apply(
+                    cosine_similiarity, target = row[vector_col]
                         ).to_dict().items(),
-                        key=lambda x: x[1], reverse=True)[0][0],'0')
+                        key=lambda x: x[1], reverse=True)[0][0],'0'
+                        )
 
 def bert_ts_semaxis_vector(row:pd.Series,
                         df_train:pd.DataFrame,
@@ -255,7 +259,7 @@ def bert_ts_semaxis_vector(row:pd.Series,
     df_train['temp_dist'] = (1 / (abs(year - df_train.year) + 1))
     df_train['temp_dist'] = df_train['temp_dist'] / sum(df_train['temp_dist'])
     df_train['tw_vector'] = df_train[vector_col] * df_train['temp_dist']
-    centroid_vectors = df_train.groupby('label')['tw_vector'].apply(np.mean,axis=0)
+    centroid_vectors = df_train.groupby('label')['tw_vector'].apply(np.sum,axis=0)
     semaxis_vector = centroid_vectors[1] - centroid_vectors[0]
     similary = cosine_similiarity(vector,semaxis_vector)
 
