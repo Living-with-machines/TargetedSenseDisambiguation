@@ -194,7 +194,28 @@ def bert_semaxis_vector(vector:np.array,
 
 # helper functions for creating time sensisitve sense vectors
 
-def weighted(df,year,vector_col,level='label'):
+def weighted(df,year,vector_col,level='label') -> pd.Series:
+    """This function weights vector representation of 
+    target words by their distance to the year
+    of the query vector. This is repeated for each 
+    sense_id or label (i.e. value of `level` argument). 
+
+    It returns sense level or binart time weighted centroid vectors
+
+    Arguments:
+        df (pd.DataFrame): the training data from which to construct
+                        the time sensitive embedding
+        year (int): year of the vector to disambiguate
+        vector_col (str): name of the colums in which vector is stord
+        level (str): use 'label' for binary centroid vector, 
+                    use `sense_id` for sense level centroid vectors
+
+    Returns:
+        as element of type pd.Series with index=level and 
+        values the centroid vector (in this the weighted vectors
+        averaged by the specified level)
+
+    """
     # 1 over the distance in years
     df['temp_dist'] = (1 / (abs(year - df.year) + 1))
     # normalize, so weights add up to one
@@ -209,7 +230,26 @@ def weighted(df,year,vector_col,level='label'):
     elif level == 'sense_id':
         return df.groupby(level)['tw_vector'].apply(np.sum,axis=0)          
 
-def nearest(df,year,vector_col,level='label'):
+def nearest(df:pd.DataFrame,
+            year:int,
+            vector_col:str,
+            level:str='label') -> pd.Series:
+    """This function selects the quotation closest in time 
+    to`year` this for each sense_id or label (i.e. value of `level` argument)
+
+    Arguments:
+        df (pd.DataFrame): the training data from which to construct
+                        the time sensitive embedding
+        year (int): year of the vector to disambiguate
+        vector_col (str): name of the colums in which vector is stord
+        level (str): use 'label' for binary centroid vector, 
+                    use `sense_id` for sense level centroid vectors
+
+    Returns:
+        as element of type pd.Series with index=level and 
+        values the centroid vector (in this case the vector
+        closest in time for the specified level)
+    """
     # this methods obtains the quotation closest in time for each sense of a lemma. 
     # get idx of quotations nearest in time for each sense
     df['temp_dist'] = abs(df.year - year)
@@ -251,8 +291,10 @@ def bert_ts_binary_centroid_vector(row:pd.Series,
     
 
     if ts_method=='weighted':
+        # weight vector by distance
         centroid_vectors = weighted(df_train,year,vector_col)
     elif ts_method=='nearest':
+        # the nearest vector in time
         centroid_vectors = nearest(df_train,year,vector_col)
     else:
         assert ts_method in ts_methods, f'ts_method should be one of the following options {ts_methods}'
@@ -299,8 +341,10 @@ def bert_ts_sense_centroid_vector(row:pd.Series,
     ts_methods = ['nearest','weighted']
 
     if ts_method=='weighted':
+        # weight vector by distance
         centroid_vectors = weighted(df_train_lemma,row.year,vector_col,level='sense_id')
     elif ts_method=='nearest':
+        # the nearest vector in time
         centroid_vectors = nearest(df_train_lemma,row.year,vector_col,level='sense_id')
     else:
         assert ts_method in ts_methods, f'ts_method should be one of the following options {ts_methods}'
