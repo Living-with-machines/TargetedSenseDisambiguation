@@ -108,9 +108,10 @@ def svm_wemb_baseline(df_train,df_test,wemb_model):
 ### ---------------------------------------------------
 # bert disambiguation with centroids
 
-def bert_binary_centroid_vector(vector:np.array,
-                            centroid_vectors:pd.Series,
-                            return_ranking=False) -> str:
+def bert_binary_centroid_vector(row:pd.Series,
+                            df_train:pd.DataFrame,
+                            return_ranking=False,
+                            vector_col='vector_bert_base_-1,-2,-3,-4_mean') -> str:
     """bert wsd disambiguation method using a centroid vectors
     representing the positive and the negative class. the class 
     is the nearest centroid. centroids are computed by averaging
@@ -125,7 +126,9 @@ def bert_binary_centroid_vector(vector:np.array,
     Returns:
         class as "0" or "1" string
     """
-    sims = centroid_vectors.apply(cosine_similiarity, target = vector)
+    centroid_vectors = df_train.groupby('label')[vector_col].apply(np.mean,axis=0)
+
+    sims = centroid_vectors.apply(cosine_similiarity, target = row[vector_col])
     
     if return_ranking:
         return sims.to_dict()
@@ -189,9 +192,11 @@ def bert_semaxis_vector(vector:np.array,
     if similary > threshold:
         return "1"
     return "0"
+
 # -------------------------------------
 # time-sensitive methods
 
+# ---------------------
 # helper functions for creating time sensisitve sense vectors
 
 def weighted(df,year,vector_col,level='label') -> pd.Series:
@@ -200,7 +205,7 @@ def weighted(df,year,vector_col,level='label') -> pd.Series:
     of the query vector. This is repeated for each 
     sense_id or label (i.e. value of `level` argument). 
 
-    It returns sense level or binart time weighted centroid vectors
+    It returns sense level or binary time weighted centroid vectors
 
     Arguments:
         df (pd.DataFrame): the training data from which to construct
@@ -261,7 +266,7 @@ def nearest(df:pd.DataFrame,
     elif level == 'sense_id':
         return df.loc[quots_nn_time_idx][['sense_id',vector_col]].set_index('sense_id',inplace=False)[vector_col]
 
-
+# ---------------------
 # wsd functions
 
 def bert_ts_binary_centroid_vector(row:pd.Series,
