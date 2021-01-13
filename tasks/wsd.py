@@ -106,22 +106,25 @@ def svm_wemb_baseline(df_train,df_test,wemb_model):
     return y_pred
 
 ### ---------------------------------------------------
-# bert disambiguation with centroids
+# BERT CENTROID METHODS
+
+### ---------------------------------------------------
+# binary centroid vectors
 
 def bert_binary_centroid_vector(row:pd.Series,
                             df_train:pd.DataFrame,
                             return_ranking=False,
                             vector_col='vector_bert_base_-1,-2,-3,-4_mean') -> str:
-    """bert wsd disambiguation method using a centroid vectors
+    """BERT wsd disambiguation method using a centroid vectors
     representing the positive and the negative class. the class 
     is the nearest centroid. centroids are computed by averaging
     the 
 
     Arguments:
-        vector (np.array): vector representation of keyword to be disambiguated
-        polar_vectors (np.Series): series with two vectors, 1 representing the 
-                    positive class, 0 representing the negative class
+        row (pd.Sries): row of the test dataframe on which of the function operates
+        df_train (np.Series): dataframe with training data
         return_rank (bool): if True return return scores as a dict
+        vector_col (str): name of the column in which the target vector is stored
 
     Returns:
         class as "0" or "1" string
@@ -135,18 +138,26 @@ def bert_binary_centroid_vector(row:pd.Series,
     
     return str(np.argmax(sims))
 
-def bert_sense_centroid_vector(row,
-                                df_train,
-                                senseid2label,
-                                return_ranking=False,
-                                vector_col='vector_bert_base_-1,-2,-3,-4_mean') -> str:
+### ---------------------------------------------------
+# sense level centroid vectors
 
-    """bert wsd disambiguation method using a centroid vectors
-    at the sense level ...
+def bert_sense_centroid_vector(row:pd.Series,
+                                df_train:pd.DataFrame,
+                                senseid2label:dict,
+                                return_ranking:bool=False,
+                                vector_col:str='vector_bert_base_-1,-2,-3,-4_mean') -> str:
+
+    """BERT wsd disambiguation method using centroid vectors
+    at the sense level. The function agregates vectors by sense_id.
+    The prediction is the label of the close sense vector.
 
     Arguments:
-        vector (np.array): vector representation of keyword to be disambiguated
-        ...
+        row (pd.Sries): row of the test dataframe on which of the function operates
+        df_train (np.Series): dataframe with training data
+        senseid2label (dict): dictionary that maps sense_id to a binary label
+        return_rank (bool): if True return return scores as a dict
+        vector_col (str): name of the column in which the target vector is stored
+
     Returns:
         class as "0" or "1" string
     """
@@ -165,38 +176,10 @@ def bert_sense_centroid_vector(row,
     # there was a KeyError here, avoided it with `.get()` but check later what happened
     return senseid2label.get(sorted(sims.items(),key=lambda x: x[1], reverse=True)[0][0],"0")
 
-# bert disambiguation with contrastive semantic axis
-def bert_semaxis_vector(vector:np.array,
-                    sem_axis:np.array,
-                    threshold:float=.5,
-                    return_ranking=False) -> Union[str,float]:
-    """bert wsd disambiguation method using the intuition
-    behind the semaxis paper. we project the vector
-    on the semantic axi
+### ---------------------------------------------------
+# Time-sensitive methods
 
-    Arguments:
-        vector (np.array): vector representation of keyword to be disambiguated
-        sem_axis (np.Series): semantic axis obtain by substracting the aggregated
-                            vector for the positive class with the aggregated 
-                            vector of the negative class
-        return_ranking (bool): flag that is set to False will return the similarity
-                        score and not the label, this is used to get a threshold
-                        value based on the development set
-    Returns:
-        class as "0" or "1" string or similarity score as float
-    """
-    similary = cosine_similiarity(vector,sem_axis)
-
-    if return_ranking: return similary
-    
-    if similary > threshold:
-        return "1"
-    return "0"
-
-# -------------------------------------
-# time-sensitive methods
-
-# ---------------------
+### ---------------------------------------------------
 # helper functions for creating time sensisitve sense vectors
 
 def weighted(df,year,vector_col,level='label') -> pd.Series:
@@ -211,7 +194,7 @@ def weighted(df,year,vector_col,level='label') -> pd.Series:
         df (pd.DataFrame): the training data from which to construct
                         the time sensitive embedding
         year (int): year of the vector to disambiguate
-        vector_col (str): name of the colums in which vector is stord
+        vector_col (str): name of the column in which the target vector is stored
         level (str): use 'label' for binary centroid vector, 
                     use `sense_id` for sense level centroid vectors
 
@@ -266,8 +249,9 @@ def nearest(df:pd.DataFrame,
     elif level == 'sense_id':
         return df.loc[quots_nn_time_idx][['sense_id',vector_col]].set_index('sense_id',inplace=False)[vector_col]
 
-# ---------------------
-# wsd functions
+### ---------------------------------------------------
+# time-sensitive centoid disambiguation functions
+# time sensitive binary centroid vectors
 
 def bert_ts_binary_centroid_vector(row:pd.Series,
                             df_train:pd.DataFrame,
@@ -310,7 +294,8 @@ def bert_ts_binary_centroid_vector(row:pd.Series,
         return sims.to_dict()
     return str(np.argmax(sims))
 
-
+### ---------------------------------------------------
+# time-sensitive sense level centroid vectors
 
 def bert_ts_sense_centroid_vector(row:pd.Series,
                                 df_train:pd.DataFrame,
@@ -369,6 +354,37 @@ def bert_ts_sense_centroid_vector(row:pd.Series,
                 sims.items(),
                         key=lambda x: x[1], reverse=True)[0][0],'0'
                         )
+
+### ---------------------------------------------------
+# SEMAXIS
+# bert disambiguation with contrastive semantic axis
+def bert_semaxis_vector(vector:np.array,
+                    sem_axis:np.array,
+                    threshold:float=.5,
+                    return_ranking=False) -> Union[str,float]:
+    """bert wsd disambiguation method using the intuition
+    behind the semaxis paper. we project the vector
+    on the semantic axi
+
+    Arguments:
+        vector (np.array): vector representation of keyword to be disambiguated
+        sem_axis (np.Series): semantic axis obtain by substracting the aggregated
+                            vector for the positive class with the aggregated 
+                            vector of the negative class
+        return_ranking (bool): flag that is set to False will return the similarity
+                        score and not the label, this is used to get a threshold
+                        value based on the development set
+    Returns:
+        class as "0" or "1" string or similarity score as float
+    """
+    similary = cosine_similiarity(vector,sem_axis)
+
+    if return_ranking: return similary
+    
+    if similary > threshold:
+        return "1"
+    return "0"
+
 
 #def bert_ts_semaxis_vector(row:pd.Series,
 #                        df_train:pd.DataFrame,

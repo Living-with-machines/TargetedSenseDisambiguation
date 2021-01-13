@@ -306,6 +306,10 @@ def generate_definition_df(df_train,lemma,eval_mode="lemma"):
         print(f'Using {eval_mode} as evaluation mode.')    
         return df_selected_senses
 
+### --------------------------------
+# Depreciated code
+# To be removed before release
+
 def eval_lemma(lemma,
                 pos,
                 idx,
@@ -417,8 +421,6 @@ def eval_lemma(lemma,
     
     return y_true, y_pred_bin_centr,y_pred_ts_bin_centr,y_pred_sense_centr,y_pred_ts_sense_centr, rand, token_overlap, w2v_lesk
 
-### --------------------------------
-# Depreciated code
 
 def bert_avg_quot_nn_wsd(query_vector: np.array,
                         quotation_df: pd.DataFrame) -> dict:
