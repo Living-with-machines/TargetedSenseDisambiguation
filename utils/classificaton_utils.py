@@ -288,7 +288,7 @@ def generate_definition_df(df_train,lemma,eval_mode="lemma"):
         return definition
 
     df_selected_senses = df_train[['sense_id','lemma','word_id','lemma_definition','definition','label']]
-    df_selected_senses['definition'] = df_selected_senses.apply(merge_definitions, axis=1)
+    #df_selected_senses['definition'] = df_selected_senses.apply(merge_definitions, axis=1)
 
 
     df_selected_senses = df_selected_senses.rename(columns={'sense_id': 'id','word_id':'lemma_id'})
@@ -313,10 +313,13 @@ def eval_lemma(lemma,
                 start=1760,
                 end=1920,
                 vector_type='vector_bert_base_-1,-2,-3,-4_mean',
+                skip_vectorize=False,
                 train_on_dev=True):
 
     quotations_path = f"./data/sfrel_quotations_{lemma}_{pos}.pickle"
-    quotations = vectorize_target_expressions(quotations_path,embedding_methods)
+    
+    if not skip_vectorize:
+        vectorize_target_expressions(quotations_path,embedding_methods)
 
     lemma_senses = pd.read_pickle(f'./data/lemma_senses_{lemma}_{pos}.pickle')
     senses = set(lemma_senses[lemma_senses.word_id==f'{lemma}_{pos.lower()}{idx}'].id)
@@ -326,6 +329,9 @@ def eval_lemma(lemma,
 
     wemb_model = Word2Vec.load("/deezy_datadrive/kaspar-playground/dictionary_expansion/HistoricalDictionaryExpansion/models/w2v_004/w2v_words.model")
     y_true,y_pred_bin_centr, y_pred_ts_bin_centr,y_pred_sense_centr,y_pred_semaxis, rand, token_overlap,w2v_lesk = [], [],[],[], [], [],[], []
+
+
+    tqdm.pandas()
 
     for sense in senses:
         
@@ -349,14 +355,14 @@ def eval_lemma(lemma,
             if train_on_dev:
                 df_train = pd.concat([df_train, df_val], axis=0)
 
-            df_train["nlp_full_text"] = df_train.apply (lambda row: nlp_tools.preprocess(row["full_text"]), axis=1)
+            df_train["nlp_full_text"] = df_train.apply(lambda row: nlp_tools.preprocess(row["full_text"]), axis=1)
 
-            df_val["nlp_full_text"] = df_val.apply (lambda row: nlp_tools.preprocess(row["full_text"]), axis=1)
+            df_val["nlp_full_text"] = df_val.apply(lambda row: nlp_tools.preprocess(row["full_text"]), axis=1)
 
-            df_test["nlp_full_text"] = df_test.apply (lambda row: nlp_tools.preprocess(row["full_text"]), axis=1)
+            df_test["nlp_full_text"] = df_test.apply(lambda row: nlp_tools.preprocess(row["full_text"]), axis=1)
 
             # random 
-            df_test["random"] = df_test.progress_apply (lambda row: wsd.random_predict(), axis=1)
+            df_test["random"] = df_test.progress_apply(lambda row: wsd.random_predict(), axis=1)
             rand.extend(df_test["random"].to_list())
             
             # token overlap
