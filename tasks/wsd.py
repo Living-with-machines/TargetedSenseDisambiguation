@@ -189,8 +189,40 @@ def bert_semaxis_vector(vector:np.array,
     if similary > threshold:
         return "1"
     return "0"
-
+# -------------------------------------
 # time-sensitive methods
+
+# helper functions for creating time sensisitve sense vectors
+
+def weighted(df,year,vector_col,level='label'):
+    # 1 over the distance in years
+    df['temp_dist'] = (1 / (abs(year - df.year) + 1))
+    # normalize, so weights add up to one
+    df['temp_dist'] = df['temp_dist'] / sum(df['temp_dist'])
+    # time weighted vector (tw_vector) is the product of the vector and the weight
+    df['tw_vector'] = df[vector_col] * df['temp_dist']
+    # sum vectors by label (sum or mean??)
+    
+    if level == 'label':
+        return df.groupby(level)['tw_vector'].apply(np.sum,axis=0)
+    
+    elif level == 'sense_id':
+        return df.groupby(level)['tw_vector'].apply(np.sum,axis=0)          
+
+def nearest(df,year,vector_col,level='label'):
+    # this methods obtains the quotation closest in time for each sense of a lemma. 
+    # get idx of quotations nearest in time for each sense
+    df['temp_dist'] = abs(df.year - year)
+    quots_nn_time_idx = df.groupby(level)['temp_dist'].idxmin().values
+    # get the quotations and the sense idx
+    if level == 'label':
+        return df.loc[quots_nn_time_idx][['label',vector_col]].set_index('label',inplace=False)[vector_col]
+
+    elif level == 'sense_id':
+        return df.loc[quots_nn_time_idx][['sense_id',vector_col]].set_index('sense_id',inplace=False)[vector_col]
+
+
+# wsd functions
 
 def bert_ts_binary_centroid_vector(row:pd.Series,
                             df_train:pd.DataFrame,
@@ -205,7 +237,7 @@ def bert_ts_binary_centroid_vector(row:pd.Series,
         row (pd.Series): row of df_test to which method is applied
         df_train (pd.DataFrame): training data used for creating centroids
         ts_method (str): specify options for time sensitive weighting 
-                        ['weighted']
+                        ['weighted','nearest']
         return_rank (bool): if True return return scores as a dict
         vector_col (str): columns used for computing centroids
         
@@ -213,21 +245,18 @@ def bert_ts_binary_centroid_vector(row:pd.Series,
         class as "0" or "1" as string
     """
 
-    vector, year = row[vector_col],row.year
+    vector, year = row[vector_col],row.year     
     
-    ts_methods = ['weighted']
-    assert ts_method in ts_methods, f'ts_method should be one of the following options {ts_methods}'
+    ts_methods = ['weighted','nearest']
+    
 
     if ts_method=='weighted':
-        # 1 over the distance in years
-        df_train['temp_dist'] = (1 / (abs(year - df_train.year) + 1))
-        # normalize, so weights add up to one
-        df_train['temp_dist'] = df_train['temp_dist'] / sum(df_train['temp_dist'])
-        # time weighted vector (tw_vector) is the product of the vector and the weight
-        df_train['tw_vector'] = df_train[vector_col] * df_train['temp_dist']
-        # sum vectors by label (sum or mean??)
-    
-    centroid_vectors = df_train.groupby('label')['tw_vector'].apply(np.sum,axis=0)
+        centroid_vectors = weighted(df_train,year,vector_col)
+    elif ts_method=='nearest':
+        centroid_vectors = nearest(df_train,year,vector_col)
+    else:
+        assert ts_method in ts_methods, f'ts_method should be one of the following options {ts_methods}'
+
     sims = centroid_vectors.apply(cosine_similiarity, target = vector)
     
     if return_ranking:
@@ -239,7 +268,7 @@ def bert_ts_binary_centroid_vector(row:pd.Series,
 def bert_ts_sense_centroid_vector(row:pd.Series,
                                 df_train:pd.DataFrame,
                                 senseid2label:dict,
-                                ts_method:str='nearest_in_time',
+                                ts_method:str='nearest',
                                 return_ranking:bool=False,
                                 vector_col:str='vector_bert_base_-1,-2,-3,-4_mean') -> str:
 
@@ -253,7 +282,7 @@ def bert_ts_sense_centroid_vector(row:pd.Series,
         df_train (pd.DataFrame): dataframe with training data
         senseid2label (dict): mapping of sense idx to binary label
         ts_method (str): specify options for time sensitive weighting 
-                        ['nearest_in_time']
+                        ['nearest','weighted']
         return_rank (bool): if True return return scores as a dict
         vector_col (str): name of vector column 
 
@@ -264,20 +293,23 @@ def bert_ts_sense_centroid_vector(row:pd.Series,
     # what if the lemma only has one sense, include exception here
     df_train_lemma = df_train[df_train.lemma==row.lemma]
 
-    ts_methods = ['nearest_in_time']
-    assert ts_method in ts_methods, f'ts_method should be one of the following options {ts_methods}'
+    # if lemma doesn't appear in train return '0'
+    if not df_train_lemma.shape[0]: return '0'
 
-    if ts_method=='nearest_in_time':
-        # this methods obtains the quotation closest in time for each sense of a lemma. 
-        # get idx of quotations nearest in time for each sense
-        quots_nn_time_idx = df_train_lemma.groupby('sense_id')['temp_dist'].idxmin().values
-        # get the quotations and the sense idx
-        sense_centroid_vectors = df_train_lemma.loc[quots_nn_time_idx][['sense_id',vector_col]]
-    
-    sense_centroid_vectors.set_index('sense_id', inplace=True)
-    sims = sense_centroid_vectors[vector_col].apply(
+    ts_methods = ['nearest','weighted']
+
+    if ts_method=='weighted':
+        centroid_vectors = weighted(df_train_lemma,row.year,vector_col,level='sense_id')
+    elif ts_method=='nearest':
+        centroid_vectors = nearest(df_train_lemma,row.year,vector_col,level='sense_id')
+    else:
+        assert ts_method in ts_methods, f'ts_method should be one of the following options {ts_methods}'
+
+    #centroid_vectors
+    sims = centroid_vectors.apply(
                     cosine_similiarity, target = row[vector_col]
                         ).to_dict()
+
     if return_ranking:
         return sims
     

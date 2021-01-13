@@ -328,7 +328,7 @@ def eval_lemma(lemma,
     eval_mode = "lemma_etal" # lemma or lemma_etal
 
     wemb_model = Word2Vec.load("/deezy_datadrive/kaspar-playground/dictionary_expansion/HistoricalDictionaryExpansion/models/w2v_004/w2v_words.model")
-    y_true,y_pred_bin_centr, y_pred_ts_bin_centr,y_pred_sense_centr,y_pred_semaxis, rand, token_overlap,w2v_lesk = [], [],[],[], [], [],[], []
+    y_true,y_pred_bin_centr, y_pred_ts_bin_centr,y_pred_sense_centr,y_pred_ts_sense_centr, rand, token_overlap,w2v_lesk = [], [],[],[], [], [],[], []
 
 
     tqdm.pandas()
@@ -373,42 +373,49 @@ def eval_lemma(lemma,
 
             #w2v lesk
             # Warning: I use a Word2vec model trained on all 19thC BL corpus that is locally stored.
-            df_test["w2v_lesk_ranking"] = df_test.progress_apply (lambda row: wsd.w2v_lesk_ranking(row["nlp_full_text"], df_selected_senses, wemb_model), axis=1)
-            w2v_lesk.extend(df_test['w2v_lesk_ranking'].to_list())
+            #df_test["w2v_lesk_ranking"] = df_test.progress_apply (lambda row: wsd.w2v_lesk_ranking(row["nlp_full_text"], df_selected_senses, wemb_model), axis=1)
+            #w2v_lesk.extend(df_test['w2v_lesk_ranking'].to_list())
 
             # binary centroid
             centroid_vectors = df_train.groupby('label')[vector_type].apply(np.mean,axis=0)
-            df_test[f"bert_centroid_binary_{vector_type}"] = df_test[vector_type].progress_apply(wsd.bert_nn_centroid_vector,
+            df_test[f"bert_centroid_binary_{vector_type}"] = df_test[vector_type].progress_apply(wsd.bert_binary_centroid_vector,
                                                                                             centroid_vectors = centroid_vectors,
                                                                                             )
             y_pred_bin_centr.extend(df_test[f"bert_centroid_binary_{vector_type}"].to_list())
             #results[f"bert_centroid_binary_{vector_type}_{sense}"] = (wsd.eval(f"bert_centroid_binary_{vector_type}",df_test),len(df_test))
             
             # binary centroid time sensitive
-            df_test[f"bert_ts_centroid_binary_{vector_type}"] = df_test.progress_apply(wsd.bert_nn_ts_centroid_vector, df_train=df_train, axis=1)
+            df_test[f"bert_ts_centroid_binary_{vector_type}"] = df_test.progress_apply(wsd.bert_ts_binary_centroid_vector, df_train=df_train, axis=1)
             y_pred_ts_bin_centr.extend(df_test[f"bert_ts_centroid_binary_{vector_type}"].to_list())
             
             #results[f"bert_ts_centroid_binary_{vector_type}_{sense}"] = (wsd.eval(f"bert_ts_centroid_binary_{vector_type}",df_test),len(df_test))
             
             # sense level centroid
             senseid2label = dict(df_test[['sense_id','label']].values)
-            df_test[f"bert_centroid_sense_{vector_type}"] = df_test.progress_apply(wsd.bert_nn_sense_centroid_vector,  
+            df_test[f"bert_centroid_sense_{vector_type}"] = df_test.progress_apply(wsd.bert_sense_centroid_vector,  
                             senseid2label= senseid2label,
                             vector_col=vector_type,
                             df_train = df_train, axis=1)
             
             y_pred_sense_centr.extend(df_test[f"bert_centroid_sense_{vector_type}"].to_list())
+
+            df_test[f"bert_ts_centroid_sense_{vector_type}"] = df_test.progress_apply(wsd.bert_ts_sense_centroid_vector,  
+                            senseid2label= senseid2label,
+                            vector_col=vector_type,
+                            df_train = df_train, axis=1)
+            
+            y_pred_ts_sense_centr.extend(df_test[f"bert_centroid_sense_{vector_type}"].to_list())
             #results[f"bert_centroid_sense_{vector_type}_{sense}"] = (wsd.eval(f"bert_centroid_sense_{vector_type}",df_test),len(df_test))
             # semaxis
-            centroid_vectors = df_train.groupby('label')[vector_type].apply(np.mean,axis=0)
-            sem_axis = centroid_vectors[1] - centroid_vectors[0] 
-            df_test[f"bert_semaxis_{vector_type}"] = df_test[vector_type].progress_apply(wsd.bert_semaxis_vector, sem_axis=sem_axis, return_label=True, threshold=.0)
-            y_pred_semaxis.extend(df_test[f"bert_semaxis_{vector_type}"].to_list())
+            #centroid_vectors = df_train.groupby('label')[vector_type].apply(np.mean,axis=0)
+            #sem_axis = centroid_vectors[1] - centroid_vectors[0] 
+            #df_test[f"bert_semaxis_{vector_type}"] = df_test[vector_type].progress_apply(wsd.bert_semaxis_vector, sem_axis=sem_axis, return_label=True, threshold=.0)
+            #y_pred_semaxis.extend(df_test[f"bert_semaxis_{vector_type}"].to_list())
             #results[f"bert_semaxis_{vector_type}_{sense}"]  = (wsd.eval(f"bert_semaxis_{vector_type}",df_test),len(df_test))
     
             #df_test.to_pickle(f'./data/results/{lemma}_{pos}_{sense}.results')
     
-    return y_true, y_pred_bin_centr,y_pred_ts_bin_centr,y_pred_sense_centr,y_pred_semaxis, rand, token_overlap, w2v_lesk
+    return y_true, y_pred_bin_centr,y_pred_ts_bin_centr,y_pred_sense_centr,y_pred_ts_sense_centr, rand, token_overlap, w2v_lesk
 
 ### --------------------------------
 # Depreciated code
