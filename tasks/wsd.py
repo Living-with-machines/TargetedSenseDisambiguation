@@ -211,12 +211,7 @@ def weighted(df,year,vector_col,level='label') -> pd.Series:
     # time weighted vector (tw_vector) is the product of the vector and the weight
     df['tw_vector'] = df[vector_col] * df['temp_dist']
     # sum vectors by label (sum or mean??)
-    
-    if level == 'label':
-        return df.groupby(level)['tw_vector'].apply(np.sum,axis=0)
-    
-    elif level == 'sense_id':
-        return df.groupby(level)['tw_vector'].apply(np.sum,axis=0)          
+    return df.groupby(level)['tw_vector'].apply(np.sum,axis=0)          
 
 def nearest(df:pd.DataFrame,
             year:int,
@@ -243,11 +238,7 @@ def nearest(df:pd.DataFrame,
     df['temp_dist'] = abs(df.year - year)
     quots_nn_time_idx = df.groupby(level)['temp_dist'].idxmin().values
     # get the quotations and the sense idx
-    if level == 'label':
-        return df.loc[quots_nn_time_idx][['label',vector_col]].set_index('label',inplace=False)[vector_col]
-
-    elif level == 'sense_id':
-        return df.loc[quots_nn_time_idx][['sense_id',vector_col]].set_index('sense_id',inplace=False)[vector_col]
+    return df.loc[quots_nn_time_idx][[level,vector_col]].set_index(level,inplace=False)[vector_col]
 
 ### ---------------------------------------------------
 # time-sensitive centoid disambiguation functions
