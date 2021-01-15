@@ -106,7 +106,7 @@ def svm_wemb_baseline(df_train,df_test,wemb_model):
     return y_pred
 
 ### ---------------------------------------------------
-# BERT CENTROID METHODS
+#  BERT CENTROID METHODS
 
 ### ---------------------------------------------------
 # binary centroid vectors
