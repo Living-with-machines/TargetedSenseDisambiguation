@@ -3,7 +3,7 @@ import sys
 
 def run(lemma,pos):
     data_path = create_glossbert_data(lemma,pos)
-    train_glossbert(data_path)
+    train_glossbert(data_path,downsample=True)
 
 if __name__=="__main__":
     lemma,pos = sys.argv[1],sys.argv[2]
