@@ -13,9 +13,19 @@ from flair.trainers import ModelTrainer
 # glossbert method ----------------------
 
 def enclose_keyword(row:pd.Series,
-                    enclose_token:str='"'):
+                    enclose_token:str='"') -> str:
     """enclose keyword with specific token to point
-    learner towards to word it has to focus on
+    learner towards to word it has to focus on. this 
+    is part of the weak supervision when learning
+    from context/quotations.
+
+    Arguments:
+        row (pd.Series): row of quotations dataframe
+        enclose_token (str): use token to mark target expression
+                    effectively this serves begin and end token
+
+    Returns:
+        quotation with target token marked by `enclose_token`
     """
     sentence = ''
     for i,c in enumerate(row.full_text):
@@ -26,12 +36,26 @@ def enclose_keyword(row:pd.Series,
         sentence+=c
     return sentence
 
-def to_glossbert_format(df:pd.DataFrame):
+def to_glossbert_format(df:pd.DataFrame) -> pd.DataFrame:
     """convert rows in dataframe to GlossBERT format
+    Argument:
+        df (pd.DataFrame): quotations dataframe
+
+    Returns:
+        pd.DataFrame with format confirming the 
+        GlossBERT template
     """
 
-    def gloss_string(row:pd.Series, definition:str):
-        """combine gloss with quoations and keyword
+    def gloss_string(row:pd.Series, definition:str) -> str:
+        """combine gloss with quotations and keyword
+        
+        Arguments:
+            row (pd.Series): row of dataframe
+            definition (str): definition to use as gloss
+        
+        Returns:
+            out_string that combines as quotation/context
+            with a gloss seperated by [SEP]
         """
 
         out_string=''
@@ -46,19 +70,28 @@ def to_glossbert_format(df:pd.DataFrame):
     df['enclosed_quotation'] = df.apply(enclose_keyword, axis=1)
     
     rows = [] 
+
+    # create labelled observations 1 of the context matches the definition
+    # 0 for the other cases (this method used weak supervision)
     for _ ,row in df.iterrows():
-        rows.append([gloss_string(row, row.definition), "Yes", row.sense_id])
+        rows.append([gloss_string(row, row.definition), "1", row.sense_id])
         definitions = df[df.lemma==row.lemma].definition.unique()
         for d in definitions:
             if d != row.definition:
-                rows.append([gloss_string(row,d), "No",row.sense_id])
+                rows.append([gloss_string(row,d), "0",row.sense_id])
     
     return pd.DataFrame(rows, columns=['text','label','sense_id'])
 
 
 def create_glossbert_data(lemma:str,
-                        pos:str):
-    """create glossbert data from quotations dataframe
+                        pos:str) -> PosixPath:
+    """Create glossbert data from quotations dataframe
+    Arguments:
+        lemma (str): lemma 
+        pos (str): part-of-speech
+
+    Return:
+        path as PosixPath to location where data is stored
     """
 
     df_quotations = pd.read_pickle(f'./data/sfrel_quotations_{lemma}_{pos}.pickle')
@@ -82,7 +115,18 @@ def create_glossbert_data(lemma:str,
     return df_out_path
 
 def train_glossbert(data_folder:PosixPath,
-                    downsample:bool=False):
+                    downsample:bool=False) -> bool:
+    """train as GlossBERT model
+    Arguments:
+        data_folder (PosixPath): folder where train/dev and 
+                    test set are stored as csv files
+        downsample (bool): if True we use only ten per cent
+                        of the data for training and testing
+                        primarily used for demo puroposes
+                
+    Return:
+        return True after training
+    """
 
     column_name_map = {0: "text", 1: "label"}
 
@@ -112,20 +156,29 @@ def train_glossbert(data_folder:PosixPath,
             mini_batch_chunk_size=4, # optionally set this if transformer is too much for your machine
             max_epochs=50, # terminate after 5 epochs
             )
+    
+    return True
 
 
 # ---------------------------------------
 # multidataset training -----------------
 
 
-def context_gloss_dfs(df:pd.DataFrame):
-    """convert rows in dataframe to GlossBERT format
+def context_gloss_dfs(df:pd.DataFrame) -> tuple:
+    """split the quotations dataframe in a context/quotation 
+    and a gloss dataframe.
+
+    Arguments:
+        df (pd.DataFrame): quotations dataframe
+    Returns:
+        a tuple in the format (context_df, gloss_df)
     """
     df = df[~df.keyword_offset.isnull()]
     df = df[~df.definition.isnull()].reset_index(drop=True)
     df['enclosed_quotation'] = df.apply(enclose_keyword, axis=1)
     df_gl =  df[['enclosed_quotation','definition','label']]
-    return df_gl[['enclosed_quotation','label']],df_gl[['definition','label']].drop_duplicates()
+    return (df_gl[['enclosed_quotation','label']],
+            df_gl[['definition','label']].drop_duplicates())
 
 def create_md_training_data(lemma:str, 
                             pos:str, 
@@ -133,7 +186,17 @@ def create_md_training_data(lemma:str,
                             relations:list, 
                             experiment_id:int=0,
                             eval_mode:str='lemma_etal'):
-    """create data for multidataset training
+    """create data for multidataset training in which
+    we train a model simultaneously on quotations and glosses.
+
+    Arguments:
+        lemma (str): lemma
+        pos (str): part-of-speech
+        senses (set): senses that define the positive class
+        relations (list): relation used for expanding the senses
+        experiment_id (int): integer identifier used as id
+        eval_mode (str): evalation mode (lemma or lemma_etal)
+
     """
     df_train, df_val, df_test = binarize(lemma,
                         pos,
@@ -166,7 +229,7 @@ def create_md_training_data(lemma:str,
                                         test_size=0.1, 
                                         random_state=42,
                                         shuffle=True,
-                                        stratify=df_train[['label']] # bug here, try to do the stratification better
+                                        stratify=df_train[['label']] 
                                         ) # 2nd
     
             df_train.to_csv(df_out_path / 'train.csv', index = False, sep='\t')  
@@ -177,7 +240,22 @@ def train_gloss_and_context(lemma:str,
                             pos:str,
                             experiment_id:int=0,
                             data_folder:PosixPath=Path("./data/training_data_md"),
-                            downsample:bool=False):
+                            downsample:bool=False) -> bool:
+    """fine-tune a transformer model on both the context and the gloss
+
+    Arguments:
+        lemma (str): lemma
+        pos (str): part-of-speech
+        experiment_id (int): integer used to identify experiment
+        data_folder (PosixPath): main folder for storing the 
+                context and gloss folder
+        downsample (bool): if True we use only 10% of the data
+                for training and testing
+
+    Returns:
+        returns True after model has finished training
+    """
+
     column_name_map = {0: "text", 1: "label"}
 
     context_corpus = CSVClassificationCorpus(data_folder / f"{lemma}_{pos}_{experiment_id}_context",
@@ -213,3 +291,4 @@ def train_gloss_and_context(lemma:str,
             mini_batch_chunk_size=4, # optionally set this if transformer is too much for your machine
             max_epochs=50, # terminate after 5 epochs
             )
+    return True
