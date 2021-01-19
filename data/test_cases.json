@@ -1,7 +1,8 @@
 {
     "slave_sense_1_ethnicity": [
         "slav_nn01-22495496",
-        "slav_nn01-22495604"
+        "slav_nn01-22495604",
+        "slave_nn02-22498415"
     ],
     "slave_sense_2_humansubmission": [
         "slave_nn01-22495881",
@@ -13,6 +14,12 @@
     "slave_sense_3_object": [
         "slave_nn01-22496432",
         "slave_nn01-22496462"
+    ],
+    "slave_other": [
+        "slave_nn01-22496013",
+        "slave_nn01-22496079",
+        "slave_nn01-22496396",
+        "slave_nn01-22496113"
     ],
     "power_sense_1_ability": [
         "power_nn01-28685348",
@@ -27,6 +34,7 @@
         "power_nn01-28684538"
     ],
     "power_sense_2_legal": [
+        "power_nn01-28685686",
         "power_nn01-28685253",
         "power_nn01-28688384",
         "power_nn01-28687020",
@@ -56,6 +64,13 @@
         "power_nn01-28687561",
         "power_nn01-28687732"
     ],
+    "power_other": [
+        "power_nn01-28686885",
+        "power_nn01-28686646",
+        "power_nn01-28685893",
+        "power_nn01-28687170",
+        "power_nn01-28687397"
+    ],
     "labour_sense_1_physical": [
         "labour_nn01-39839017",
         "labour_nn01-39838984",
@@ -71,11 +86,19 @@
         "labour_nn01-184772185",
         "labour_nn01-39839092"
     ],
-    "labour_sense_3_childbearing": [
+    "labour_sense_3_figurative": [
+        "labour_nn01-39839738",
         "labour_nn01-39839676"
     ],
     "labour_sense_4_political": [
-        "labour_nn01-39839157"
+        "labour_nn01-39839157",
+        "labour_nn01-39839281"
+    ],
+    "labour_other": [
+        "labour_nn01-136931648",
+        "labour_nn01-39839452",
+        "labour_nn01-39839006",
+        "labour_nn01-39839738"
     ],
     "technology_sense_1_treatise": [
         "technology_nn01-132200429",
@@ -86,5 +109,8 @@
         "technology_nn01-19092345",
         "technology_nn01-19092442",
         "technology_nn01-19092403"
+    ],
+    "technology_other": [
+        "technology_nn01-19092552"
     ]
 }
