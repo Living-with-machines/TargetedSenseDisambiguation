@@ -30,9 +30,6 @@ def compute_eval_metrics(word,results_path,eval_mode):
                     for method in methods:
                         pred = experiment[method].tolist()
 
-                        # we consider only the prediction for the 1 label
-                        p,r,f1 = [round(x,3) for x in precision_recall_fscore_support(label,pred, average='binary',pos_label=1)[:3]]
-
                         if method in micro:
                             micro[method]+=pred
                         else:
