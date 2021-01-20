@@ -227,10 +227,14 @@ def binarize(lemma:str,
                     )
     
     # get the quotations for the filtered senses
+    # !! important change here: the start and end flag
+    # only effect the filtering of the senses not the 
+    # quotations themselves, we only filter quotations
+    # by time for the test set
     df_quotations_selected = obtain_quotations_for_senses(df_quotations,
                                 df_source,                  
                                 senses,
-                                start=start,end=end)
+                                start=0,end=2021)
     #print(df_quotations_selected.columns)
     # add label column, set all labels to zero 
     df_quotations['label'] = "0"
@@ -238,13 +242,20 @@ def binarize(lemma:str,
     df_quotations.loc[df_quotations.quotation_id.isin(df_quotations_selected.quotation_id),'label'] = "1"
     
     # strict filter is True we discard all functions outside
-    # of the experiment parameters, which are defined by the
-    # time period and the word types of the target senses
+    # of the experiment parameters
+    # we first filter out all lemma which are not related
+    # (via their surface form) to the selected senses
+    # we keep, for now, quotations from all years
     if strict_filter:
-        df_quotations = df_quotations[(df_quotations.lemma.isin(df_quotations_selected.lemma)) & \
-                                    (df_quotations.year >= start) & \
-                                    (df_quotations.year <= end) ]
-                                    
+        df_quotations = df_quotations[(df_quotations.lemma.isin(df_quotations_selected.lemma))] #& \
+                                    #(df_quotations.year >= start) & \
+                                    #(df_quotations.year <= end) 
+                                    #]
+
+    if len(df_quotations)==0:
+        print ("\nThere are no quotations available, given this sense-id and time-frame.")
+        return None,None,None
+
     df_quotations = df_quotations.merge(df_source[['id','daterange',
                             "provenance","provenance_type",
                             "relation_to_core_senses","relation_to_seed_senses"]],
@@ -253,15 +264,12 @@ def binarize(lemma:str,
                             how='left'
                                 )#.drop("id",axis=1)
     
-    if len(df_quotations)==0:
-        print ("\nThere are no quotations available, given this sense-id and time-frame.")
-        return None,None,None
-
     df_quotations.drop_duplicates(subset = ["year", "lemma", "word_id", "sense_id", "definition", "full_text"], inplace = True)
+    # drop observation that can't be used 
     # drop rows with vector in vector_bert_base_-1,-2,-3,-4_mean
-    print('[LOG] #rows before removing None vector',df_quotations.shape)
     df_quotations = df_quotations[~df_quotations['vector_bert_base_-1,-2,-3,-4_mean'].isnull()]
-    print('[LOG] #rows after removing None vector',df_quotations.shape)
+    
+    # drop observations which are not ambiguous
     # counts the number of senses per lemma
     sense_count_by_lemma = df_quotations.groupby('lemma')['sense_id'].unique().apply(len)
     # ambiguous lemmas are those with more than one sense
@@ -270,10 +278,19 @@ def binarize(lemma:str,
     df_quotations = df_quotations[df_quotations.lemma.isin(ambiguous_lemmas)]
     df_quotations = df_quotations.reset_index(drop=True)
     
-    train, test = train_test_split(df_quotations, test_size=0.2, random_state=42,shuffle=True, stratify=df_quotations[['label']])
+    train, test = train_test_split(df_quotations, test_size=0.25, random_state=42,shuffle=True, stratify=df_quotations[['label']])
+    
+    # ! Important: we want to evaluate only on quotations for the test set that fit
+    # the date range defined by start end end
+    test = test[(start <= test.year) & (test.year <= end)]
+    if len(test)==0:
+        print ("\nThere are no quotations available in the test set, given this sense-id and time-frame.")
+        return None,None,None
+
     train, val = train_test_split(train, test_size=0.2, random_state=42,shuffle=True, stratify=train[['label']])
     train = train[~train.definition.isnull()].reset_index(drop=True)
-    
+    print(f"[LOG] {train.shape[0] + val.shape[0] + test.shape[0]} quotations selected")
+    print(f"[LOG] train = {train.shape[0]} val = {val.shape[0]} test = {test.shape[0]} quotations")
     if eval_mode == "lemma":
         train = train[train['lemma'] == lemma] # changed this
         train = train.reset_index(drop=True)
