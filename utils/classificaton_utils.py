@@ -10,8 +10,6 @@ from pathlib import Path, PosixPath
 from typing import Union
 from utils.dataset_download import *
 from sklearn.model_selection import train_test_split
-from tasks import wsd
-from utils import nlp_tools
 #import swifter
 
 cosine_similiarity = lambda x, target : 1 - cosine(x,target)
@@ -264,8 +262,14 @@ def binarize(lemma:str,
     print('[LOG] #rows before removing None vector',df_quotations.shape)
     df_quotations = df_quotations[~df_quotations['vector_bert_base_-1,-2,-3,-4_mean'].isnull()]
     print('[LOG] #rows after removing None vector',df_quotations.shape)
+    # counts the number of senses per lemma
+    sense_count_by_lemma = df_quotations.groupby('lemma')['sense_id'].unique().apply(len)
+    # ambiguous lemmas are those with more than one sense
+    ambiguous_lemmas = list(sense_count_by_lemma[sense_count_by_lemma > 1].index)
+    # retain only ambiguouse lemmas
+    df_quotations = df_quotations[df_quotations.lemma.isin(ambiguous_lemmas)]
     df_quotations = df_quotations.reset_index(drop=True)
-
+    
     train, test = train_test_split(df_quotations, test_size=0.2, random_state=42,shuffle=True, stratify=df_quotations[['label']])
     train, val = train_test_split(train, test_size=0.2, random_state=42,shuffle=True, stratify=train[['label']])
     train = train[~train.definition.isnull()].reset_index(drop=True)
