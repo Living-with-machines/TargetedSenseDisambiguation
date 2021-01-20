@@ -466,13 +466,18 @@ def harvest_data_from_extended_senses(
     # make a new dataframe based on the dictionary format of the quotation column
     # the will create a dataframe in which each key of the dictionary becomes a 
     # column in the new dataframe, this dataframe will only comprise the core content
-    # of each quotation
+    # of each quotation 
     quotations_content = quotations.quotations.apply(pd.Series)
     quotations_content.drop({'lemma', 'oed_reference', 'oed_url', 'word_id'}, axis=1, inplace=True)
     print(f'[LOG] Shape of quotations dataframe = {quotations_content.shape}')
     # create a new dataframe with only unique definitions
     definitions = quotations[['sense_id','lemma_definition','definition','word_id','lemma']].drop_duplicates()
     final_df = definitions.merge(quotations_content[['id','source','sense_id','text','year']],on='sense_id')
+
+    final_df["full_text"] = final_df.apply (lambda row: row["text"]["full_text"], axis=1)
+    final_df["keyword"] = final_df.apply (lambda row: row["text"]["keyword"], axis=1)
+    final_df["keyword_offset"] = final_df.apply (lambda row: row["text"]["keyword_offset"], axis=1)
+    
     final_df.rename({'id':'quotation_id'},inplace=True, axis=1)
     print(f'[LOG] Saving pickle file to "./data/sfrel_quotations_{lemma_pos}{demo_suffix}.pickle"')
     final_df.to_pickle(f'./data/sfrel_quotations_{lemma_pos}{demo_suffix}.pickle')

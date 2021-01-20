@@ -2,7 +2,7 @@ from numpy.core.numeric import outer
 from numpy.lib.financial import ppmt
 import pandas as pd
 import numpy as np
-import flair
+from gensim.models import Word2Vec
 from flair.data import Sentence
 from flair.embeddings import TransformerWordEmbeddings
 from scipy.spatial.distance import cosine
@@ -10,6 +10,9 @@ from pathlib import Path, PosixPath
 from typing import Union
 from utils.dataset_download import *
 from sklearn.model_selection import train_test_split
+from tasks import wsd
+from utils import nlp_tools
+#import swifter
 
 cosine_similiarity = lambda x, target : 1 - cosine(x,target)
 
@@ -119,75 +122,62 @@ def get_target_token_vector(row: pd.Series,
         print("[WARNING] 'vectors' variable is empty. Return None.")
         return None
 
-def prepare_data(path: PosixPath, 
-                embedding_type: TransformerWordEmbeddings,
-                start_year:int=1760, 
-                end_year:int=1920) -> pd.DataFrame:
+def vectorize_target_expressions(
+                quotations_path: PosixPath, 
+                embedding_method: dict,
+                ) -> pd.DataFrame:
     """prepare data for word sense disambiguation with quotations
-    this function filters quotations for a given date range
-    it then checks if all target words have been vectorized (mean
+    this function vectorizes target words in a quotation (meaning
     we have a vector representation for the quotation keyword)
-    if not, we add a `vector` column to dataframe and save it.
+    the vector representations are saved in the dataframe in the
+    `vector_{bert_name}_{settings}` column. 
+    
+    `embedding_method` is a dictionary that contains the name of 
+    the BERT model and the specific settings
+    for extracting contextual vector representation (i.e. the number of
+    layers and the pooling_operation)
+
     Arguments:
         path (PoxixPath): path to dataframe with all sense ids and quotations
-        embedding_type (TransformerWordEmbeddings): Transformer used for generating
-            the vector representation used for disambiguation
-        start_year (int): start filter at year
-        end_year (int): end filter at year
+        embedding_method (dict): dictionary with { column_name : 
+                                                    { path: path_to_bert_model, 
+                                                        layers=-1, 
+                                                        pooling_operation='mean'
+                                                        }}
 
     Returns:
         a pandas.DataFrame with quotations that or filtered by time
         and which are processed for sense disambiguation using the vector
         representation of the target word (or keyword)
     """
-    data = pd.read_pickle(path)
     
-    quotations_path = path.parent / f"{path.stem}_{start_year}_{end_year}.pickle"
-    
-    if not quotations_path.is_file():
-        print(f'Quotations file: {quotations_path} could not be found. Vectorizing the target word...')
-        quotations = filter_quotations_by_year(data,start=start_year,end=end_year)
-        try:
-            import swifter
-            print("[INFO] swifter is installed. Parallelize pandas apply method.")
-            quotations['vector'] = quotations.swifter.apply(get_target_token_vector,
-                                                            embedding_type=embedding_type,
-                                                            axis=1)
-        except ImportError:
-            print("[WARNING] could not find swifter...run pandas apply on one process.")
-            quotations['vector'] = quotations.apply(get_target_token_vector,
-                                                    embedding_type=embedding_type,
-                                                    axis=1)
-        quotations.to_pickle(quotations_path)
-        print("Done. Created dataframe with vectors for target words.")
-        print(f'Saved Dataframe: {quotations_path}')
-    else:
-        quotations = pd.read_pickle(quotations_path)
-    
+    quotations = pd.read_pickle(quotations_path)
+
+    for bert_name, bert_settings in embedding_method.items():
+        layers = layers=bert_settings['layers']
+        pooling_operation = bert_settings['pooling_operation']
+        col_name = f'vector_{bert_name}_{layers}_{pooling_operation}'
+        
+        # if dataframe already contains column, skip
+        if hasattr(quotations, col_name):
+            print(f'Dataframe alread contains vectors from {bert_name} settings')
+            print(bert_settings)
+
+            continue
+        
+        # load embedding model
+        embedding_type = TransformerWordEmbeddings(
+                                bert_settings['path'],
+                                layers=layers,
+                                pooling_operation=pooling_operation)
+
+        # embded
+        quotations[col_name] = quotations.progress_apply(get_target_token_vector,
+                                                        embedding_type=embedding_type,
+                                                        axis=1)
+
+    quotations.to_pickle(quotations_path)
     return quotations
-
-def bert_avg_quot_nn_wsd(query_vector: np.array,
-                        quotation_df: pd.DataFrame) -> dict:
-    """Function that scores the similarity of a query vector (of a target word taken from a quotations) 
-    to the sense embeddings of other sense available in quotation_df. we follow the 
-    procedure of (Liu et al. 2019): for each sense we average the vector representation
-    and compute the cosine similarity between these sense embeddings and the query vector.
-    
-    Arguments:
-        query_vector (np.array): vector representation of the word we want to disambiguate
-        quotation_df (pd.DataFrame): dataframe with vector column.
-    
-    Returns:
-        dictionary that maps sense_id to the cosine similarity score
-    """
-    # check if 
-    if not hasattr(quotation_df, 'vector'):
-        raise(ValueError,"""DataFrame needs a vector column containing the vector of the target word. 
-            Use utils.prepare_data() to create vector for target words""")
-
-    quotation_df_avg_by_lemma = quotation_df.groupby('sense_id')['vector'].apply(np.mean,axis=0)
-    results = quotation_df_avg_by_lemma.apply(cosine_similiarity, target = query_vector).to_dict() 
-    return results
 
 def binarize(lemma:str,
             pos: str,
@@ -226,7 +216,8 @@ def binarize(lemma:str,
     # load core dataset for a given lemma_id
     df_source = pd.read_pickle(f'./data/extended_senses_{lemma}_{pos}.pickle')
     df_quotations = pd.read_pickle(f'./data/sfrel_quotations_{lemma}_{pos}.pickle')
-    print(df_quotations.columns)
+
+    #print(df_quotations.columns)
     # filter senses
     senses = filter_senses(df_source,
                     senses,
@@ -265,13 +256,16 @@ def binarize(lemma:str,
                                 )#.drop("id",axis=1)
     
     if len(df_quotations)==0:
-        print ("\nThere are not quotations available, given this sense-id and time-frame.")
+        print ("\nThere are no quotations available, given this sense-id and time-frame.")
         return None,None,None
 
-    df_quotations["full_text"] = df_quotations.apply (lambda row: row["text"]["full_text"], axis=1)
     df_quotations.drop_duplicates(subset = ["year", "lemma", "word_id", "sense_id", "definition", "full_text"], inplace = True)
+    # drop rows with vector in vector_bert_base_-1,-2,-3,-4_mean
+    print('[LOG] #rows before removing None vector',df_quotations.shape)
+    df_quotations = df_quotations[~df_quotations['vector_bert_base_-1,-2,-3,-4_mean'].isnull()]
+    print('[LOG] #rows after removing None vector',df_quotations.shape)
     df_quotations = df_quotations.reset_index(drop=True)
-    
+
     train, test = train_test_split(df_quotations, test_size=0.2, random_state=42,shuffle=True, stratify=df_quotations[['label']])
     train, val = train_test_split(train, test_size=0.2, random_state=42,shuffle=True, stratify=train[['label']])
     train = train[~train.definition.isnull()].reset_index(drop=True)
@@ -294,7 +288,7 @@ def generate_definition_df(df_train,lemma,eval_mode="lemma"):
         return definition
 
     df_selected_senses = df_train[['sense_id','lemma','word_id','lemma_definition','definition','label']]
-    df_selected_senses['definition'] = df_selected_senses.apply(merge_definitions, axis=1)
+    #df_selected_senses['definition'] = df_selected_senses.apply(merge_definitions, axis=1)
 
 
     df_selected_senses = df_selected_senses.rename(columns={'sense_id': 'id','word_id':'lemma_id'})
@@ -312,4 +306,3 @@ def generate_definition_df(df_train,lemma,eval_mode="lemma"):
         print(f'Using {eval_mode} as evaluation mode.')    
         return df_selected_senses
 
-    
