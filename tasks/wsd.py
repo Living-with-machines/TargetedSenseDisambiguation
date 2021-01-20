@@ -375,39 +375,3 @@ def bert_semaxis_vector(vector:np.array,
     if similary > threshold:
         return "1"
     return "0"
-
-
-#def bert_ts_semaxis_vector(row:pd.Series,
-#                        df_train:pd.DataFrame,
-#                        vector_col:str='vector_bert_base_-1,-2,-3,-4_mean',
-#                        threshold=.0,
-#                        return_label=True
-#                            ) -> str:
-#    """time-sensitive wsd disambiguation method using a semaxis vector.
-#    ...
-#
-#    Arguments:
-#        row (pd.Series): row to which method is applied
-#        df_train (pd.DataFrame): training data used for creating centroids
-#        vector_col (str): columns used for computing centroids
-#        ...
-#
-#
-#    Returns:
-#        class as "0" or "1" as string
-#    """
-#
-#    vector, year = row[vector_col],row.year
-#    
-#    df_train['temp_dist'] = (1 / (abs(year - df_train.year) + 1))
-#    df_train['temp_dist'] = df_train['temp_dist'] / sum(df_train['temp_dist'])
-#    df_train['tw_vector'] = df_train[vector_col] * df_train['temp_dist']
-#    centroid_vectors = df_train.groupby('label')['tw_vector'].apply(np.sum,axis=0)
-#    semaxis_vector = centroid_vectors[1] - centroid_vectors[0]
-#    similary = cosine_similiarity(vector,semaxis_vector)
-#
-#    if not return_label: return similary
-#    
-#    if similary > threshold:
-#        return "1"
-#    return "0"
