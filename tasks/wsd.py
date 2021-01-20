@@ -1,5 +1,7 @@
+import os
 import scipy
 import random
+import pandas as pd
 import numpy as np
 import pandas as pd
 from sklearn import svm
@@ -9,14 +11,48 @@ from sklearn.metrics import precision_recall_fscore_support
 from utils.classificaton_utils import cosine_similiarity
 
 ### evaluation metrics
-def eval(approach,df_quotations):
-    gold = df_quotations["label"]
-    preds = df_quotations[approach]
-    # we report p,r,f1 for both labels
-    p_1,r_1,f1_1 = [round(x,3) for x in precision_recall_fscore_support(gold,preds, average='binary',pos_label="1")[:3]]
-    p_0,r_0,f1_0 = [round(x,3) for x in precision_recall_fscore_support(gold,preds, average='binary',pos_label="0")[:3]]
-    results = {"1":[p_1,r_1,f1_1 ],"0":[p_0,r_0,f1_0]}
-    return results
+def compute_eval_metrics(word,results_path,eval_mode):
+    micro = {}
+    true = []
+    # just to avoid picking up annoying folders
+    if not word.startswith('.'):
+        experiments = os.path.join(results_path, word, eval_mode)
+
+        # for each experiment, so basically for each sense
+        for exp_file in os.listdir(experiments):
+            if exp_file.endswith('.csv'):
+                exp_path = os.path.join(experiments, exp_file)
+                try:
+                    experiment = pd.read_csv(exp_path, sep=",")
+                    label = experiment["label"].tolist()
+                    true+=label
+
+                    methods = experiment.columns.tolist()
+                    methods.remove("label")
+
+                    for method in methods:
+                        pred = experiment[method].tolist()
+
+                        if method in micro:
+                            micro[method]+=pred
+                        else:
+                            micro[method] = pred
+
+                # we have some empty files <-- to be checked
+                except pd.io.common.EmptyDataError:
+                    print ("\t --> No results stored for", exp_path)
+
+        columns = ["method","p","r","f1"]
+        res_df = []
+
+        for method,micro_preds in micro.items():
+            row = [method]
+            p,r,f1 = [round(x,3) for x in precision_recall_fscore_support(true,micro_preds, average='binary',pos_label=1)[:3]]
+            row+=[p,r,f1]
+            res_df.append(row)
+
+        res_df = pd.DataFrame(res_df,columns=columns)
+        return res_df
 
 ### ---------------------------------------------------
 ### random baseline
