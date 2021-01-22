@@ -353,7 +353,7 @@ def bert_ts_sense_centroid_vector(row:pd.Series,
     df_train_lemma = df_train[df_train.lemma==row.lemma]
 
     # if lemma doesn't appear in train return '0'
-    if not df_train_lemma.shape[0]: return '0'
+    if not df_train_lemma.shape[0]: return '0' 
 
     ts_methods = ['nearest','weighted']
 
