@@ -249,6 +249,56 @@ def weighted(df,year,vector_col,level='label') -> pd.Series:
     # sum vectors by label (sum or mean??)
     return df.groupby(level)['tw_vector'].apply(np.sum,axis=0)          
 
+def weighted_past(df,year,vector_col,level='label') -> pd.Series:
+    """This function weights vector representation of 
+    target words by their distance to the year
+    of the query vector. This is repeated for each 
+    sense_id or label (i.e. value of `level` argument).
+    If the quotation from the training set happens in
+    the future, then it is given the minimum weight.
+    If all quotations happen in the future, the same
+    strategy as for nearest is used.
+
+    It returns sense level or binary time weighted centroid vectors
+
+    Arguments:
+        df (pd.DataFrame): the training data from which to construct
+                        the time sensitive embedding
+        year (int): year of the vector to disambiguate
+        vector_col (str): name of the column in which the target vector is stored
+        level (str): use 'label' for binary centroid vector, 
+                    use `sense_id` for sense level centroid vectors
+
+    Returns:
+        as element of type pd.Series with index=level and 
+        values the centroid vector (in this the weighted vectors
+        averaged by the specified level)
+
+    """
+    # 1 over the distance in years
+    def norm_past_distance(tdist):
+        if tdist > 0:
+            return 1 / (tdist + 1)
+        else:
+            return 0.0
+
+    df['temp_dist'] = year - df.year
+
+    df['temp_dist'] = df.apply(lambda x: norm_past_distance(x['temp_dist']), axis=1)
+    # If there are only future quotations, take the nearest:
+    if df[df['temp_dist'] > 0].empty:
+        df['temp_dist'] = abs(df.year - year)
+        quots_nn_time_idx = df.groupby(level)['temp_dist'].idxmin().values
+        return df.loc[quots_nn_time_idx][[level,vector_col]].set_index(level,inplace=False)[vector_col]
+    # give minimum weight to quotations that happen in the future:
+    df.loc[df['temp_dist'] == 0.0, 'temp_dist'] = min(df[df['temp_dist'] > 0]['temp_dist'])
+    # normalize, so weights add up to one
+    df['temp_dist'] = df['temp_dist'] / sum(df['temp_dist'])
+    # time weighted vector (tw_vector) is the product of the vector and the weight
+    df['tw_vector'] = df[vector_col] * df['temp_dist']
+    # sum vectors by label (sum or mean??)
+    return df.groupby(level)['tw_vector'].apply(np.sum,axis=0)      
+
 def nearest(df:pd.DataFrame,
             year:int,
             vector_col:str,
@@ -303,7 +353,7 @@ def bert_ts_binary_centroid_vector(row:pd.Series,
 
     vector, year = row[vector_col],row.year     
     
-    ts_methods = ['weighted','nearest']
+    ts_methods = ['weighted','nearest','weighted_past']
     
 
     if ts_method=='weighted':
@@ -312,6 +362,9 @@ def bert_ts_binary_centroid_vector(row:pd.Series,
     elif ts_method=='nearest':
         # the nearest vector in time
         centroid_vectors = nearest(df_train,year,vector_col)
+    elif ts_method=='weighted_past':
+        # the nearest vector in time
+        centroid_vectors = weighted_past(df_train,year,vector_col)
     else:
         assert ts_method in ts_methods, f'ts_method should be one of the following options {ts_methods}'
 
@@ -355,7 +408,7 @@ def bert_ts_sense_centroid_vector(row:pd.Series,
     # if lemma doesn't appear in train return '0'
     if not df_train_lemma.shape[0]: return '0' 
 
-    ts_methods = ['nearest','weighted']
+    ts_methods = ['nearest','weighted','weighted_past']
 
     if ts_method=='weighted':
         # weight vector by distance
@@ -363,6 +416,9 @@ def bert_ts_sense_centroid_vector(row:pd.Series,
     elif ts_method=='nearest':
         # the nearest vector in time
         centroid_vectors = nearest(df_train_lemma,row.year,vector_col,level='sense_id')
+    elif ts_method=='weighted_past':
+        # the nearest vector in time
+        centroid_vectors = weighted_past(df_train_lemma,row.year,vector_col,level='sense_id')
     else:
         assert ts_method in ts_methods, f'ts_method should be one of the following options {ts_methods}'
 
