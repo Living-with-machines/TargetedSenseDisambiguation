@@ -186,6 +186,8 @@ def binarize(lemma:str,
             start:int=1760, 
             end:int=1920,
             strict_filter:bool=True,
+            filter_test_by_year=True,
+            filter_val_by_year=True,
             eval_mode="lemma") -> pd.DataFrame:
     """binarize labels and select quotations
     given a set of senses, provenance rules, and expansion flags,
@@ -282,12 +284,17 @@ def binarize(lemma:str,
     
     # ! Important: we want to evaluate only on quotations for the test set that fit
     # the date range defined by start end end
-    test = test[(start <= test.year) & (test.year <= end)]
+    if filter_test_by_year:
+        test = test[(start <= test.year) & (test.year <= end)]
     if len(test)==0:
         print ("\nThere are no quotations available in the test set, given this sense-id and time-frame.")
         return None,None,None
 
     train, val = train_test_split(train, test_size=0.2, random_state=42,shuffle=True, stratify=train[['label']])
+    
+    if filter_val_by_year:
+        val = val[(start <= test.year) & (test.year <= end)]
+    
     train = train[~train.definition.isnull()].reset_index(drop=True)
     print(f"[LOG] {train.shape[0] + val.shape[0] + test.shape[0]} quotations selected")
     print(f"[LOG] train = {train.shape[0]} val = {val.shape[0]} test = {test.shape[0]} quotations")
