@@ -411,3 +411,44 @@ def bert_semaxis_vector(vector:np.array,
     if similary > threshold:
         return "1"
     return "0" 
+
+### ---------------------------------------------------
+# Supervised vector classification
+
+def clf_svm(vector_col:str,
+            df_train:pd.DataFrame,
+            model,
+            return_ranking=False) -> list:
+    """return classification for multi-layer perception
+
+    Arguments:
+        vector_col (str): name of the columns with vectors to classify
+        df_train (pd.DataFrame): dataframe with training data
+        model (Linear SVM): fitted linear svm classifier
+        return_ranking (bool): return confidences instead of predictions
+    Returns:
+        list of "0" and "1" predictions
+    """
+
+    if return_ranking: return list(model.decision_function(df_train[vector_col].to_list()))
+    
+    return list(model.predict(df_train[vector_col].to_list()))
+
+def clf_perceptron(vector_col:str,
+            df_train:pd.DataFrame,
+            model,
+            ) -> list:
+    """return classification for multi-layer perception
+
+    Arguments:
+        vector_col (str): name of the columns with vectors to classify
+        df_train (pd.DataFrame): dataframe with training data
+        model (Perceptron): fitted (multi-layer) perceptron
+    Returns:
+        list of "0" and "1" predictions
+    """
+
+    #if return_ranking: return list(model.decision_function(df[vector_col].to_list()))
+    
+    return list(model.predict(df_train[vector_col].to_list()))
+    
