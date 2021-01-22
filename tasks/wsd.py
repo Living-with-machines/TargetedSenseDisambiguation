@@ -454,5 +454,5 @@ def clf_perceptron(vector_col:str,
 
     #if return_ranking: return list(model.decision_function(df[vector_col].to_list()))
     
-    return list(model.predict(df_train[vector_col].to_list()))
+    return list(model.predict(df_train[vector_col].to_list())) 
     
