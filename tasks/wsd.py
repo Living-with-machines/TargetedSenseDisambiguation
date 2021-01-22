@@ -9,6 +9,8 @@ from utils import nlp_tools
 from typing import Union
 from sklearn.metrics import precision_recall_fscore_support
 from utils.classificaton_utils import cosine_similiarity
+from sklearn.svm import LinearSVC
+from sklearn.linear_model import Perceptron
 
 ### evaluation metrics
 def compute_eval_metrics(word,results_path,eval_mode):
@@ -271,8 +273,10 @@ def nearest(df:pd.DataFrame,
     """
     # this methods obtains the quotation closest in time for each sense of a lemma. 
     # get idx of quotations nearest in time for each sense
+    
     df['temp_dist'] = abs(df.year - year)
     quots_nn_time_idx = df.groupby(level)['temp_dist'].idxmin().values
+    
     # get the quotations and the sense idx
     return df.loc[quots_nn_time_idx][[level,vector_col]].set_index(level,inplace=False)[vector_col]
 
@@ -314,7 +318,7 @@ def bert_ts_binary_centroid_vector(row:pd.Series,
         centroid_vectors = nearest(df_train,year,vector_col)
     else:
         assert ts_method in ts_methods, f'ts_method should be one of the following options {ts_methods}'
-
+    
     sims = centroid_vectors.apply(cosine_similiarity, target = vector)
     
     if return_ranking:
@@ -417,14 +421,14 @@ def bert_semaxis_vector(vector:np.array,
 
 def clf_svm(vector_col:str,
             df_train:pd.DataFrame,
-            model,
+            model:LinearSVC,
             return_ranking=False) -> list:
     """return classification for multi-layer perception
 
     Arguments:
         vector_col (str): name of the columns with vectors to classify
         df_train (pd.DataFrame): dataframe with training data
-        model (Linear SVM): fitted linear svm classifier
+        model (sklearn.svm.LinearSVC): fitted linear svm classifier
         return_ranking (bool): return confidences instead of predictions
     Returns:
         list of "0" and "1" predictions
@@ -436,14 +440,14 @@ def clf_svm(vector_col:str,
 
 def clf_perceptron(vector_col:str,
             df_train:pd.DataFrame,
-            model,
+            model:Perceptron,
             ) -> list:
     """return classification for multi-layer perception
 
     Arguments:
         vector_col (str): name of the columns with vectors to classify
         df_train (pd.DataFrame): dataframe with training data
-        model (Perceptron): fitted (multi-layer) perceptron
+        model (sklearn.linear_model.Perceptron): fitted (multi-layer) perceptron
     Returns:
         list of "0" and "1" predictions
     """
