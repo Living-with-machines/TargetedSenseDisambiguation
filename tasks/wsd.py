@@ -323,6 +323,7 @@ def bert_ts_binary_centroid_vector(row:pd.Series,
     
     if return_ranking:
         return sims.to_dict()
+    #return str(np.argmax(sims))
     return str(np.argmax(sims))
 
 ### ---------------------------------------------------
