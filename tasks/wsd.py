@@ -7,8 +7,16 @@ import pandas as pd
 from sklearn import svm
 from utils import nlp_tools
 from typing import Union
+from scipy.spatial.distance import cosine
 from sklearn.metrics import precision_recall_fscore_support
-from utils.classificaton_utils import cosine_similiarity
+from flair.models.text_classification_model import TARSClassifier
+from flair.datasets import SentenceDataset
+from flair.data import Sentence, Corpus
+from flair.trainers import ModelTrainer
+from pathlib import Path
+# from utils.classificaton_utils import cosine_similiarity
+
+cosine_similiarity = lambda x, target : 1 - cosine(x,target)
 
 ### evaluation metrics
 def compute_eval_metrics(word,results_path,eval_mode):
@@ -139,6 +147,90 @@ def svm_wemb_baseline(df_train,df_test,wemb_model):
     classifier = SVM.fit(X_train,y_train)
     y_pred = classifier.predict(X_test)
 
+    return y_pred
+
+### ---------------------------------------------------
+# Few-shot learning method
+# Source: https://github.com/flairNLP/flair/blob/master/resources/docs/TUTORIAL_10_TRAINING_ZERO_SHOT_MODEL.md
+def enclose_keyword(row:pd.Series,
+                    enclose_token:str='$') -> str:
+    """enclose keyword with specific token to point
+    learner towards to word it has to focus on. this
+    is part of the weak supervision when learning
+    from context/quotations.
+    Arguments:
+        row (pd.Series): row of quotations dataframe
+        enclose_token (str): use token to mark target expression
+                    effectively this serves begin and end token
+    Returns:
+        quotation with target token marked by `enclose_token`
+    """
+    sentence = ''
+    for i,c in enumerate(row.full_text):
+        if i == int(row.keyword_offset):
+            sentence+=enclose_token + ' '
+        elif i ==int(row.keyword_offset + len(row.keyword)):
+            sentence+= ' ' + enclose_token
+        sentence+=c
+    return sentence
+
+def few_shot_baseline(df_train,df_val,df_test,senses,relations,tars,lr=1e-4,mini_batch_size=1,max_epochs=1,train_with_dev=True):
+
+    print(senses)
+    model_path = 'models/taggers/' + '_'.join(senses) + "~" + "+".join(sorted(relations))
+    print(model_path)
+
+    if not Path(model_path + "/best-model.pt").exists():
+    
+        # Prepare training data:
+        train_sentences = [(enclose_keyword(row),
+                        row.text.get('keyword',''),
+                        row.label)
+                            for i,row in df_train.iterrows()]
+
+        # Add definitions to training data:
+        train_sentences += [(row.keyword + ": " + row.definition,
+                            row.keyword,
+                            row.label)
+                                for i,row in df_train[["definition", "label", "keyword"]].drop_duplicates(subset=["definition", "label"]).iterrows()]
+
+        train_sentences = [Sentence(s + ' ' + t).add_label('binary_wsd',l) for s,t,l in train_sentences if s and t]
+
+        # Prepare validation data:
+        val_sentences = [(enclose_keyword(row),
+                        row.text.get('keyword',''),
+                        row.label)
+                            for i,row in df_val.iterrows()]
+                    
+        val_sentences = [Sentence(s + ' ' + t).add_label('binary_wsd',l) for s,t,l in val_sentences]
+
+        trainset = SentenceDataset(train_sentences)
+        valset = SentenceDataset(val_sentences)
+        corpus = Corpus(train=trainset, test=valset)
+
+        # 2. make the model aware of the desired set of labels from the new corpus
+        tars.add_and_switch_to_new_task("binary_wsd", label_dictionary=corpus.make_label_dictionary())
+
+        # 3. initialize the text classifier trainer with your corpus
+        trainer = ModelTrainer(tars, corpus)
+
+        # 4. train model
+        trainer.train(base_path=model_path, # path to store the model artifacts
+                      learning_rate=lr, # use very small learning rate
+                      mini_batch_size=mini_batch_size, # small mini-batch size since corpus is tiny
+                      max_epochs=max_epochs, # terminate after 10 epochs
+                      train_with_dev=train_with_dev,
+                      anneal_with_restarts=True,
+                      patience=1
+                      )
+    
+    tars = TARSClassifier.load(model_path + "/best-model.pt")
+    y_pred = []
+    for i, row in df_test.iterrows():
+        s = enclose_keyword(row)
+        sentence = Sentence(s)
+        tars.predict(sentence)
+        y_pred.append(sentence.labels[0].value)
     return y_pred
 
 ### ---------------------------------------------------
