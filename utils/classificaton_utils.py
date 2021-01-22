@@ -293,7 +293,7 @@ def binarize(lemma:str,
     train, val = train_test_split(train, test_size=0.2, random_state=42,shuffle=True, stratify=train[['label']])
     
     if filter_val_by_year:
-        val = val[(start <= test.year) & (test.year <= end)]
+        val = val[(start <= val.year) & (val.year <= end)]
     
     train = train[~train.definition.isnull()].reset_index(drop=True)
     print(f"[LOG] {train.shape[0] + val.shape[0] + test.shape[0]} quotations selected")
