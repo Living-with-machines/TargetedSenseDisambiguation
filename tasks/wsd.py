@@ -410,4 +410,4 @@ def bert_semaxis_vector(vector:np.array,
     
     if similary > threshold:
         return "1"
-    return "0"
+    return "0" 
