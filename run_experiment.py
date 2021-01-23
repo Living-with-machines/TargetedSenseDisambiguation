@@ -1,21 +1,16 @@
 import os
 import pandas as pd
 import numpy as np
-import json
 from tasks import wsd
 from pathlib import Path
 from utils import nlp_tools
 from parhugin import multiFunc
 from gensim.models import Word2Vec
-from sentence_transformers import SentenceTransformer
-from utils.dataset_download import harvest_data_from_extended_senses
 from utils.classificaton_utils import binarize,generate_definition_df, vectorize_target_expressions
 from tqdm.notebook import tqdm
 from sklearn.svm import LinearSVC
 from sklearn.linear_model import Perceptron
 from sklearn.neural_network import MLPClassifier
-
-
 
 def eval_sense(lemma,
                 pos,
@@ -28,14 +23,14 @@ def eval_sense(lemma,
                 vector_cols,
                 wemb_model):
 
-    df_train, df_val, df_test = binarize(lemma,
-                pos,
-                senses, 
-                start=start,
-                end=end,
-                relations=relations,
-                eval_mode=eval_mode,
-                strict_filter=True)
+    df_train, df_val, df_test = binarize(lemma=lemma,
+                                    pos=pos,
+                                    senses=senses, 
+                                    start=start,
+                                    end=end,
+                                    relations=relations,
+                                    eval_mode=eval_mode,
+                                    strict_filter=True)
 
     # no quotations for sense and timeframe
     if df_train is None:
@@ -133,11 +128,11 @@ def run(lemma,
         train_on_dev,
         wemb_model):
         
-    df_test = eval_sense(lemma,
-                pos,
-                senses,
-                start,
-                end,
+    df_test = eval_sense(lemma=lemma,
+                pos=pos,
+                senses=senses,
+                start=start,
+                end=end,
                 train_on_dev=train_on_dev,
                 eval_mode=eval_mode,
                 relations=relations,
@@ -164,22 +159,25 @@ def run(lemma,
     out_df.to_csv(os.path.join(results_path, results_filename), index=False)  
 
 if __name__=="__main__":
+
+    # arguments that remain constant for all experiments
     vector_cols = ['vector_bert_base_-1,-2,-3,-4_mean',
                 "vector_blert_base_-1,-2,-3,-4_mean",
                 'vector_bert_1850_-1,-2,-3,-4_mean']
-
     relations = ['seed','synonym']
-
     eval_mode = 'lemma_etal'
-
-    train_on_dev = True
-
     wemb_model = Word2Vec.load("models/w2v_004/w2v_words.model")
 
-    words = [['machine','NN']]
+    # argument may change
+    train_on_dev = True
 
+    # arguments that vary by experiment
     start = 1760
     end = 1920
+
+    # arguments that vary for each run
+    words = [['machine','NN']]
+
 
     for lemma, pos in words:
         quotations_path = f"./data/sfrel_quotations_{lemma}_{pos}.pickle"
