@@ -315,12 +315,12 @@ def generate_definition_df(df_train,lemma,eval_mode="lemma"):
     df_selected_senses = df_selected_senses.reset_index(drop=True)
 
     if eval_mode == "lemma":
-        print(f'Using {eval_mode} as evaluation mode.')
+        print(f'[LOG] Using {eval_mode} as evaluation mode.')
         df_selected_senses = df_selected_senses[df_selected_senses['lemma'] == lemma]
         df_selected_senses = df_selected_senses.reset_index(drop=True)
         return df_selected_senses
 
     if eval_mode == "lemma_etal":
-        print(f'Using {eval_mode} as evaluation mode.')    
+        print(f'[LOG] Using {eval_mode} as evaluation mode.')    
         return df_selected_senses
 
