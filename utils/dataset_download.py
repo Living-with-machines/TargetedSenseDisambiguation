@@ -591,7 +591,7 @@ def filter_senses(df, sense_ids:set,
     """
     print("[LOG] # senses before filtering by date =", df.shape[0])
     df = df[df.daterange.apply(filter_by_year_range, target_start=start, target_end=end)]
-    print("[LOG]# senses after filtering by date =", df.shape[0])
+    print("[LOG] # senses after filtering by date =", df.shape[0])
     
     
     seeds = df[df['provenance_type'] == "seed"].reset_index(inplace=False)

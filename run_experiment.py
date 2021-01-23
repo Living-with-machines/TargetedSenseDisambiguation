@@ -7,7 +7,7 @@ from utils import nlp_tools
 from parhugin import multiFunc
 from gensim.models import Word2Vec
 from utils.classificaton_utils import binarize,generate_definition_df, vectorize_target_expressions
-from tqdm.notebook import tqdm
+from tqdm import tqdm
 from sklearn.svm import LinearSVC
 from sklearn.linear_model import Perceptron
 from sklearn.neural_network import MLPClassifier
@@ -161,22 +161,24 @@ def run(lemma,
 if __name__=="__main__":
 
     # arguments that remain constant for all experiments
-    vector_cols = ['vector_bert_base_-1,-2,-3,-4_mean',
+    VECTOR_COLS = ['vector_bert_base_-1,-2,-3,-4_mean',
                 "vector_blert_base_-1,-2,-3,-4_mean",
                 'vector_bert_1850_-1,-2,-3,-4_mean']
-    relations = ['seed','synonym']
-    eval_mode = 'lemma_etal'
-    wemb_model = Word2Vec.load("models/w2v_004/w2v_words.model")
+    RELATIONS = ['seed','synonym']
+    EVAL_MODE = 'lemma_etal'
+    WEMB_MODEL = Word2Vec.load("models/w2v_004/w2v_words.model")
 
     # argument may change
-    train_on_dev = True
+    TRAIN_ON_DEV = True
 
     # arguments that vary by experiment
-    start = 1760
-    end = 1920
+    START = 1760
+    END = 1920
 
     # arguments that vary for each run
-    words = [['machine','NN']]
+    words = [['anger',"NN"],["apple","NN"],["art","NN"],["democracy","NN"],
+            ["happiness","NN"],["labour","NN"],["machine","NN"],["man","NN"],
+            ["nation","NN"],["power","NN"],["slave","NN"],['woman','NN']]
 
 
     for lemma, pos in words:
@@ -192,11 +194,11 @@ if __name__=="__main__":
 
             run(lemma, 
                 pos, 
-                senses, 
-                start, 
-                end,
-                vector_cols,
-                eval_mode,
-                relations,
-                train_on_dev,
-                wemb_model)
+                {sense}, 
+                start=START, 
+                end=END,
+                vector_cols=VECTOR_COLS,
+                eval_mode=EVAL_MODE,
+                relations=RELATIONS,
+                train_on_dev=TRAIN_ON_DEV,
+                wemb_model=WEMB_MODEL)
