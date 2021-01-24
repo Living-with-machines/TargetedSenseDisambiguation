@@ -144,4 +144,5 @@ data/
 .DS_Store
 .vscode/settings.json
 results/*
+results*/*
 

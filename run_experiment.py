@@ -24,6 +24,8 @@ def eval_sense(lemma,
                 filter_test,
                 wemb_model):
 
+    print(f'STARTING AT {start}; ENDING AT {end}')
+
     df_train, df_val, df_test = binarize(lemma=lemma,
                                     pos=pos,
                                     senses=senses, 
@@ -129,6 +131,7 @@ def run(lemma,
         relations,
         train_on_dev,
         wemb_model,
+        filter_test,
         results_path_base):
         
     df_test = eval_sense(lemma=lemma,
@@ -140,6 +143,7 @@ def run(lemma,
                 eval_mode=eval_mode,
                 relations=relations,
                 vector_cols=vector_cols,
+                filter_test=filter_test,
                 wemb_model=wemb_model)
 
     results_path = os.path.join(results_path_base, f"{lemma}_{pos}", eval_mode)
@@ -148,10 +152,11 @@ def run(lemma,
 
     # IF df_test is None, create an empty DataFrame
     if not isinstance(df_test, type(None)):
-        
         baselines = ['id_x','label','random','def_tok_overlap_ranking', 'sent_embedding', 'w2v_lesk_ranking',                        'svm_wemb_baseline']
         bert_methods = [[f"bert_binary_centroid_{vector_col}",f"bert_centroid_sense_{vector_col}",f"bert_contrast_{vector_col}",
-                        f"bert_ts_binary_centroid_{vector_col}",f"bert_ts_centroid_sense_{vector_col}"] 
+                        f"bert_ts_binary_centroid_{vector_col}",f"bert_ts_centroid_sense_{vector_col}",
+                        f"bert_svm_{vector_col}",f"bert_perceptron_{vector_col}",f"bert_ml_perceptron_{vector_col}"
+                        ] 
                                     for vector_col in  vector_cols]
         bert_methods = [i for tm in bert_methods for i in tm]
 
@@ -162,7 +167,6 @@ def run(lemma,
     out_df.to_csv(os.path.join(results_path, results_filename), index=False)  
 
 if __name__=="__main__":
-
     # arguments that remain constant for all experiments
     VECTOR_COLS = ['vector_bert_base_-1,-2,-3,-4_mean',
                 "vector_blert_base_-1,-2,-3,-4_mean",
@@ -177,15 +181,17 @@ if __name__=="__main__":
 
     # arguments that vary by experiment
     START = 1760
-    END = 1920
+    END = 1920 # 1850 = results_2 1920 = results 2000 = results_3
 
-    RESULTS_PATH_BASE = "results"
+    RESULTS_PATH_BASE = "results_2"
 
     # arguments that vary for each run
-    words = [['anger',"NN"],["apple","NN"],["art","NN"],["democracy","NN"],
-            ["happiness","NN"],["labour","NN"],["machine","NN"],["man","NN"],
-            ["nation","NN"],["power","NN"],["slave","NN"],['woman','NN']]
+    #words = [['anger',"NN"],["apple","NN"],["art","NN"],["democracy","NN"],
+    #        ["happiness","NN"],["labour","NN"],["machine","NN"],["man","NN"],
+    #        ["nation","NN"],["power","NN"],["slave","NN"],['woman','NN']]
 
+    words = [["democracy","NN"],["labour","NN"],["machine","NN"],
+            ["nation","NN"],["power","NN"],["slave","NN"],['woman','NN']]
     errors = []
 
     for lemma, pos in words:
@@ -209,7 +215,7 @@ if __name__=="__main__":
                     relations=RELATIONS,
                     train_on_dev=TRAIN_ON_DEV,
                     wemb_model=WEMB_MODEL,
-                    FILTER_TEST=FILTER_TEST,
+                    filter_test=FILTER_TEST,
                     results_path_base=RESULTS_PATH_BASE)
             except Exception as e:
                 print(sense,e)
