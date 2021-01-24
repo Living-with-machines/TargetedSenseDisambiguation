@@ -21,6 +21,7 @@ def eval_sense(lemma,
                 eval_mode,
                 relations,
                 vector_cols,
+                filter_test,
                 wemb_model):
 
     df_train, df_val, df_test = binarize(lemma=lemma,
@@ -30,6 +31,7 @@ def eval_sense(lemma,
                                     end=end,
                                     relations=relations,
                                     eval_mode=eval_mode,
+                                    filter_test_by_year=filter_test,
                                     strict_filter=True)
 
     # no quotations for sense and timeframe
@@ -126,7 +128,8 @@ def run(lemma,
         eval_mode,
         relations,
         train_on_dev,
-        wemb_model):
+        wemb_model,
+        results_path_base):
         
     df_test = eval_sense(lemma=lemma,
                 pos=pos,
@@ -139,7 +142,7 @@ def run(lemma,
                 vector_cols=vector_cols,
                 wemb_model=wemb_model)
 
-    results_path = os.path.join('results', f"{lemma}_{pos}", eval_mode)
+    results_path = os.path.join(results_path_base, f"{lemma}_{pos}", eval_mode)
     results_filename = '_'.join(senses) + "~" + "+".join(sorted(relations)) + ".csv"
     Path(results_path).mkdir(parents=True, exist_ok=True)
 
@@ -170,16 +173,20 @@ if __name__=="__main__":
 
     # argument may change
     TRAIN_ON_DEV = True
+    FILTER_TEST = True
 
     # arguments that vary by experiment
     START = 1760
     END = 1920
+
+    RESULTS_PATH_BASE = "results"
 
     # arguments that vary for each run
     words = [['anger',"NN"],["apple","NN"],["art","NN"],["democracy","NN"],
             ["happiness","NN"],["labour","NN"],["machine","NN"],["man","NN"],
             ["nation","NN"],["power","NN"],["slave","NN"],['woman','NN']]
 
+    errors = []
 
     for lemma, pos in words:
         quotations_path = f"./data/sfrel_quotations_{lemma}_{pos}.pickle"
@@ -188,17 +195,25 @@ if __name__=="__main__":
         # this is the index of the lemma id <-- we could remove this later
         idx = "01"
         senses = set(lemma_senses[lemma_senses.word_id==f'{lemma}_{pos.lower()}{idx}'].id)
-    
+        
         for sense in tqdm(list(senses)):
         
-
-            run(lemma, 
-                pos, 
-                {sense}, 
-                start=START, 
-                end=END,
-                vector_cols=VECTOR_COLS,
-                eval_mode=EVAL_MODE,
-                relations=RELATIONS,
-                train_on_dev=TRAIN_ON_DEV,
-                wemb_model=WEMB_MODEL)
+            try:
+                run(lemma, 
+                    pos, 
+                    {sense}, 
+                    start=START, 
+                    end=END,
+                    vector_cols=VECTOR_COLS,
+                    eval_mode=EVAL_MODE,
+                    relations=RELATIONS,
+                    train_on_dev=TRAIN_ON_DEV,
+                    wemb_model=WEMB_MODEL,
+                    FILTER_TEST=FILTER_TEST,
+                    results_path_base=RESULTS_PATH_BASE)
+            except Exception as e:
+                print(sense,e)
+                errors.append(sense)
+    print("Done.")
+    print("Errors with the following senses:")
+    print(errors)
