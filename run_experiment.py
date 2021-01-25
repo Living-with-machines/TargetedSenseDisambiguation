@@ -90,16 +90,28 @@ def eval_sense(lemma,
                                                     sem_axis=sem_axis,
                                                     threshold=.0)
 
-        df_test[f"bert_ts_binary_centroid_{vector_col}"] = df_test.apply(wsd.bert_ts_binary_centroid_vector, 
+        df_test[f"bert_ts_nearest_binary_centroid_{vector_col}"] = df_test.apply(wsd.bert_ts_binary_centroid_vector, 
                                                         df_train=df_train, 
                                                         ts_method='nearest',
                                                         vector_col=vector_col,
                                                         axis=1)
 
+        df_test[f"bert_ts_weighted_binary_centroid_{vector_col}"] = df_test.apply(wsd.bert_ts_binary_centroid_vector, 
+                                                        df_train=df_train, 
+                                                        ts_method='weighted',
+                                                        vector_col=vector_col,
+                                                        axis=1)
+
         senseid2label = dict(df_test[['sense_id','label']].values)
-        df_test[f"bert_ts_centroid_sense_{vector_col}"] = df_test.apply(wsd.bert_ts_sense_centroid_vector,  
+        df_test[f"bert_ts_nearest_centroid_sense_{vector_col}"] = df_test.apply(wsd.bert_ts_sense_centroid_vector,  
                         senseid2label= senseid2label,
                         ts_method='nearest',
+                        vector_col=vector_col,
+                        df_train = df_train, axis=1)
+
+        df_test[f"bert_ts_weighted_centroid_sense_{vector_col}"] = df_test.apply(wsd.bert_ts_sense_centroid_vector,  
+                        senseid2label= senseid2label,
+                        ts_method='weighted',
                         vector_col=vector_col,
                         df_train = df_train, axis=1)
 
@@ -154,7 +166,8 @@ def run(lemma,
     if not isinstance(df_test, type(None)):
         baselines = ['id_x','label','random','def_tok_overlap_ranking', 'sent_embedding', 'w2v_lesk_ranking',                        'svm_wemb_baseline']
         bert_methods = [[f"bert_binary_centroid_{vector_col}",f"bert_centroid_sense_{vector_col}",f"bert_contrast_{vector_col}",
-                        f"bert_ts_binary_centroid_{vector_col}",f"bert_ts_centroid_sense_{vector_col}",
+                        f"bert_ts_nearest_binary_centroid_{vector_col}", "bert_ts_weighted_binary_centroid_{vector_col}",
+                        f"bert_ts_nearest_centroid_sense_{vector_col}",f"bert_ts_weighteds_centroid_sense_{vector_col}",
                         f"bert_svm_{vector_col}",f"bert_perceptron_{vector_col}",f"bert_ml_perceptron_{vector_col}"
                         ] 
                                     for vector_col in  vector_cols]
@@ -169,21 +182,22 @@ def run(lemma,
 if __name__=="__main__":
     # arguments that remain constant for all experiments
     VECTOR_COLS = ['vector_bert_base_-1,-2,-3,-4_mean',
-                "vector_blert_base_-1,-2,-3,-4_mean",
-                'vector_bert_1850_-1,-2,-3,-4_mean']
+                #"vector_blert_base_-1,-2,-3,-4_mean",
+                #'vector_bert_1850_-1,-2,-3,-4_mean'
+                ]
     RELATIONS = ['seed','synonym']
     EVAL_MODE = 'lemma_etal'
     WEMB_MODEL = Word2Vec.load("models/w2v_004/w2v_words.model")
 
     # argument may change
     TRAIN_ON_DEV = True
-    FILTER_TEST = True
+    FILTER_TEST = False
 
     # arguments that vary by experiment
     START = 1760
-    END = 1920 # 1850 = results_2 1920 = results 2000 = results_3
+    END = 2000 # 1850 = results_2 1920 = results 2000 = results_3
 
-    RESULTS_PATH_BASE = "results_2"
+    RESULTS_PATH_BASE = "results_2000_no_time_filter"
 
     # arguments that vary for each run
     #words = [['anger',"NN"],["apple","NN"],["art","NN"],["democracy","NN"],
