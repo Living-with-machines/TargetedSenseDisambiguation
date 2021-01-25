@@ -21,6 +21,7 @@ def eval_sense(lemma,
                 eval_mode,
                 relations,
                 vector_cols,
+                filter_val,
                 filter_test,
                 wemb_model):
 
@@ -33,6 +34,7 @@ def eval_sense(lemma,
                                     end=end,
                                     relations=relations,
                                     eval_mode=eval_mode,
+                                    filter_val_by_year=filter_val,
                                     filter_test_by_year=filter_test,
                                     strict_filter=True)
 
@@ -143,6 +145,7 @@ def run(lemma,
         relations,
         train_on_dev,
         wemb_model,
+        filter_val,
         filter_test,
         results_path_base):
         
@@ -155,6 +158,7 @@ def run(lemma,
                 eval_mode=eval_mode,
                 relations=relations,
                 vector_cols=vector_cols,
+                filter_val=filter_val,
                 filter_test=filter_test,
                 wemb_model=wemb_model)
 
@@ -180,34 +184,60 @@ def run(lemma,
     out_df.to_csv(os.path.join(results_path, results_filename), index=False)  
 
 if __name__=="__main__":
+    import sys
+    experiment_id = sys.argv[1]
     # arguments that remain constant for all experiments
-    VECTOR_COLS = ['vector_bert_base_-1,-2,-3,-4_mean',
-                #"vector_blert_base_-1,-2,-3,-4_mean",
-                #'vector_bert_1850_-1,-2,-3,-4_mean'
-                ]
+    
+    print(f'Running experiment {experiment_id}')
+
     RELATIONS = ['seed','synonym']
     EVAL_MODE = 'lemma_etal'
     WEMB_MODEL = Word2Vec.load("models/w2v_004/w2v_words.model")
-
-    # argument may change
     TRAIN_ON_DEV = True
-    FILTER_TEST = False
 
-    # arguments that vary by experiment
+    # argument the change by experiment change
+    
+    FILTER_VAL = True
+    FILTER_TEST = True
+
+    VECTOR_COLS = ['vector_bert_base_-1,-2,-3,-4_mean',
+                "vector_blert_base_-1,-2,-3,-4_mean",
+                'vector_bert_1850_-1,-2,-3,-4_mean'
+                ]
+
     START = 1760
-    END = 2000 # 1850 = results_2 1920 = results 2000 = results_3
 
-    RESULTS_PATH_BASE = "results_2000_no_time_filter"
+    if experiment_id == "1":
+        
+        END = 1850 # 1850 = results_2 1920 = results 2000 = results_3
+        RESULTS_PATH_BASE = "results_1850"
 
-    # arguments that vary for each run
-    #words = [['anger',"NN"],["apple","NN"],["art","NN"],["democracy","NN"],
-    #        ["happiness","NN"],["labour","NN"],["machine","NN"],["man","NN"],
+        
+    
+    elif experiment_id == "2":
+        END = 1900 # 1850 = results_2 1920 = results 2000 = results_3
+        RESULTS_PATH_BASE = "results_1900"
+
+    elif experiment_id == "3":
+        END = 2000 # 1850 = results_2 1920 = results 2000 = results_3
+        RESULTS_PATH_BASE = "results_2000"
+
+    elif experiment_id == "4":
+        VECTOR_COLS = ['vector_bert_base_-1,-2,-3,-4_mean']
+        END = 2000 # 1850 = results_2 1920 = results 2000 = results_3
+        RESULTS_PATH_BASE = "results_2000_wo_time_filter"
+        FILTER_VAL = False
+        FILTER_TEST = False
+
+    words = [['anger',"NN"],["apple","NN"],["art","NN"],["democracy","NN"],
+            ["happiness","NN"],["labour","NN"],["machine","NN"],["man","NN"],
+            ["nation","NN"],["power","NN"],["slave","NN"],['woman','NN']]
+
+    #words = [["democracy","NN"],["labour","NN"],["machine","NN"],
     #        ["nation","NN"],["power","NN"],["slave","NN"],['woman','NN']]
 
-    words = [["democracy","NN"],["labour","NN"],["machine","NN"],
-            ["nation","NN"],["power","NN"],["slave","NN"],['woman','NN']]
     errors = []
-
+    
     for lemma, pos in words:
         quotations_path = f"./data/sfrel_quotations_{lemma}_{pos}.pickle"
         lemma_senses = pd.read_pickle(f'./data/lemma_senses_{lemma}_{pos}.pickle')
@@ -229,6 +259,7 @@ if __name__=="__main__":
                     relations=RELATIONS,
                     train_on_dev=TRAIN_ON_DEV,
                     wemb_model=WEMB_MODEL,
+                    filter_val=FILTER_VAL,
                     filter_test=FILTER_TEST,
                     results_path_base=RESULTS_PATH_BASE)
             except Exception as e:
