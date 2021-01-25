@@ -228,6 +228,9 @@ if __name__=="__main__":
         RESULTS_PATH_BASE = "results_2000_wo_time_filter"
         FILTER_VAL = False
         FILTER_TEST = False
+    else:
+        print('experiment_id has to be "1", "2", "3" or "4"')
+        sys.exit(1)
 
     words = [['anger',"NN"],["apple","NN"],["art","NN"],["democracy","NN"],
             ["happiness","NN"],["labour","NN"],["machine","NN"],["man","NN"],
