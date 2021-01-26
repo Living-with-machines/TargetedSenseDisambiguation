@@ -170,7 +170,7 @@ def run(lemma,
     if not isinstance(df_test, type(None)):
         baselines = ['id_x','label','random','def_tok_overlap_ranking', 'sent_embedding', 'w2v_lesk_ranking',                        'svm_wemb_baseline']
         bert_methods = [[f"bert_binary_centroid_{vector_col}",f"bert_centroid_sense_{vector_col}",f"bert_contrast_{vector_col}",
-                        f"bert_ts_nearest_binary_centroid_{vector_col}", "bert_ts_weighted_binary_centroid_{vector_col}",
+                        f"bert_ts_nearest_binary_centroid_{vector_col}", f"bert_ts_weighted_binary_centroid_{vector_col}",
                         f"bert_ts_nearest_centroid_sense_{vector_col}",f"bert_ts_weighteds_centroid_sense_{vector_col}",
                         f"bert_svm_{vector_col}",f"bert_perceptron_{vector_col}",f"bert_ml_perceptron_{vector_col}"
                         ] 
@@ -190,8 +190,8 @@ if __name__=="__main__":
     
     print(f'Running experiment {experiment_id}')
 
-    RELATIONS = ['seed','synonym']
-    EVAL_MODE = 'lemma_etal'
+    RELATIONS = ['seed','synonym'] # ,
+    EVAL_MODE = 'lemma_etal ' #'lemma_etal'
     WEMB_MODEL = Word2Vec.load("models/w2v_004/w2v_words.model")
     TRAIN_ON_DEV = True
 
@@ -209,27 +209,22 @@ if __name__=="__main__":
 
     if experiment_id == "1":
         
-        END = 1850 # 1850 = results_2 1920 = results 2000 = results_3
+        END = 1850 
         RESULTS_PATH_BASE = "results_1850"
 
         
     
     elif experiment_id == "2":
-        END = 1900 # 1850 = results_2 1920 = results 2000 = results_3
+        END = 1900 
         RESULTS_PATH_BASE = "results_1900"
 
     elif experiment_id == "3":
-        END = 2000 # 1850 = results_2 1920 = results 2000 = results_3
+        END = 2000 
         RESULTS_PATH_BASE = "results_2000"
 
-    elif experiment_id == "4":
-        VECTOR_COLS = ['vector_bert_base_-1,-2,-3,-4_mean']
-        END = 2000 # 1850 = results_2 1920 = results 2000 = results_3
-        RESULTS_PATH_BASE = "results_2000_wo_time_filter"
-        FILTER_VAL = False
-        FILTER_TEST = False
+
     else:
-        print('experiment_id has to be "1", "2", "3" or "4"')
+        print('experiment_id has to be "1", "2", "3"')
         sys.exit(1)
 
     words = [['anger',"NN"],["apple","NN"],["art","NN"],["democracy","NN"],
