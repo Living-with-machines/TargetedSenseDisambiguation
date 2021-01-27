@@ -341,7 +341,7 @@ def evaluate_results(results_path):
             clf_dict[col].extend(df[col])
     
     for colname, classifications in clf_dict.items():
-        if colname != 'label':
+        if colname not in ['label','year','quotation_id']:
             results[colname] =  [round(x,3) for x in precision_recall_fscore_support(clf_dict['label'],classifications,average='macro') if x] # ,pos_label=1
     return results
 
