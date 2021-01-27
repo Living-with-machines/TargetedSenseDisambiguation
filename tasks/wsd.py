@@ -12,50 +12,6 @@ from utils.classificaton_utils import cosine_similiarity
 from sklearn.svm import LinearSVC
 from sklearn.linear_model import Perceptron
 
-### evaluation metrics
-def compute_eval_metrics(word,results_path,eval_mode):
-    micro = {}
-    true = []
-    # just to avoid picking up annoying folders
-    if not word.startswith('.'):
-        experiments = os.path.join(results_path, word, eval_mode)
-
-        # for each experiment, so basically for each sense
-        for exp_file in os.listdir(experiments):
-            if exp_file.endswith('.csv'):
-                exp_path = os.path.join(experiments, exp_file)
-                try:
-                    experiment = pd.read_csv(exp_path, sep=",")
-                    label = experiment["label"].tolist()
-                    true+=label
-
-                    methods = experiment.columns.tolist()
-                    methods.remove("label")
-
-                    for method in methods:
-                        pred = experiment[method].tolist()
-
-                        if method in micro:
-                            micro[method]+=pred
-                        else:
-                            micro[method] = pred
-
-                # we have some empty files <-- to be checked
-                except pd.io.common.EmptyDataError:
-                    print ("\t --> No results stored for", exp_path)
-
-        columns = ["method","p","r","f1"]
-        res_df = []
-
-        for method,micro_preds in micro.items():
-            row = [method]
-            p,r,f1 = [round(x,3) for x in precision_recall_fscore_support(true,micro_preds, average='binary',pos_label=1)[:3]]
-            row+=[p,r,f1]
-            res_df.append(row)
-
-        res_df = pd.DataFrame(res_df,columns=columns)
-        return res_df
-
 ### ---------------------------------------------------
 ### random baseline
 def random_predict():

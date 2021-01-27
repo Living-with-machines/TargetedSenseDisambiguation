@@ -11,6 +11,9 @@ from typing import Union
 from collections import defaultdict
 from utils.dataset_download import *
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import precision_recall_fscore_support
+from scipy.stats import ttest_ind
+
 #import swifter
 
 cosine_similiarity = lambda x, target : 1 - cosine(x,target)
@@ -326,13 +329,13 @@ def generate_definition_df(df_train,lemma,eval_mode="lemma"):
         return df_selected_senses
 
 def evaluate_results(results_path):
-    from sklearn.metrics import precision_recall_fscore_support
     clf_dict = defaultdict(list)
     results = {}
     csv_files = results_path.glob("**/*.csv")
     for csv in csv_files:
         try:
             df = pd.read_csv(csv)
+
         except Exception as e:
             #print(e)
             #print(csv)
@@ -342,6 +345,6 @@ def evaluate_results(results_path):
     
     for colname, classifications in clf_dict.items():
         if colname not in ['label','year','quotation_id']:
-            results[colname] =  [round(x,3) for x in precision_recall_fscore_support(clf_dict['label'],classifications,average='macro') if x] # ,pos_label=1
+            results[colname] =  {"metrics":[round(x,3) for x in precision_recall_fscore_support(clf_dict['label'],classifications,average='binary',pos_label=1) if x],"pred":classifications} # ,pos_label=1
     return results
 
