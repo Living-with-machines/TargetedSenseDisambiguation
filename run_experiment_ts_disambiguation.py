@@ -113,7 +113,7 @@ def run(lemma,
 
     # IF df_test is None, create an empty DataFrame
     if not isinstance(df_test, type(None)):
-        baselines = ['id_x','label']
+        baselines = ["id_x",'label','year','quotation_id']
         bert_methods = [[
                         f"bert_centroid_sense_{vector_col}",
                         f"bert_ts_nearest_centroid_sense_{vector_col}",
@@ -163,8 +163,9 @@ if __name__=="__main__":
         lemma_senses = pd.read_pickle(f'./data/lemma_senses_{lemma}_{pos}.pickle')
     
         # this is the index of the lemma id <-- we could remove this later
-        idx = "01"
-        senses = set(lemma_senses[lemma_senses.word_id==f'{lemma}_{pos.lower()}{idx}'].id)
+        #idx = "01"
+        #senses = set(lemma_senses[lemma_senses.word_id==f'{lemma}_{pos.lower()}{idx}'].id)
+        senses = set(lemma_senses[lemma_senses.word_id.str.startswith(f'{lemma}_{pos.lower()}')]["id"])
         
         for sense in tqdm(list(senses)):
         

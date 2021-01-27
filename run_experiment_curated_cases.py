@@ -125,7 +125,7 @@ def run(lemma,
 
     # IF df_test is None, create an empty DataFrame
     if not isinstance(df_test, type(None)):
-        baselines = ['id_x','label',]#'random','def_tok_overlap_ranking', 'sent_embedding', 'w2v_lesk_ranking'] # ,'svm_wemb_baseline'
+        baselines = ["id_x",'label','year','quotation_id'] #'random','def_tok_overlap_ranking', 'sent_embedding', 'w2v_lesk_ranking'] # ,'svm_wemb_baseline'
         
         bert_methods = [[f"bert_centroid_sense_{vector_col}",
                         #f"bert_ts_nearest_centroid_sense_{vector_col}",

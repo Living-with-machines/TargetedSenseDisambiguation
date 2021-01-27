@@ -165,7 +165,7 @@ def run(lemma,
 
     # IF df_test is None, create an empty DataFrame
     if not isinstance(df_test, type(None)):
-        baselines = ['id_x','label','random','def_tok_overlap_ranking', 'sent_embedding', 'w2v_lesk_ranking',                        'svm_wemb_baseline']
+        baselines = ['id_x','label','year','quotation_id','random','def_tok_overlap_ranking', 'sent_embedding', 'w2v_lesk_ranking','svm_wemb_baseline']
         bert_methods = [[f"bert_binary_centroid_{vector_col}",f"bert_centroid_sense_{vector_col}",f"bert_contrast_{vector_col}",
                         #f"bert_ts_nearest_binary_centroid_{vector_col}", f"bert_ts_weighted_binary_centroid_{vector_col}",
                         #f"bert_ts_nearest_centroid_sense_{vector_col}",f"bert_ts_weighteds_centroid_sense_{vector_col}",
@@ -195,7 +195,7 @@ if __name__=="__main__":
 
     # argument the change by experiment change
     
-    FILTER_VAL = True
+    FILTER_VAL = False
     FILTER_TEST = True
 
     VECTOR_COLS = ['vector_bert_base_-1,-2,-3,-4_mean',
@@ -210,11 +210,9 @@ if __name__=="__main__":
         END = 1850 
         RESULTS_PATH_BASE = "results_1850"
 
-        
-    
     elif experiment_id == "2":
-        END = 1900 
-        RESULTS_PATH_BASE = "results_1900"
+        END = 1920 
+        RESULTS_PATH_BASE = "results_1920"
 
     elif experiment_id == "3":
         END = 2000 
@@ -240,8 +238,8 @@ if __name__=="__main__":
     
         # this is the index of the lemma id <-- we could remove this later
         idx = "01"
-        senses = set(lemma_senses[lemma_senses.word_id==f'{lemma}_{pos.lower()}{idx}'].id)
-        
+        #senses = set(lemma_senses[lemma_senses.word_id==f'{lemma}_{pos.lower()}{idx}'].id)
+        senses = set(lemma_senses[lemma_senses.word_id.str.startswith(f'{lemma}_{pos.lower()}')]["id"])
         for sense in tqdm(list(senses)):
         
             try:
