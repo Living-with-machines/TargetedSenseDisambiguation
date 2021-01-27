@@ -189,7 +189,7 @@ if __name__=="__main__":
     print(f'Running experiment {experiment_id}')
 
     RELATIONS = ['seed','synonym'] # ,
-    EVAL_MODE = 'lemma_etal ' #'lemma_etal'
+    EVAL_MODE = 'lemma_etal' #'lemma_etal'
     WEMB_MODEL = Word2Vec.load("models/w2v_004/w2v_words.model")
     TRAIN_ON_DEV = True
 
