@@ -138,9 +138,6 @@ if __name__=="__main__":
     TRAIN_ON_DEV = True
 
     # argument the change by experiment change
-    
-    FILTER_VAL = True
-    FILTER_TEST = True
 
     VECTOR_COLS = ['vector_bert_base_-1,-2,-3,-4_mean',
                 "vector_blert_base_-1,-2,-3,-4_mean",
@@ -150,10 +147,10 @@ if __name__=="__main__":
     START = 1760
 
     
-    END = 2000 
-    RESULTS_PATH_BASE = "results_2000_wo_time_filter"
+    END = 1850 
+    RESULTS_PATH_BASE = "results_ts_1850"
     FILTER_VAL = False
-    FILTER_TEST = False
+    FILTER_TEST = True
     
     words = [['anger',"NN"],["apple","NN"],["art","NN"],["democracy","NN"],
             ["happiness","NN"],["labour","NN"],["machine","NN"],["man","NN"],

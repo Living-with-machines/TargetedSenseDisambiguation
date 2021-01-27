@@ -54,11 +54,11 @@ def eval_sense(lemma,
                                                     vector_col=vector_col,
                                                     df_train = df_train, axis=1)
 
-        df_test[f"bert_ts_nearest_centroid_sense_{vector_col}"] = df_test.apply(wsd.bert_ts_sense_centroid_vector,  
-                        senseid2label= senseid2label,
-                        ts_method='nearest',
-                        vector_col=vector_col,
-                        df_train = df_train, axis=1)
+        #df_test[f"bert_ts_nearest_centroid_sense_{vector_col}"] = df_test.apply(wsd.bert_ts_sense_centroid_vector,  
+        #                senseid2label= senseid2label,
+        #                ts_method='nearest',
+        #                vector_col=vector_col,
+        #                df_train = df_train, axis=1)
 
         df_test[f"bert_ts_weighted_centroid_sense_{vector_col}"] = df_test.apply(wsd.bert_ts_sense_centroid_vector,  
                         senseid2label= senseid2label,
@@ -76,13 +76,13 @@ def eval_sense(lemma,
         print(f'[LOG] traing classifier for {senses} [BERT model = {vector_col}]' )
         X,y = list(df_train[vector_col].values), list(df_train.label.values)
 
-        svm_model = LinearSVC(random_state=0, C=.1, tol=1e-5,class_weight='balanced')
-        svm_model.fit(X,y)
-        df_test[f"bert_svm_{vector_col}"] = wsd.clf_svm(vector_col,df_test, svm_model)
+        #svm_model = LinearSVC(random_state=0, C=.1, tol=1e-5,class_weight='balanced')
+        #svm_model.fit(X,y)
+        #df_test[f"bert_svm_{vector_col}"] = wsd.clf_svm(vector_col,df_test, svm_model)
 
-        perc_model = Perceptron(validation_fraction=.2, early_stopping=True,class_weight='balanced')
-        perc_model.fit(X,y)
-        df_test[f"bert_perceptron_{vector_col}"] = wsd.clf_perceptron(vector_col,df_test, perc_model)
+        #perc_model = Perceptron(validation_fraction=.2, early_stopping=True,class_weight='balanced')
+        #perc_model.fit(X,y)
+        #df_test[f"bert_perceptron_{vector_col}"] = wsd.clf_perceptron(vector_col,df_test, perc_model)
 
         mlperc_model = MLPClassifier(validation_fraction=.2, early_stopping=True, solver='lbfgs',activation='relu')
         mlperc_model.fit(X,y)
@@ -103,6 +103,7 @@ def run(lemma,
         wemb_model,
         filter_val,
         filter_test,
+        results_filename,
         results_path_base):
         
     df_test = eval_sense(lemma=lemma,
@@ -119,17 +120,17 @@ def run(lemma,
                 wemb_model=wemb_model)
 
     results_path = os.path.join(results_path_base, f"{lemma}_{pos}", eval_mode)
-    results_filename = '_'.join(senses) + "~" + "+".join(sorted(relations)) + ".csv"
+    results_filename = results_filename + "+".join(sorted(relations)) + ".csv"
     Path(results_path).mkdir(parents=True, exist_ok=True)
 
     # IF df_test is None, create an empty DataFrame
     if not isinstance(df_test, type(None)):
-        baselines = ['id_x','label','random','def_tok_overlap_ranking', 'sent_embedding', 'w2v_lesk_ranking'] # ,'svm_wemb_baseline'
-        
+        baselines = ['id_x','label',]#'random','def_tok_overlap_ranking', 'sent_embedding', 'w2v_lesk_ranking'] # ,'svm_wemb_baseline'
         
         bert_methods = [[f"bert_centroid_sense_{vector_col}",
-                        f"bert_ts_nearest_centroid_sense_{vector_col}",f"bert_ts_weighted_centroid_sense_{vector_col}",
-                        f"bert_svm_{vector_col}",f"bert_perceptron_{vector_col}",f"bert_ml_perceptron_{vector_col}"
+                        #f"bert_ts_nearest_centroid_sense_{vector_col}",
+                        f"bert_ts_weighted_centroid_sense_{vector_col}",
+                        f"bert_ml_perceptron_{vector_col}"
                             ] 
                                     for vector_col in  vector_cols]
         bert_methods = [i for tm in bert_methods for i in tm]
@@ -143,8 +144,8 @@ def run(lemma,
 if __name__=="__main__":
     
 
-    RELATIONS = ['seed','synonym'] # ,
-    EVAL_MODE = 'lemma_etal'
+    RELATIONS = ['seed'] # 'synonym'
+    EVAL_MODE = 'lemma' #'lemma_etal'
     WEMB_MODEL = Word2Vec.load("models/w2v_004/w2v_words.model")
     TRAIN_ON_DEV = True
 
@@ -158,12 +159,12 @@ if __name__=="__main__":
                 ]
 
     START = 1760
-    END = 2000 
+    END = 1920
     
     FILTER_VAL = False
-    FILTER_TEST = False
+    FILTER_TEST = True
 
-    RESULTS_PATH_BASE = 'results_curated_vert'
+    RESULTS_PATH_BASE = 'results_curated_1920_seed'
 
     words = {
     ("slave_sense_1_ethnicity",'slave','NN'): {"slave_nn01-22495496", "slave_nn01-22495604","slave_nn02-22498415"},
@@ -191,20 +192,24 @@ if __name__=="__main__":
     errors = []
     for name, senses in words.items():
         name,lemma,pos = name
-        
-        run(lemma, 
-            pos, 
-            senses, 
-            start=START, 
-            end=END,
-            vector_cols=VECTOR_COLS,
-            eval_mode=EVAL_MODE,
-            relations=RELATIONS,
-            train_on_dev=TRAIN_ON_DEV,
-            wemb_model=WEMB_MODEL,
-            filter_val=FILTER_VAL,
-            filter_test=FILTER_TEST,
-            results_path_base=RESULTS_PATH_BASE)
+        try:
+            run(lemma, 
+                pos, 
+                senses, 
+                start=START, 
+                end=END,
+                vector_cols=VECTOR_COLS,
+                eval_mode=EVAL_MODE,
+                relations=RELATIONS,
+                train_on_dev=TRAIN_ON_DEV,
+                wemb_model=WEMB_MODEL,
+                filter_val=FILTER_VAL,
+                filter_test=FILTER_TEST,
+                results_filename=name,
+                results_path_base=RESULTS_PATH_BASE)
+        except Exception as e:
+            print(name,e)
+            errors.append(name)
     print("Done.")
     print("Errors with the following senses:")
     print(errors)

@@ -67,9 +67,6 @@ def eval_sense(lemma,
     #w2v lesk
     df_test["w2v_lesk_ranking"] = df_test.apply (lambda row: wsd.w2v_lesk_ranking(row["nlp_full_text"], df_selected_senses, wemb_model), axis=1)
 
-    #Bert lesk      
-    #df_test["bert_lesk_ranking"] = df_test.apply (lambda row: wsd.bert_lesk_ranking(row["text"]["full_text"], df_selected_senses, bert_sentsim_model), axis=1)
-
     # supervised baselined (w-emb SVM) - careful this is a 19thC BL model
     df_test["svm_wemb_baseline"] = wsd.svm_wemb_baseline(df_train,df_test,wemb_model)
 
@@ -92,41 +89,41 @@ def eval_sense(lemma,
                                                     sem_axis=sem_axis,
                                                     threshold=.0)
 
-        df_test[f"bert_ts_nearest_binary_centroid_{vector_col}"] = df_test.apply(wsd.bert_ts_binary_centroid_vector, 
-                                                        df_train=df_train, 
-                                                        ts_method='nearest',
-                                                        vector_col=vector_col,
-                                                        axis=1)
+        #df_test[f"bert_ts_nearest_binary_centroid_{vector_col}"] = df_test.apply(wsd.bert_ts_binary_centroid_vector, 
+        #                                                df_train=df_train, 
+        #                                                ts_method='nearest',
+        #                                                vector_col=vector_col,
+        #                                                axis=1)
 
-        df_test[f"bert_ts_weighted_binary_centroid_{vector_col}"] = df_test.apply(wsd.bert_ts_binary_centroid_vector, 
-                                                        df_train=df_train, 
-                                                        ts_method='weighted',
-                                                        vector_col=vector_col,
-                                                        axis=1)
+        #df_test[f"bert_ts_weighted_binary_centroid_{vector_col}"] = df_test.apply(wsd.bert_ts_binary_centroid_vector, 
+        #                                                df_train=df_train, 
+        #                                                ts_method='weighted',
+        #                                                vector_col=vector_col,
+        #                                                axis=1)
 
-        senseid2label = dict(df_test[['sense_id','label']].values)
-        df_test[f"bert_ts_nearest_centroid_sense_{vector_col}"] = df_test.apply(wsd.bert_ts_sense_centroid_vector,  
-                        senseid2label= senseid2label,
-                        ts_method='nearest',
-                        vector_col=vector_col,
-                        df_train = df_train, axis=1)
+        #senseid2label = dict(df_test[['sense_id','label']].values)
+        #df_test[f"bert_ts_nearest_centroid_sense_{vector_col}"] = df_test.apply(wsd.bert_ts_sense_centroid_vector,  
+        #                senseid2label= senseid2label,
+        #                ts_method='nearest',
+        #                vector_col=vector_col,
+        #                df_train = df_train, axis=1)
 
-        df_test[f"bert_ts_weighted_centroid_sense_{vector_col}"] = df_test.apply(wsd.bert_ts_sense_centroid_vector,  
-                        senseid2label= senseid2label,
-                        ts_method='weighted',
-                        vector_col=vector_col,
-                        df_train = df_train, axis=1)
+        #df_test[f"bert_ts_weighted_centroid_sense_{vector_col}"] = df_test.apply(wsd.bert_ts_sense_centroid_vector,  
+        #                senseid2label= senseid2label,
+        #                ts_method='weighted',
+        #                vector_col=vector_col,
+        #                df_train = df_train, axis=1)
 
         print(f'[LOG] traing classifier for {senses} [BERT model = {vector_col}]' )
         X,y = list(df_train[vector_col].values), list(df_train.label.values)
 
-        svm_model = LinearSVC(random_state=0, C=.1, tol=1e-5,class_weight='balanced')
-        svm_model.fit(X,y)
-        df_test[f"bert_svm_{vector_col}"] = wsd.clf_svm(vector_col,df_test, svm_model)
+        #svm_model = LinearSVC(random_state=0, C=.1, tol=1e-5,class_weight='balanced')
+        #svm_model.fit(X,y)
+        #df_test[f"bert_svm_{vector_col}"] = wsd.clf_svm(vector_col,df_test, svm_model)
 
-        perc_model = Perceptron(validation_fraction=.2, early_stopping=True,class_weight='balanced')
-        perc_model.fit(X,y)
-        df_test[f"bert_perceptron_{vector_col}"] = wsd.clf_perceptron(vector_col,df_test, perc_model)
+        #perc_model = Perceptron(validation_fraction=.2, early_stopping=True,class_weight='balanced')
+        #perc_model.fit(X,y)
+        #df_test[f"bert_perceptron_{vector_col}"] = wsd.clf_perceptron(vector_col,df_test, perc_model)
 
         mlperc_model = MLPClassifier(validation_fraction=.2, early_stopping=True, solver='lbfgs',activation='relu')
         mlperc_model.fit(X,y)
@@ -170,9 +167,10 @@ def run(lemma,
     if not isinstance(df_test, type(None)):
         baselines = ['id_x','label','random','def_tok_overlap_ranking', 'sent_embedding', 'w2v_lesk_ranking',                        'svm_wemb_baseline']
         bert_methods = [[f"bert_binary_centroid_{vector_col}",f"bert_centroid_sense_{vector_col}",f"bert_contrast_{vector_col}",
-                        f"bert_ts_nearest_binary_centroid_{vector_col}", f"bert_ts_weighted_binary_centroid_{vector_col}",
-                        f"bert_ts_nearest_centroid_sense_{vector_col}",f"bert_ts_weighteds_centroid_sense_{vector_col}",
-                        f"bert_svm_{vector_col}",f"bert_perceptron_{vector_col}",f"bert_ml_perceptron_{vector_col}"
+                        #f"bert_ts_nearest_binary_centroid_{vector_col}", f"bert_ts_weighted_binary_centroid_{vector_col}",
+                        #f"bert_ts_nearest_centroid_sense_{vector_col}",f"bert_ts_weighteds_centroid_sense_{vector_col}",
+                        #f"bert_svm_{vector_col}",f"bert_perceptron_{vector_col}",
+                        f"bert_ml_perceptron_{vector_col}"
                         ] 
                                     for vector_col in  vector_cols]
         bert_methods = [i for tm in bert_methods for i in tm]

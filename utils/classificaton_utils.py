@@ -342,6 +342,6 @@ def evaluate_results(results_path):
     
     for colname, classifications in clf_dict.items():
         if colname != 'label':
-            results[colname] =  [round(x,3) for x in precision_recall_fscore_support(clf_dict['label'],classifications,average='binary',pos_label=1) if x]
+            results[colname] =  [round(x,3) for x in precision_recall_fscore_support(clf_dict['label'],classifications,average='macro') if x] # ,pos_label=1
     return results
 
