@@ -21,8 +21,8 @@ if __name__=="__main__":
                 ]
 
     START = 1760 
-    END = 1850 
-    
+    END = 2000 
+
     RESULTS_PATH_BASE = "results_ts_1850"
     FILTER_VAL = False
     FILTER_TEST = True
@@ -57,10 +57,11 @@ if __name__=="__main__":
                     wemb_model=WEMB_MODEL,
                     filter_val=FILTER_VAL,
                     filter_test=FILTER_TEST,
-                    results_path_base=RESULTS_PATH_BASE)
+                    results_path_base=RESULTS_PATH_BASE,
+                    exp=3)
             except Exception as e:
-                print(sense,e)
-                errors.append(sense)
+                print("--->",sense,e)
+                errors.append({sense:e})
     print("Done.")
     print("Errors with the following senses:")
     print(errors)

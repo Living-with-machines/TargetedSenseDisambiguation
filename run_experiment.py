@@ -42,13 +42,14 @@ if __name__=="__main__":
         END = 2000 
         RESULTS_PATH_BASE = "results_2000"
 
-
     else:
         print('experiment_id has to be "1", "2", "3"')
         sys.exit(1)
+        
+
     words = [['anger',"NN"],["apple","NN"],["art","NN"],["democracy","NN"],
-            ["nation","NN"],["power","NN"],["slave","NN"],['woman','NN']]
             ["happiness","NN"],["labour","NN"],["machine","NN"],["man","NN"],
+            ["nation","NN"],["power","NN"],["slave","NN"],['woman','NN']]
 
     #words = [["democracy","NN"],["labour","NN"],["machine","NN"],
     #        ["nation","NN"],["power","NN"],["slave","NN"],['woman','NN']]
@@ -78,7 +79,9 @@ if __name__=="__main__":
                     wemb_model=WEMB_MODEL,
                     filter_val=FILTER_VAL,
                     filter_test=FILTER_TEST,
-                    results_path_base=RESULTS_PATH_BASE)
+                    results_path_base=RESULTS_PATH_BASE,
+                    exp=1)
+
             except Exception as e:
                 print(sense,e)
                 errors.append(sense)
