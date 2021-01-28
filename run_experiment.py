@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 import numpy as np
-from tasks import wsd
+from utils import wsd
 from pathlib import Path
 from utils import nlp_tools
 from parhugin import multiFunc
