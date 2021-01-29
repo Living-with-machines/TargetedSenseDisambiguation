@@ -7,10 +7,12 @@ import pandas as pd
 from sklearn import svm
 from utils import nlp_tools
 from typing import Union
+from scipy.spatial.distance import cosine
 from sklearn.metrics import precision_recall_fscore_support
-from utils.classificaton_utils import cosine_similiarity
 from sklearn.svm import LinearSVC
 from sklearn.linear_model import Perceptron
+
+cosine_similiarity = lambda x, target : 1 - cosine(x,target)
 
 ### ---------------------------------------------------
 ### random baseline
@@ -208,7 +210,13 @@ def weighted_past(df,year,vector_col,level='label') -> pd.Series:
     the future, then it is given the minimum weight.
     If all quotations happen in the future, the same
     strategy as for nearest is used.
+<<<<<<< HEAD:utils/wsd.py
     It returns sense level or binary time weighted centroid vectors
+=======
+
+    It returns sense level or binary time weighted centroid vectors
+
+>>>>>>> dev:tasks/wsd.py
     Arguments:
         df (pd.DataFrame): the training data from which to construct
                         the time sensitive embedding
@@ -216,10 +224,18 @@ def weighted_past(df,year,vector_col,level='label') -> pd.Series:
         vector_col (str): name of the column in which the target vector is stored
         level (str): use 'label' for binary centroid vector, 
                     use `sense_id` for sense level centroid vectors
+<<<<<<< HEAD:utils/wsd.py
+=======
+
+>>>>>>> dev:tasks/wsd.py
     Returns:
         as element of type pd.Series with index=level and 
         values the centroid vector (in this the weighted vectors
         averaged by the specified level)
+<<<<<<< HEAD:utils/wsd.py
+=======
+
+>>>>>>> dev:tasks/wsd.py
     """
     # 1 over the distance in years
     def norm_past_distance(tdist):
@@ -308,7 +324,11 @@ def bert_ts_binary_centroid_vector(row:pd.Series,
         # the nearest vector in time
         centroid_vectors = nearest(df_train,year,vector_col)
     elif ts_method=='weighted_past':
+<<<<<<< HEAD:utils/wsd.py
         # the nearest vector in time
+=======
+        # the nearest vector in time
+>>>>>>> dev:tasks/wsd.py
         centroid_vectors = weighted_past(df_train,year,vector_col)
     else:
         assert ts_method in ts_methods, f'ts_method should be one of the following options {ts_methods}'
@@ -361,7 +381,11 @@ def bert_ts_sense_centroid_vector(row:pd.Series,
         # the nearest vector in time
         centroid_vectors = nearest(df_train_lemma,row.year,vector_col,level='sense_id')
     elif ts_method=='weighted_past':
+<<<<<<< HEAD:utils/wsd.py
         # the nearest vector in time
+=======
+        # the nearest vector in time
+>>>>>>> dev:tasks/wsd.py
         centroid_vectors = weighted_past(df_train_lemma,row.year,vector_col,level='sense_id')
     else:
         assert ts_method in ts_methods, f'ts_method should be one of the following options {ts_methods}'
@@ -448,4 +472,3 @@ def clf_perceptron(vector_col:str,
     #if return_ranking: return list(model.decision_function(df[vector_col].to_list()))
     
     return list(model.predict(df_train[vector_col].to_list())) 
-    
