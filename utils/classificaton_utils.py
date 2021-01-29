@@ -8,8 +8,12 @@ from flair.embeddings import TransformerWordEmbeddings
 from scipy.spatial.distance import cosine
 from pathlib import Path, PosixPath
 from typing import Union
+from collections import defaultdict
 from utils.dataset_download import *
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import precision_recall_fscore_support
+from scipy.stats import ttest_ind
+
 #import swifter
 
 cosine_similiarity = lambda x, target : 1 - cosine(x,target)
@@ -315,12 +319,32 @@ def generate_definition_df(df_train,lemma,eval_mode="lemma"):
     df_selected_senses = df_selected_senses.reset_index(drop=True)
 
     if eval_mode == "lemma":
-        print(f'Using {eval_mode} as evaluation mode.')
+        print(f'[LOG] Using {eval_mode} as evaluation mode.')
         df_selected_senses = df_selected_senses[df_selected_senses['lemma'] == lemma]
         df_selected_senses = df_selected_senses.reset_index(drop=True)
         return df_selected_senses
 
     if eval_mode == "lemma_etal":
-        print(f'Using {eval_mode} as evaluation mode.')    
+        print(f'[LOG] Using {eval_mode} as evaluation mode.')    
         return df_selected_senses
+
+def evaluate_results(results_path):
+    clf_dict = defaultdict(list)
+    results = {}
+    csv_files = results_path.glob("**/*.csv")
+    for csv in csv_files:
+        try:
+            df = pd.read_csv(csv)
+
+        except Exception as e:
+            #print(e)
+            #print(csv)
+            continue
+        for col in df.columns:
+            clf_dict[col].extend(df[col])
+    
+    for colname, classifications in clf_dict.items():
+        if colname not in ['label','year','quotation_id']:
+            results[colname] =  {"metrics":[round(x,3) for x in precision_recall_fscore_support(clf_dict['label'],classifications,average='binary',pos_label=1) if x],"pred":classifications} # ,pos_label=1
+    return results
 

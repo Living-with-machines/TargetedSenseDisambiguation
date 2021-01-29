@@ -589,9 +589,9 @@ def filter_senses(df, sense_ids:set,
     Returns:
         set with senses
     """
-    print("# senses before filtering by date =", df.shape[0])
+    print("[LOG] # senses before filtering by date =", df.shape[0])
     df = df[df.daterange.apply(filter_by_year_range, target_start=start, target_end=end)]
-    print("# senses after filtering by date =", df.shape[0])
+    print("[LOG] # senses after filtering by date =", df.shape[0])
     
     
     seeds = df[df['provenance_type'] == "seed"].reset_index(inplace=False)
@@ -611,9 +611,9 @@ def filter_senses(df, sense_ids:set,
             ).union(set(synonyms.id)
                         ).union(set(seeds.id))
     
-    print("\n\n# of seed senses", seeds.shape[0],
-        "\n# of synonyms", synonyms.shape[0],
-        "\n# of branch senses", branches.shape[0])
+    print("[LOG] # of seed senses", seeds.shape[0],
+        "\n[LOG] # of synonyms", synonyms.shape[0],
+        "\n[LOG] # of branch senses", branches.shape[0])
 
 
     if 'seed' in relations:
@@ -652,9 +652,9 @@ def filter_senses(df, sense_ids:set,
             ).union(set(synonyms.iloc[syn_sel_indices].id)
                         ).union(set(seeds_selected))
     if verbose:
-        print('\n\n# of seeds selected', len(seeds_selected),
-            '\n# of synonyms selected', len(syn_sel_indices),
-            '\n# of branches selected', len(branches_selected))
+        print('[LOG] # of seeds selected', len(seeds_selected),
+            '\n[LOG] # of synonyms selected', len(syn_sel_indices),
+            '\n[LOG] # of branches selected', len(branches_selected))
     return senses
 
 def relation_to_core_senses(df):
