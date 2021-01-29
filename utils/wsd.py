@@ -7,12 +7,10 @@ import pandas as pd
 from sklearn import svm
 from utils import nlp_tools
 from typing import Union
-from scipy.spatial.distance import cosine
 from sklearn.metrics import precision_recall_fscore_support
+from utils.classificaton_utils import cosine_similiarity
 from sklearn.svm import LinearSVC
 from sklearn.linear_model import Perceptron
-
-cosine_similiarity = lambda x, target : 1 - cosine(x,target)
 
 ### ---------------------------------------------------
 ### random baseline
@@ -450,3 +448,4 @@ def clf_perceptron(vector_col:str,
     #if return_ranking: return list(model.decision_function(df[vector_col].to_list()))
     
     return list(model.predict(df_train[vector_col].to_list())) 
+    
