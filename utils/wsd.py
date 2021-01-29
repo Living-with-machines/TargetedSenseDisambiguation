@@ -102,7 +102,7 @@ def svm_wemb_baseline(df_train,df_test,wemb_model):
     return y_pred
 
 ### ---------------------------------------------------
-# BERT CENTROID METHODS
+# BERT CENTROID METHODS
 
 ### ---------------------------------------------------
 # binary centroid vectors
@@ -115,13 +115,11 @@ def bert_binary_centroid_vector(row:pd.Series,
     representing the positive and the negative class. the class 
     is the nearest centroid. centroids are computed by averaging
     the 
-
     Arguments:
         row (pd.Sries): row of the test dataframe on which of the function operates
         df_train (np.Series): dataframe with training data
         return_rank (bool): if True return return scores as a dict
         vector_col (str): name of the column in which the target vector is stored
-
     Returns:
         class as "0" or "1" string
     """
@@ -146,14 +144,12 @@ def bert_sense_centroid_vector(row:pd.Series,
     """BERT wsd disambiguation method using centroid vectors
     at the sense level. The function agregates vectors by sense_id.
     The prediction is the label of the close sense vector.
-
     Arguments:
         row (pd.Sries): row of the test dataframe on which of the function operates
         df_train (np.Series): dataframe with training data
         senseid2label (dict): dictionary that maps sense_id to a binary label
         return_rank (bool): if True return return scores as a dict
         vector_col (str): name of the column in which the target vector is stored
-
     Returns:
         class as "0" or "1" string
     """
@@ -173,7 +169,7 @@ def bert_sense_centroid_vector(row:pd.Series,
     return senseid2label.get(sorted(sims.items(),key=lambda x: x[1], reverse=True)[0][0],"0")
 
 ### ---------------------------------------------------
-# Time-sensitive methods
+# Time-sensitive methods
 
 ### ---------------------------------------------------
 # helper functions for creating time sensisitve sense vectors
@@ -183,9 +179,7 @@ def weighted(df,year,vector_col,level='label') -> pd.Series:
     target words by their distance to the year
     of the query vector. This is repeated for each 
     sense_id or label (i.e. value of `level` argument). 
-
     It returns sense level or binary time weighted centroid vectors
-
     Arguments:
         df (pd.DataFrame): the training data from which to construct
                         the time sensitive embedding
@@ -193,12 +187,10 @@ def weighted(df,year,vector_col,level='label') -> pd.Series:
         vector_col (str): name of the column in which the target vector is stored
         level (str): use 'label' for binary centroid vector, 
                     use `sense_id` for sense level centroid vectors
-
     Returns:
         as element of type pd.Series with index=level and 
         values the centroid vector (in this the weighted vectors
         averaged by the specified level)
-
     """
     # 1 over the distance in years
     df['temp_dist'] = (1 / (abs(year - df.year) + 1))
@@ -209,13 +201,58 @@ def weighted(df,year,vector_col,level='label') -> pd.Series:
     # sum vectors by label (sum or mean??)
     return df.groupby(level)['tw_vector'].apply(np.sum,axis=0)          
 
+def weighted_past(df,year,vector_col,level='label') -> pd.Series:
+    """This function weights vector representation of 
+    target words by their distance to the year
+    of the query vector. This is repeated for each 
+    sense_id or label (i.e. value of `level` argument).
+    If the quotation from the training set happens in
+    the future, then it is given the minimum weight.
+    If all quotations happen in the future, the same
+    strategy as for nearest is used.
+    It returns sense level or binary time weighted centroid vectors
+    Arguments:
+        df (pd.DataFrame): the training data from which to construct
+                        the time sensitive embedding
+        year (int): year of the vector to disambiguate
+        vector_col (str): name of the column in which the target vector is stored
+        level (str): use 'label' for binary centroid vector, 
+                    use `sense_id` for sense level centroid vectors
+    Returns:
+        as element of type pd.Series with index=level and 
+        values the centroid vector (in this the weighted vectors
+        averaged by the specified level)
+    """
+    # 1 over the distance in years
+    def norm_past_distance(tdist):
+        if tdist > 0:
+            return 1 / (tdist + 1)
+        else:
+            return 0.0
+
+    df['temp_dist'] = year - df.year
+
+    df['temp_dist'] = df.apply(lambda x: norm_past_distance(x['temp_dist']), axis=1)
+    # If there are only future quotations, take the nearest:
+    if df[df['temp_dist'] > 0].empty:
+        df['temp_dist'] = abs(df.year - year)
+        quots_nn_time_idx = df.groupby(level)['temp_dist'].idxmin().values
+        return df.loc[quots_nn_time_idx][[level,vector_col]].set_index(level,inplace=False)[vector_col]
+    # give minimum weight to quotations that happen in the future:
+    df.loc[df['temp_dist'] == 0.0, 'temp_dist'] = min(df[df['temp_dist'] > 0]['temp_dist'])
+    # normalize, so weights add up to one
+    df['temp_dist'] = df['temp_dist'] / sum(df['temp_dist'])
+    # time weighted vector (tw_vector) is the product of the vector and the weight
+    df['tw_vector'] = df[vector_col] * df['temp_dist']
+    # sum vectors by label (sum or mean??)
+    return df.groupby(level)['tw_vector'].apply(np.sum,axis=0)      
+
 def nearest(df:pd.DataFrame,
             year:int,
             vector_col:str,
             level:str='label') -> pd.Series:
     """This function selects the quotation closest in time 
     to`year` this for each sense_id or label (i.e. value of `level` argument)
-
     Arguments:
         df (pd.DataFrame): the training data from which to construct
                         the time sensitive embedding
@@ -223,7 +260,6 @@ def nearest(df:pd.DataFrame,
         vector_col (str): name of the colums in which vector is stord
         level (str): use 'label' for binary centroid vector, 
                     use `sense_id` for sense level centroid vectors
-
     Returns:
         as element of type pd.Series with index=level and 
         values the centroid vector (in this case the vector
@@ -235,11 +271,11 @@ def nearest(df:pd.DataFrame,
     df['temp_dist'] = abs(df.year - year)
     quots_nn_time_idx = df.groupby(level)['temp_dist'].idxmin().values
     
-    # get the quotations and the sense idx
+    # get the quotations and the sense idx
     return df.loc[quots_nn_time_idx][[level,vector_col]].set_index(level,inplace=False)[vector_col]
 
 ### ---------------------------------------------------
-# time-sensitive centoid disambiguation functions
+# time-sensitive centoid disambiguation functions
 # time sensitive binary centroid vectors
 
 def bert_ts_binary_centroid_vector(row:pd.Series,
@@ -250,7 +286,6 @@ def bert_ts_binary_centroid_vector(row:pd.Series,
     """time-sensitive wsd disambiguation method using a centroid vectors
     for the positive and negative class. the nearest of the centroid vectors
     determines the class.
-
     Arguments:
         row (pd.Series): row of df_test to which method is applied
         df_train (pd.DataFrame): training data used for creating centroids
@@ -265,15 +300,18 @@ def bert_ts_binary_centroid_vector(row:pd.Series,
 
     vector, year = row[vector_col],row.year     
     
-    ts_methods = ['weighted','nearest']
+    ts_methods = ['weighted','nearest','weighted_past']
     
 
     if ts_method=='weighted':
         # weight vector by distance
         centroid_vectors = weighted(df_train,year,vector_col)
     elif ts_method=='nearest':
-        # the nearest vector in time
+        # the nearest vector in time
         centroid_vectors = nearest(df_train,year,vector_col)
+    elif ts_method=='weighted_past':
+        # the nearest vector in time
+        centroid_vectors = weighted_past(df_train,year,vector_col)
     else:
         assert ts_method in ts_methods, f'ts_method should be one of the following options {ts_methods}'
     
@@ -298,7 +336,6 @@ def bert_ts_sense_centroid_vector(row:pd.Series,
     at the sense level. the time-sensitive
     sense embedding is vector of the keyword of the quotation
     nearest in time.
-
     Arguments:
         row (pd.Series): row of df_test dataframe
         df_train (pd.DataFrame): dataframe with training data
@@ -307,7 +344,6 @@ def bert_ts_sense_centroid_vector(row:pd.Series,
                         ['nearest','weighted']
         return_rank (bool): if True return return scores as a dict
         vector_col (str): name of vector column 
-
     Returns:
         class as "0" or "1" string
     """
@@ -318,14 +354,17 @@ def bert_ts_sense_centroid_vector(row:pd.Series,
     # if lemma doesn't appear in train return '0'
     if not df_train_lemma.shape[0]: return '0' 
 
-    ts_methods = ['nearest','weighted']
+    ts_methods = ['nearest','weighted','weighted_past']
 
     if ts_method=='weighted':
         # weight vector by distance
         centroid_vectors = weighted(df_train_lemma,row.year,vector_col,level='sense_id')
     elif ts_method=='nearest':
-        # the nearest vector in time
+        # the nearest vector in time
         centroid_vectors = nearest(df_train_lemma,row.year,vector_col,level='sense_id')
+    elif ts_method=='weighted_past':
+        # the nearest vector in time
+        centroid_vectors = weighted_past(df_train_lemma,row.year,vector_col,level='sense_id')
     else:
         assert ts_method in ts_methods, f'ts_method should be one of the following options {ts_methods}'
 
@@ -346,8 +385,8 @@ def bert_ts_sense_centroid_vector(row:pd.Series,
                         )
 
 ### ---------------------------------------------------
-# SEMAXIS
-# bert disambiguation with contrastive semantic axis
+# SEMAXIS
+# bert disambiguation with contrastive semantic axis
 def bert_semaxis_vector(vector:np.array,
                     sem_axis:np.array,
                     threshold:float=.5,
@@ -355,7 +394,6 @@ def bert_semaxis_vector(vector:np.array,
     """bert wsd disambiguation method using the intuition
     behind the semaxis paper. we project the vector
     on the semantic axi
-
     Arguments:
         vector (np.array): vector representation of keyword to be disambiguated
         sem_axis (np.Series): semantic axis obtain by substracting the aggregated
@@ -383,7 +421,6 @@ def clf_svm(vector_col:str,
             model:LinearSVC,
             return_ranking=False) -> list:
     """return classification for multi-layer perception
-
     Arguments:
         vector_col (str): name of the columns with vectors to classify
         df_train (pd.DataFrame): dataframe with training data
@@ -402,7 +439,6 @@ def clf_perceptron(vector_col:str,
             model:Perceptron,
             ) -> list:
     """return classification for multi-layer perception
-
     Arguments:
         vector_col (str): name of the columns with vectors to classify
         df_train (pd.DataFrame): dataframe with training data
@@ -414,4 +450,3 @@ def clf_perceptron(vector_col:str,
     #if return_ranking: return list(model.decision_function(df[vector_col].to_list()))
     
     return list(model.predict(df_train[vector_col].to_list())) 
-    
