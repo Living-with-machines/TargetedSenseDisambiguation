@@ -349,7 +349,7 @@ def evaluate_results(results_path, avg):
                 # note: we compute f1 independently to avoid this known issue of scikit learn macro f1: https://github.com/scikit-learn/scikit-learn/issues/3122
                 p,r = [round(x,3) for x in precision_recall_fscore_support(clf_dict['label'],classifications,average='macro')[:2] if x] 
                 f1 = round((2*(p*r))/(p+r),3)
-                results[colname] =  [p,r,f1]+ [[classifications]]
+                results[colname] =  [p,r,f1]+ [classifications]
                     
     return results
 
