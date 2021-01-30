@@ -328,7 +328,7 @@ def generate_definition_df(df_train,lemma,eval_mode="lemma"):
         print(f'[LOG] Using {eval_mode} as evaluation mode.')    
         return df_selected_senses
 
-def evaluate_results(results_path):
+def evaluate_results(results_path, avg):
     clf_dict = defaultdict(list)
     results = {}
     csv_files = results_path.glob("**/*.csv")
@@ -337,14 +337,19 @@ def evaluate_results(results_path):
             df = pd.read_csv(csv)
 
         except Exception as e:
-            #print(e)
-            #print(csv)
             continue
         for col in df.columns:
             clf_dict[col].extend(df[col])
     
     for colname, classifications in clf_dict.items():
         if colname not in ['label','year','quotation_id']:
-            results[colname] =  [round(x,3) for x in precision_recall_fscore_support(clf_dict['label'],classifications,average='macro') if x] + [[classifications]]
+            if avg == "none":
+                results[colname] =  [round(x,3) for x in precision_recall_fscore_support(clf_dict['label'],classifications,average='binary',pos_label=1) if x] + [[classifications]]
+            elif avg == "macro":
+                # note: we compute f1 independently to avoid this known issue of scikit learn macro f1: https://github.com/scikit-learn/scikit-learn/issues/3122
+                p,r = [round(x,3) for x in precision_recall_fscore_support(clf_dict['label'],classifications,average='macro')[:2] if x] 
+                f1 = round((2*(p*r))/(p+r),3)
+                results[colname] =  [p,r,f1]+ [[classifications]]
+                    
     return results
 
