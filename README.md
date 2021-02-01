@@ -10,7 +10,7 @@ We strongly recommend installation via Anaconda:
 
 * Refer to [Anaconda website and follow the instructions](https://docs.anaconda.com/anaconda/install/).
 
-* Create a new environment
+* Create a new environment:
 
 ```bash
 conda create -n py37_hde python=3.7
