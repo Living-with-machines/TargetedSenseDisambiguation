@@ -1,6 +1,7 @@
 from pathlib import Path,PosixPath
 import pandas as pd
 from utils.dataset_download import *
+from utils.classificaton_utils import vectorize_target_expressions
 
 def create_dataframe(lemma:str,
                     pos:str,
@@ -39,6 +40,20 @@ def create_dataframe(lemma:str,
     # but are not related to machines
     harvest_data_from_extended_senses(auth,f"{lemma}_{pos}", download_all=download_all)
 
+    quotations_path = f"./data/sfrel_quotations_{lemma}_{pos}.pickle"
+
+    # [WARNING] this script requires you to add path the BERT_1850 and BERT_1900 models!
+    embedding_methods = {'bert_base': {"path":'bert-base-uncased',
+                                'layers':'-1,-2,-3,-4',
+                                'pooling_operation':'mean'},
+                        'blert': {"path":'PATH/TO/BERT/1900', # !! specify path to BERT_1900 model
+                                'layers':'-1,-2,-3,-4',
+                                'pooling_operation':'mean'},
+                        'bert_1850':{"path":"/path/to/bert/1850", # !! specify path to BERT_1850 model
+                                'layers':'-1,-2,-3,-4',
+                                'pooling_operation':'mean'}
+                        }
+    quotations = vectorize_target_expressions(quotations_path,embedding_methods)
 if __name__=="__main__":
     lemma, pos,download_all = parse_input_commands()
     print(lemma,pos, download_all)
