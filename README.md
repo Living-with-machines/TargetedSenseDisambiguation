@@ -101,7 +101,7 @@ Save changes and run again:
 python python run_experiment_ts_disambiguation.py
 ```
 
-#### Case-studies
+#### Case-studies
 
 To run the case studies, execute:
 
@@ -112,15 +112,15 @@ python run_experiment_curated_cases.py
 Then changes lines 147-148 from:
 
 ```python
-RELATIONS = ['seed'] # 'synonym'
-EVAL_MODE = 'lemma' #'lemma_etal'
+RELATIONS = ['seed'] 
+EVAL_MODE = 'lemma' 
 ```
 
 to:
 
 ```python
-RELATIONS = ['seed','synonym'] # 
-EVAL_MODE = 'lemma_etal' #'lemma_etal'
+RELATIONS = ['seed','synonym'] 
+EVAL_MODE = 'lemma_etal' 
 ```
 
 And change line 167 from:
