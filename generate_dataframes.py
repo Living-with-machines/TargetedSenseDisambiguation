@@ -46,10 +46,10 @@ def create_dataframe(lemma:str,
     embedding_methods = {'bert_base': {"path":'bert-base-uncased',
                                 'layers':'-1,-2,-3,-4',
                                 'pooling_operation':'mean'},
-                        'blert': {"path":'path/to/bert/1900',
+                        'blert': {"path":'PATH/TO/BERT/1900', # !! specify path to BERT_1900 model
                                 'layers':'-1,-2,-3,-4',
                                 'pooling_operation':'mean'},
-                        'bert_1850':{"path":"/path/to/bert/1850", 
+                        'bert_1850':{"path":"/path/to/bert/1850", # !! specify path to BERT_1850 model
                                 'layers':'-1,-2,-3,-4',
                                 'pooling_operation':'mean'}
                         }
