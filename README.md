@@ -14,25 +14,19 @@ We strongly recommend installation via Anaconda:
 * Create a new environment:
 
 ```bash
-conda create -n py37_hde python=3.7
+conda create -n py37_tsd python=3.7
 ```
 
 * Activate the environment:
 
 ```bash
-conda activate py37_hde
-```
-
-* Clone source code:
-
-```bash
-git clone https://github.com/Living-with-machines/HistoricalDictionaryExpansion.git
+conda activate py37_tsd
 ```
 
 * Install dependencies:
 
 ```bash
-cd /path/to/my/HistoricalDictionaryExpansion
+cd /path/to/my/TargetedSenseDisambiguation
 pip install -r requirements.txt
 ```
 
