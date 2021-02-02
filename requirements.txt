@@ -7,4 +7,3 @@ spacy
 numpy==1.19
 gensim
 flair
-git+https://github.com/kasra-hosseini/parhugin.git
