@@ -12,7 +12,7 @@ from sklearn.svm import LinearSVC
 from sklearn.linear_model import Perceptron
 from sklearn.neural_network import MLPClassifier
 
-def eval_sense(lemma,
+def eval_sense(lemma, 
                 pos,
                 senses,
                 start,
