@@ -13,6 +13,8 @@ from utils.dataset_download import *
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import precision_recall_fscore_support
 from scipy.stats import ttest_ind
+from tqdm import tqdm
+tqdm.pandas()
 
 #import swifter
 
@@ -171,7 +173,8 @@ def vectorize_target_expressions(
         embedding_type = TransformerWordEmbeddings(
                                 bert_settings['path'],
                                 layers=layers,
-                                pooling_operation=pooling_operation)
+                                layer_mean=False,
+                                subtoken_pooling=pooling_operation)
 
         # embded
         quotations[col_name] = quotations.progress_apply(get_target_token_vector,
