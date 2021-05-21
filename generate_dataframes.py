@@ -60,9 +60,9 @@ def create_dataframe(lemma:str,
                         }
     quotations = vectorize_target_expressions(quotations_path,embedding_methods)
 if __name__=="__main__":
-    lemmas = [('machine','NN')]#[('woman','NN'), ('man','NN'),('apple','NN'), ('anger','NN'), ('happiness','NN'),
-            #('nation','NN'),('art','NN'), ('technology','NN'), ('labour','NN'),
-            #('power','NN'), ('democracy','NN'), ('slave','NN')]
+    lemmas = [('machine','NN'),('woman','NN'), ('man','NN'),('apple','NN'), ('anger','NN'), ('happiness','NN'),
+            ('nation','NN'),('art','NN'), ('technology','NN'), ('labour','NN'),
+            ('power','NN'), ('democracy','NN'), ('slave','NN')]
     
     for lemma, pos in lemmas:
         print(lemma,pos)
