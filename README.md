@@ -47,7 +47,7 @@ This script downloads data from the API for a given headword and vectorizes the 
 **[WARNING]** This script also requires access to the historical BERT models which are not provided at the moment. Models will be released upon publication.
 
 ```python
-python generate_dataframes.py --lemma='democracy' --pos='NN'
+python generate_dataframes.py
 ```
 
 All results should be saved in the `/data` folder. Almost all next steps require these data as input.
@@ -55,13 +55,11 @@ All results should be saved in the `/data` folder. Almost all next steps require
 ### Running Experiments
 
 #### Comparing BERT models
-
+=
 The code snippet below runs the main experiment that tests the effect of plugging in historical BERT models.
 
 ```python
-python run_experiment.py "1"
-python run_experiment.py "2"
-python run_experiment.py "3"
+python run_main_experiment.py 
 ```
 
 
