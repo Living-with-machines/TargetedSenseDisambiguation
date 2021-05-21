@@ -3,6 +3,11 @@ import pandas as pd
 from utils.dataset_download import *
 from utils.classificaton_utils import vectorize_target_expressions
 
+
+BERT_1850 = './models/FT_bert_base_uncased_before_1850_v001'
+BERT_1900 = './models/FT_bert_base_uncased_all_books_v002'
+CREDENTIALS_FILE = './data/oed_credentials.json'
+
 def create_dataframe(lemma:str,
                     pos:str,
                     download_all:bool=False,
@@ -24,7 +29,7 @@ def create_dataframe(lemma:str,
         save_path (PosixPath): save dataframes in the save_path folder
     """
 
-    with open('./oed_experiments/oed_credentials.json') as f:
+    with open(CREDENTIALS_FILE) as f:
         auth = json.load(f)
 
     # create folder if it doesn't yet exist
@@ -46,15 +51,19 @@ def create_dataframe(lemma:str,
     embedding_methods = {'bert_base': {"path":'bert-base-uncased',
                                 'layers':'-1,-2,-3,-4',
                                 'pooling_operation':'mean'},
-                        'blert': {"path":'PATH/TO/BERT/1900', # !! specify path to BERT_1900 model
+                        'blert': {"path":BERT_1900, # !! specify path to BERT_1900 model
                                 'layers':'-1,-2,-3,-4',
                                 'pooling_operation':'mean'},
-                        'bert_1850':{"path":"/path/to/bert/1850", # !! specify path to BERT_1850 model
+                        'bert_1850':{"path":BERT_1850, # !! specify path to BERT_1850 model
                                 'layers':'-1,-2,-3,-4',
                                 'pooling_operation':'mean'}
                         }
     quotations = vectorize_target_expressions(quotations_path,embedding_methods)
 if __name__=="__main__":
-    lemma, pos,download_all = parse_input_commands()
-    print(lemma,pos, download_all)
-    create_dataframe(lemma, pos,download_all)
+    lemmas = [('machine','NN')]#[('woman','NN'), ('man','NN'),('apple','NN'), ('anger','NN'), ('happiness','NN'),
+            #('nation','NN'),('art','NN'), ('technology','NN'), ('labour','NN'),
+            #('power','NN'), ('democracy','NN'), ('slave','NN')]
+    
+    for lemma, pos in lemmas:
+        print(lemma,pos)
+        create_dataframe(lemma, pos,download_all=True)
