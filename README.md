@@ -73,24 +73,10 @@ To create results files for the time-sensitive methods, run:
 python python run_experiment_ts_disambiguation.py
 ```
 
-Then open `run_experiment_ts_disambiguation.py`, changes lines 150 and 151 from:
+Then run `run_experiment_ts_disambiguation.py` to run the experiments with time-sensitive disambiguation.
 
 ```python
-END = 1850 
-RESULTS_PATH_BASE = "results_ts_1850"
-```
-
-to:
-
-```python
-END = 1920 
-RESULTS_PATH_BASE = "results_ts_1920"
-```
-
-Save changes and run again:
-
-```python
-python python run_experiment_ts_disambiguation.py
+python run_experiment_ts_disambiguation.py
 ```
 
 #### Case-studies
@@ -99,32 +85,6 @@ To run the case studies, execute:
 
 ```python
 python run_experiment_curated_cases.py 
-```
-
-Then changes lines 147-148 from:
-
-```python
-RELATIONS = ['seed'] 
-EVAL_MODE = 'lemma' 
-```
-
-to:
-
-```python
-RELATIONS = ['seed','synonym'] 
-EVAL_MODE = 'lemma_etal' 
-```
-
-And change line 167 from:
-
-```python
-RESULTS_PATH_BASE = 'results_curated_1920_seed'
-```
-
-to:
-
-```python
-RESULTS_PATH_BASE = 'results_curated_1920_syn'
 ```
 
 ### Create Results

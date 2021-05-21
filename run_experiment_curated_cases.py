@@ -141,11 +141,16 @@ def run(lemma,
 
     out_df.to_csv(os.path.join(results_path, results_filename), index=False)  
 
-if __name__=="__main__":
+def run_experiment(direction='vertical'):
+    if direction == 'vertical':
+        RELATIONS = ['seed'] # 'synonym'
+        EVAL_MODE = 'lemma' #'lemma_etal'
+        RESULTS_PATH_BASE = 'results_curated_1920_seed'
+    elif direction == 'horizontal':
+        RELATIONS = ['seed','synonym'] # ''
+        EVAL_MODE = 'lemma_etal' #'lemma_etal'
+        RESULTS_PATH_BASE = 'results_curated_1920_syn'
     
-
-    RELATIONS = ['seed'] # 'synonym'
-    EVAL_MODE = 'lemma' #'lemma_etal'
     WEMB_MODEL = Word2Vec.load("models/w2v_004/w2v_words.model")
     TRAIN_ON_DEV = True
 
@@ -154,7 +159,7 @@ if __name__=="__main__":
     FILTER_TEST = True
 
     VECTOR_COLS = ['vector_bert_base_-1,-2,-3,-4_mean',
-                "vector_blert_base_-1,-2,-3,-4_mean",
+                "vector_blert_-1,-2,-3,-4_mean",
                 'vector_bert_1850_-1,-2,-3,-4_mean'
                 ]
 
@@ -164,7 +169,7 @@ if __name__=="__main__":
     FILTER_VAL = False
     FILTER_TEST = True
 
-    RESULTS_PATH_BASE = 'results_curated_1920_seed'
+    #RESULTS_PATH_BASE = 'results_curated_1920_seed'
 
     words = {
     ("slave_sense_1_ethnicity",'slave','NN'): {"slave_nn01-22495496", "slave_nn01-22495604","slave_nn02-22498415"},
@@ -213,3 +218,6 @@ if __name__=="__main__":
     print("Done.")
     print("Errors with the following senses:")
     print(errors)
+if __name__=="__main__":
+    run_experiment(direction='vertical')
+    run_experiment(direction='horizontal')

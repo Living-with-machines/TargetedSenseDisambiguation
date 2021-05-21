@@ -181,12 +181,8 @@ def run(lemma,
 
     out_df.to_csv(os.path.join(results_path, results_filename), index=False)  
 
-if __name__=="__main__":
-    import sys
-    experiment_id = sys.argv[1]
-    # arguments that remain constant for all experiments
-    
-    print(f'Running experiment {experiment_id}')
+def run_experiment(START,END):
+    #print(f'Running experiment {experiment_id}')
 
     RELATIONS = ['seed','synonym'] # ,
     EVAL_MODE = 'lemma_etal' #'lemma_etal'
@@ -199,29 +195,9 @@ if __name__=="__main__":
     FILTER_TEST = True
 
     VECTOR_COLS = ['vector_bert_base_-1,-2,-3,-4_mean',
-                "vector_blert_base_-1,-2,-3,-4_mean",
+                "vector_blert_-1,-2,-3,-4_mean",
                 'vector_bert_1850_-1,-2,-3,-4_mean'
                 ]
-
-    START = 1760
-
-    if experiment_id == "1":
-        
-        END = 1850 
-        RESULTS_PATH_BASE = "results_1850"
-
-    elif experiment_id == "2":
-        END = 1920 
-        RESULTS_PATH_BASE = "results_1920"
-
-    elif experiment_id == "3":
-        END = 2000 
-        RESULTS_PATH_BASE = "results_2000"
-
-
-    else:
-        print('experiment_id has to be "1", "2", "3"')
-        sys.exit(1)
 
     words = [['anger',"NN"],["apple","NN"],["art","NN"],["democracy","NN"],
             ["happiness","NN"],["labour","NN"],["machine","NN"],["man","NN"],
@@ -232,6 +208,8 @@ if __name__=="__main__":
 
     errors = []
     
+    RESULTS_PATH_BASE = f"results_{END}"
+
     for lemma, pos in words:
         quotations_path = f"./data/sfrel_quotations_{lemma}_{pos}.pickle"
         lemma_senses = pd.read_pickle(f'./data/lemma_senses_{lemma}_{pos}.pickle')
@@ -262,3 +240,8 @@ if __name__=="__main__":
     print("Done.")
     print("Errors with the following senses:")
     print(errors)
+
+if __name__=="__main__":
+    run_experiment(START = 1760,END = 1850)
+    run_experiment(START = 1760,END = 1920)
+    run_experiment(START = 1760,END = 2000)  
