@@ -40,11 +40,23 @@ python -m spacy download en_core_web_lg
 
 This section explain how to run the code. For most of scripts you'd need credentials for the Oxford Historical Dictionary Research API. These scripts are marked by `\*\*`. More information on obtaining access to the API can be found [here](https://languages.oup.com/research/oed-researcher-api/)
 
+**[WARNING]** Results produced by this notebook may slightly differ from those in the paper, this is because:
+- the source data (the quotations stored in the OED) may change over time
+- the order is which data is retrieved and stored changes with each run, reulting in the different splits for train, validation and test. Please contact the author 
+
+However, the authors have rerun the pipeline multiple time and scores produced by these scritps are close to the one's reported in the paper and don't affect the conclusions drawn from the experiments.
+
+The only deviation may be results for the curated experiments, which tend to be more volatile.
+
 ### Generate Dataframe
 
-This script downloads data from the API for a given headword and vectorizes the keyword of the quotations.
+This script `generate_dataframes.py` downloads data from the API for a given headword and vectorizes the keyword of the quotations.
 
-**[WARNING]** This script also requires access to the historical BERT models which are not provided at the moment. Models will be released upon publication.
+**[WARNING]** This script requires access to the historical BERT are available on [Zenodo](https://zenodo.org/record/4782245#.YKqQzZNKjlw).  Please copy `bert_1760_1850` and `bert_1760_1900` models to the `models` folder.
+
+Before running this script move 1760- and model to the `models` folder and adjust the path in lines 7-8.
+
+**[WARNING]** To download the data you need access to the OED API, more information on how to obtain credential is available [here](https://languages.oup.com/research/oed-researcher-api/). Once you have the credentials add them to `oed_credentials.json`.
 
 ```python
 python generate_dataframes.py
@@ -55,8 +67,10 @@ All results should be saved in the `/data` folder. Almost all next steps require
 ### Running Experiments
 
 #### Comparing BERT models
-=
+
 The code snippet below runs the main experiment that tests the effect of plugging in historical BERT models.
+
+**[WARNING]** This script requires access to a historical word2vec model which available on [Zenodo](https://zenodo.org/record/4782245#.YKqQzZNKjlw). Please copy the `w2v_1760_1900` model to the `models` folder.
 
 ```python
 python run_main_experiment.py 

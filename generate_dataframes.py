@@ -51,7 +51,7 @@ def create_dataframe(lemma:str,
     embedding_methods = {'bert_base': {"path":'bert-base-uncased',
                                 'layers':'-1,-2,-3,-4',
                                 'pooling_operation':'mean'},
-                        'blert': {"path":BERT_1900, # !! specify path to BERT_1900 model
+                        'blert_base': {"path":BERT_1900, # !! specify path to BERT_1900 model
                                 'layers':'-1,-2,-3,-4',
                                 'pooling_operation':'mean'},
                         'bert_1850':{"path":BERT_1850, # !! specify path to BERT_1850 model

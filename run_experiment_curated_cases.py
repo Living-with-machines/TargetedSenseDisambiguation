@@ -159,7 +159,7 @@ def run_experiment(direction='vertical'):
     FILTER_TEST = True
 
     VECTOR_COLS = ['vector_bert_base_-1,-2,-3,-4_mean',
-                "vector_blert_-1,-2,-3,-4_mean",
+                "vector_blert_base_-1,-2,-3,-4_mean",
                 'vector_bert_1850_-1,-2,-3,-4_mean'
                 ]
 
@@ -191,8 +191,9 @@ def run_experiment(direction='vertical'):
     ("machine_non_figurative","machine","NN"): {"machine_nn01-38473945","machine_nn01-38474233","machine_nn01-38474301","machine_nn01-38474548",
         "machine_nn01-38475099","machine_nn01-38475046","machine_nn01-38475013","machine_nn01-38474974","machine_nn01-38474877",
         "machine_nn01-38475494","machine_nn01-38474820","machine_nn01-38475164","machine_nn01-38475923","machine_nn01-38475286","machine_nn01-38474607"},
-    ("macchine_figurative","machine","NN"): {"machine_nn01-38474140","machine_nn01-38474405","machine_nn01-38475994","machine_nn01-38476096",
-        "machine_nn01-38476316","machine_nn01-38476397","machine_nn01-38476566","machine_nn01-38476245","machine_nn01-38475835"}}
+    ("machine_figurative","machine","NN"): {"machine_nn01-38474140","machine_nn01-38474405","machine_nn01-38475994","machine_nn01-38476096",
+        "machine_nn01-38476316","machine_nn01-38476397","machine_nn01-38476566","machine_nn01-38476245","machine_nn01-38475835"}
+}
 
     errors = []
     for name, senses in words.items():

@@ -135,7 +135,8 @@ oed_experiments/oed_credentials.json
 *.pickle
 models/
 data/
-
+data_new/
+figures/
 # VS code
 ./vscode
 ./vscode/*

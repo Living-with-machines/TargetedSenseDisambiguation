@@ -195,7 +195,7 @@ def run_experiment(START,END):
     FILTER_TEST = True
 
     VECTOR_COLS = ['vector_bert_base_-1,-2,-3,-4_mean',
-                "vector_blert_-1,-2,-3,-4_mean",
+                "vector_blert_base_-1,-2,-3,-4_mean",
                 'vector_bert_1850_-1,-2,-3,-4_mean'
                 ]
 
@@ -242,6 +242,6 @@ def run_experiment(START,END):
     print(errors)
 
 if __name__=="__main__":
-    run_experiment(START = 1760,END = 1850)
+    #run_experiment(START = 1760,END = 1850)
     run_experiment(START = 1760,END = 1920)
     run_experiment(START = 1760,END = 2000)  

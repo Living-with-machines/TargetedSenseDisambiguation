@@ -138,7 +138,7 @@ def run_experiment(END):
     # argument the change by experiment change
 
     VECTOR_COLS = ['vector_bert_base_-1,-2,-3,-4_mean',
-                "vector_blert_-1,-2,-3,-4_mean",
+                "vector_blert_base_-1,-2,-3,-4_mean",
                 'vector_bert_1850_-1,-2,-3,-4_mean'
                 ]
 
