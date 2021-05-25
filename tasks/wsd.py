@@ -200,12 +200,61 @@ def weighted(df,year,vector_col,level='label') -> pd.Series:
     """
     # 1 over the distance in years
     df['temp_dist'] = (1 / (abs(year - df.year) + 1))
+
     # normalize, so weights add up to one
     df['temp_dist'] = df['temp_dist'] / sum(df['temp_dist'])
     # time weighted vector (tw_vector) is the product of the vector and the weight
     df['tw_vector'] = df[vector_col] * df['temp_dist']
     # sum vectors by label (sum or mean??)
-    return df.groupby(level)['tw_vector'].apply(np.sum,axis=0)          
+    return df.groupby(level)['tw_vector'].apply(np.sum,axis=0)    
+
+
+def weighted_gauss(df,year,vector_col,level='label', offset=0.5, scale=0.5) -> pd.Series:
+    """This function weights vector representation of 
+    target words by their distance to the year
+    of the query vector. This is repeated for each 
+    sense_id or label (i.e. value of `level` argument). 
+
+    It returns sense level or binary time weighted centroid vectors
+
+    Arguments:
+        df (pd.DataFrame): the training data from which to construct
+                        the time sensitive embedding
+        year (int): year of the vector to disambiguate
+        vector_col (str): name of the column in which the target vector is stored
+        level (str): use 'label' for binary centroid vector, 
+                    use `sense_id` for sense level centroid vectors
+
+    Returns:
+        as element of type pd.Series with index=level and 
+        values the centroid vector (in this the weighted vectors
+        averaged by the specified level)
+
+    """
+
+    # Date of latest quotation in the training data:
+    max_date = df.year.max()
+
+    # Date of first quotation in the training data:
+    min_date = df.year.min()
+
+    # Date of the target quotation:
+    origin = year
+
+    offset = offset * (max_date-min_date)
+    scale = scale * (max_date-min_date)
+
+    # Gauss-based weighting:
+    # Inspired by: https://recordlinkage.readthedocs.io/en/latest/ref-compare.html#recordlinkage.compare.Numeric
+    d = (abs(df.year - origin)).clip(offset, None)
+    expr = '2**(-((d-offset)/scale)**2)'
+    df['temp_dist'] = pd.eval(expr)
+
+    # Time weighted vector (tw_vector) is the product of the vector and the weight
+    df['tw_vector'] = df[vector_col] * df['temp_dist']
+
+    # sum vectors by label (sum or mean??)
+    return df.groupby(level)['tw_vector'].apply(np.sum,axis=0)        
 
 def weighted_past(df,year,vector_col,level='label') -> pd.Series:
     """This function weights vector representation of 
@@ -313,7 +362,7 @@ def bert_ts_binary_centroid_vector(row:pd.Series,
 
     vector, year = row[vector_col],row.year     
     
-    ts_methods = ['weighted','nearest','weighted_past']
+    ts_methods = ['weighted','nearest','weighted_past','weighted_gauss']
     
 
     if ts_method=='weighted':
@@ -325,6 +374,9 @@ def bert_ts_binary_centroid_vector(row:pd.Series,
     elif ts_method=='weighted_past':
         # the nearest vector in time
         centroid_vectors = weighted_past(df_train,year,vector_col)
+    elif ts_method=='weighted_gauss':
+        # the nearest vector in time
+        centroid_vectors = weighted_gauss(df_train,year,vector_col)
     else:
         assert ts_method in ts_methods, f'ts_method should be one of the following options {ts_methods}'
     
@@ -369,7 +421,7 @@ def bert_ts_sense_centroid_vector(row:pd.Series,
     # if lemma doesn't appear in train return '0'
     if not df_train_lemma.shape[0]: return '0' 
 
-    ts_methods = ['nearest','weighted','weighted_past']
+    ts_methods = ['nearest','weighted','weighted_past','weighted_gauss']
 
     if ts_method=='weighted':
         # weight vector by distance
@@ -380,6 +432,9 @@ def bert_ts_sense_centroid_vector(row:pd.Series,
     elif ts_method=='weighted_past':
         # the nearest vector in time
         centroid_vectors = weighted_past(df_train_lemma,row.year,vector_col,level='sense_id')
+    elif ts_method=='weighted_gauss':
+        # the nearest vector in time
+        centroid_vectors = weighted_gauss(df_train_lemma,row.year,vector_col,level='sense_id')
     else:
         assert ts_method in ts_methods, f'ts_method should be one of the following options {ts_methods}'
 

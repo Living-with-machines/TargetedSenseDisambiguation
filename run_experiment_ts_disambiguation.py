@@ -68,12 +68,19 @@ def eval_sense(lemma,
                         vector_col=vector_col,
                         df_train = df_train, axis=1)
 
+        # Inspired by https://recordlinkage.readthedocs.io/en/latest/ref-compare.html#recordlinkage.compare.Numeric
+        df_test[f"bert_ts_weighted_centroid_sense_gauss_{vector_col}"] = df_test.apply(wsd.bert_ts_sense_centroid_vector,  
+                        senseid2label= senseid2label,
+                        ts_method='weighted_gauss',
+                        vector_col=vector_col,
+                        df_train = df_train, axis=1)
+
         # TO DO: uncomment this after merging with dev
-        #df_test[f"bert_ts_weighted_centroid_sense_{vector_col}"] = df_test.apply(wsd.bert_ts_sense_centroid_vector,  
-        #                senseid2label= senseid2label,
-        #                ts_method='weighted_past',
-        #                vector_col=vector_col,
-        #                df_train = df_train, axis=1)
+        df_test[f"bert_ts_weighted_centroid_sense_past_{vector_col}"] = df_test.apply(wsd.bert_ts_sense_centroid_vector,  
+                       senseid2label= senseid2label,
+                       ts_method='weighted_past',
+                       vector_col=vector_col,
+                       df_train = df_train, axis=1)
 
         
 
@@ -118,7 +125,8 @@ def run(lemma,
                         f"bert_centroid_sense_{vector_col}",
                         f"bert_ts_nearest_centroid_sense_{vector_col}",
                         f"bert_ts_weighted_centroid_sense_{vector_col}",
-                        # f"bert_ts_weighted_past_centroid_sense_{vector_col}",
+                        f"bert_ts_weighted_centroid_sense_past_{vector_col}",
+                        f"bert_ts_weighted_centroid_sense_gauss_{vector_col}",
                         ] 
                                     for vector_col in  vector_cols]
         bert_methods = [i for tm in bert_methods for i in tm]
@@ -132,7 +140,7 @@ def run(lemma,
 def run_experiment(END):
     RELATIONS = ['seed','synonym']
     EVAL_MODE = 'lemma_etal'
-    WEMB_MODEL = Word2Vec.load("models/w2v_004/w2v_words.model")
+    WEMB_MODEL = Word2Vec.load("models/word2vec/w2v_1760_1900/w2v_words.model")
     TRAIN_ON_DEV = True
 
     # argument the change by experiment change
@@ -153,10 +161,15 @@ def run_experiment(END):
     words = [['anger',"NN"],["apple","NN"],["art","NN"],["democracy","NN"],
             ["happiness","NN"],["labour","NN"],["machine","NN"],["man","NN"],
             ["nation","NN"],["power","NN"],["slave","NN"],['woman','NN']]
+    
+    # words = [["machine","NN"]]
 
     errors = []
     
     for lemma, pos in words:
+
+        print(lemma, pos)
+
         quotations_path = f"./data/sfrel_quotations_{lemma}_{pos}.pickle"
         lemma_senses = pd.read_pickle(f'./data/lemma_senses_{lemma}_{pos}.pickle')
     
@@ -184,6 +197,7 @@ def run_experiment(END):
             except Exception as e:
                 print(sense,e)
                 errors.append(sense)
+
     print("Done.")
     print("Errors with the following senses:")
     print(errors)
