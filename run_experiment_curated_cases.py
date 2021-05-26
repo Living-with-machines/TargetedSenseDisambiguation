@@ -12,6 +12,8 @@ from sklearn.svm import LinearSVC
 from sklearn.linear_model import Perceptron
 from sklearn.neural_network import MLPClassifier
 
+WEMB_MODEL_PATH = "models/w2v_004/w2v_words.model"
+
 def eval_sense(lemma,
                 pos,
                 senses,
@@ -151,7 +153,7 @@ def run_experiment(direction='vertical'):
         EVAL_MODE = 'lemma_etal' #'lemma_etal'
         RESULTS_PATH_BASE = 'results_curated_1920_syn'
     
-    WEMB_MODEL = Word2Vec.load("models/w2v_004/w2v_words.model")
+    WEMB_MODEL = Word2Vec.load(WEMB_MODEL_PATH)
     TRAIN_ON_DEV = True
 
     # argument the change by experiment change

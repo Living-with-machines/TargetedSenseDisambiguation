@@ -12,6 +12,8 @@ from sklearn.svm import LinearSVC
 from sklearn.linear_model import Perceptron
 from sklearn.neural_network import MLPClassifier
 
+WEMB_MODEL_PATH = "models/w2v_004/w2v_words.model"
+
 def eval_sense(lemma, 
                 pos,
                 senses,
@@ -186,7 +188,7 @@ def run_experiment(START,END):
 
     RELATIONS = ['seed','synonym'] # ,
     EVAL_MODE = 'lemma_etal' #'lemma_etal'
-    WEMB_MODEL = Word2Vec.load("models/w2v_004/w2v_words.model")
+    WEMB_MODEL = Word2Vec.load(WEMB_MODEL_PATH)
     TRAIN_ON_DEV = True
 
     # argument the change by experiment change
@@ -203,8 +205,6 @@ def run_experiment(START,END):
             ["happiness","NN"],["labour","NN"],["machine","NN"],["man","NN"],
             ["nation","NN"],["power","NN"],["slave","NN"],['woman','NN']]
 
-    #words = [["democracy","NN"],["labour","NN"],["machine","NN"],
-    #        ["nation","NN"],["power","NN"],["slave","NN"],['woman','NN']]
 
     errors = []
     
@@ -242,6 +242,6 @@ def run_experiment(START,END):
     print(errors)
 
 if __name__=="__main__":
-    #run_experiment(START = 1760,END = 1850)
+    run_experiment(START = 1760,END = 1850)
     run_experiment(START = 1760,END = 1920)
     run_experiment(START = 1760,END = 2000)  

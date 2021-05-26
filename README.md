@@ -72,14 +72,17 @@ The code snippet below runs the main experiment that tests the effect of pluggin
 
 **[WARNING]** This script requires access to a historical word2vec model which available on [Zenodo](https://zenodo.org/record/4782245#.YKqQzZNKjlw). Please copy the `w2v_1760_1900` model to the `models` folder.
 
+**[WARNING]** in line 15 of `run_main_experiment.py ` change the path to the word2vec model.
+
 ```python
 python run_main_experiment.py 
 ```
 
-
 All results should be saved in `result_{year}` folder.
 
 #### Time-sensitive approaches
+
+**[WARNING]** in line 15 of `run_experiment_ts_disambiguation.py ` change the path to the word2vec model.
 
 To create results files for the time-sensitive methods, run:
 
@@ -94,6 +97,8 @@ python run_experiment_ts_disambiguation.py
 ```
 
 #### Case-studies
+
+**[WARNING]** in line 15 of `run_experiment_curated_cases.py ` change the path to the word2vec model.
 
 To run the case studies, execute:
 
