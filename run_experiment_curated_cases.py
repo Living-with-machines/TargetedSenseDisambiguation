@@ -12,6 +12,8 @@ from sklearn.svm import LinearSVC
 from sklearn.linear_model import Perceptron
 from sklearn.neural_network import MLPClassifier
 
+WEMB_MODEL_PATH = "models/w2v_004/w2v_words.model"
+
 def eval_sense(lemma,
                 pos,
                 senses,
@@ -141,12 +143,17 @@ def run(lemma,
 
     out_df.to_csv(os.path.join(results_path, results_filename), index=False)  
 
-if __name__=="__main__":
+def run_experiment(direction='vertical'):
+    if direction == 'vertical':
+        RELATIONS = ['seed'] # 'synonym'
+        EVAL_MODE = 'lemma' #'lemma_etal'
+        RESULTS_PATH_BASE = 'results_curated_1920_seed'
+    elif direction == 'horizontal':
+        RELATIONS = ['seed','synonym'] # ''
+        EVAL_MODE = 'lemma_etal' #'lemma_etal'
+        RESULTS_PATH_BASE = 'results_curated_1920_syn'
     
-
-    RELATIONS = ['seed'] # 'synonym'
-    EVAL_MODE = 'lemma' #'lemma_etal'
-    WEMB_MODEL = Word2Vec.load("models/w2v_004/w2v_words.model")
+    WEMB_MODEL = Word2Vec.load(WEMB_MODEL_PATH)
     TRAIN_ON_DEV = True
 
     # argument the change by experiment change
@@ -164,7 +171,7 @@ if __name__=="__main__":
     FILTER_VAL = False
     FILTER_TEST = True
 
-    RESULTS_PATH_BASE = 'results_curated_1920_seed'
+    #RESULTS_PATH_BASE = 'results_curated_1920_seed'
 
     words = {
     ("slave_sense_1_ethnicity",'slave','NN'): {"slave_nn01-22495496", "slave_nn01-22495604","slave_nn02-22498415"},
@@ -186,8 +193,9 @@ if __name__=="__main__":
     ("machine_non_figurative","machine","NN"): {"machine_nn01-38473945","machine_nn01-38474233","machine_nn01-38474301","machine_nn01-38474548",
         "machine_nn01-38475099","machine_nn01-38475046","machine_nn01-38475013","machine_nn01-38474974","machine_nn01-38474877",
         "machine_nn01-38475494","machine_nn01-38474820","machine_nn01-38475164","machine_nn01-38475923","machine_nn01-38475286","machine_nn01-38474607"},
-    ("macchine_figurative","machine","NN"): {"machine_nn01-38474140","machine_nn01-38474405","machine_nn01-38475994","machine_nn01-38476096",
-        "machine_nn01-38476316","machine_nn01-38476397","machine_nn01-38476566","machine_nn01-38476245","machine_nn01-38475835"}}
+    ("machine_figurative","machine","NN"): {"machine_nn01-38474140","machine_nn01-38474405","machine_nn01-38475994","machine_nn01-38476096",
+        "machine_nn01-38476316","machine_nn01-38476397","machine_nn01-38476566","machine_nn01-38476245","machine_nn01-38475835"}
+}
 
     errors = []
     for name, senses in words.items():
@@ -213,3 +221,6 @@ if __name__=="__main__":
     print("Done.")
     print("Errors with the following senses:")
     print(errors)
+if __name__=="__main__":
+    run_experiment(direction='vertical')
+    run_experiment(direction='horizontal')

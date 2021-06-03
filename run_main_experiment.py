@@ -12,7 +12,9 @@ from sklearn.svm import LinearSVC
 from sklearn.linear_model import Perceptron
 from sklearn.neural_network import MLPClassifier
 
-def eval_sense(lemma,
+WEMB_MODEL_PATH = "models/w2v_004/w2v_words.model"
+
+def eval_sense(lemma, 
                 pos,
                 senses,
                 start,
@@ -181,16 +183,12 @@ def run(lemma,
 
     out_df.to_csv(os.path.join(results_path, results_filename), index=False)  
 
-if __name__=="__main__":
-    import sys
-    experiment_id = sys.argv[1]
-    # arguments that remain constant for all experiments
-    
-    print(f'Running experiment {experiment_id}')
+def run_experiment(START,END):
+    #print(f'Running experiment {experiment_id}')
 
     RELATIONS = ['seed','synonym'] # ,
     EVAL_MODE = 'lemma_etal' #'lemma_etal'
-    WEMB_MODEL = Word2Vec.load("models/w2v_004/w2v_words.model")
+    WEMB_MODEL = Word2Vec.load(WEMB_MODEL_PATH)
     TRAIN_ON_DEV = True
 
     # argument the change by experiment change
@@ -203,35 +201,15 @@ if __name__=="__main__":
                 'vector_bert_1850_-1,-2,-3,-4_mean'
                 ]
 
-    START = 1760
-
-    if experiment_id == "1":
-        
-        END = 1850 
-        RESULTS_PATH_BASE = "results_1850"
-
-    elif experiment_id == "2":
-        END = 1920 
-        RESULTS_PATH_BASE = "results_1920"
-
-    elif experiment_id == "3":
-        END = 2000 
-        RESULTS_PATH_BASE = "results_2000"
-
-
-    else:
-        print('experiment_id has to be "1", "2", "3"')
-        sys.exit(1)
-
     words = [['anger',"NN"],["apple","NN"],["art","NN"],["democracy","NN"],
             ["happiness","NN"],["labour","NN"],["machine","NN"],["man","NN"],
             ["nation","NN"],["power","NN"],["slave","NN"],['woman','NN']]
 
-    #words = [["democracy","NN"],["labour","NN"],["machine","NN"],
-    #        ["nation","NN"],["power","NN"],["slave","NN"],['woman','NN']]
 
     errors = []
     
+    RESULTS_PATH_BASE = f"results_{END}"
+
     for lemma, pos in words:
         quotations_path = f"./data/sfrel_quotations_{lemma}_{pos}.pickle"
         lemma_senses = pd.read_pickle(f'./data/lemma_senses_{lemma}_{pos}.pickle')
@@ -262,3 +240,8 @@ if __name__=="__main__":
     print("Done.")
     print("Errors with the following senses:")
     print(errors)
+
+if __name__=="__main__":
+    run_experiment(START = 1760,END = 1850)
+    run_experiment(START = 1760,END = 1920)
+    run_experiment(START = 1760,END = 2000)  

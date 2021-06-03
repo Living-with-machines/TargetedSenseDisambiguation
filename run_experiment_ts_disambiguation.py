@@ -12,6 +12,8 @@ from tqdm import tqdm
 #from sklearn.linear_model import Perceptron
 #from sklearn.neural_network import MLPClassifier
 
+WEMB_MODEL_PATH = "models/w2v_004/w2v_words.model"
+
 def eval_sense(lemma,
                 pos,
                 senses,
@@ -129,12 +131,10 @@ def run(lemma,
 
     out_df.to_csv(os.path.join(results_path, results_filename), index=False)  
 
-if __name__=="__main__":
-    
-
+def run_experiment(END):
     RELATIONS = ['seed','synonym']
     EVAL_MODE = 'lemma_etal'
-    WEMB_MODEL = Word2Vec.load("models/w2v_004/w2v_words.model")
+    WEMB_MODEL = Word2Vec.load(WEMB_MODEL_PATH)
     TRAIN_ON_DEV = True
 
     # argument the change by experiment change
@@ -146,9 +146,7 @@ if __name__=="__main__":
 
     START = 1760
 
-    
-    END = 1850 
-    RESULTS_PATH_BASE = "results_ts_1850"
+    RESULTS_PATH_BASE = f"results_ts_{END}"
     FILTER_VAL = False
     FILTER_TEST = True
     
@@ -189,3 +187,7 @@ if __name__=="__main__":
     print("Done.")
     print("Errors with the following senses:")
     print(errors)
+
+if __name__=="__main__":
+    run_experiment(1850)
+    run_experiment(1920)
