@@ -127,3 +127,23 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+code/machine_senses.tsv
+oed_experiments/oed_credentials.json
+*.tsv
+
+# Model/data files
+*.pickle
+models/
+data/
+data_new/
+figures/
+# VS code
+./vscode
+./vscode/*
+
+# others
+.DS_Store
+.vscode/settings.json
+results/*
+results*/*
+

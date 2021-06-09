@@ -1,0 +1,9 @@
+requests
+matplotlib
+scipy
+scikit-learn
+seaborn
+spacy
+numpy==1.19
+gensim
+flair
